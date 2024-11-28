@@ -1,0 +1,31 @@
+body{
+    text-align: center;
+    background-color: darkgray;
+}
+h1{
+	position:relative;
+    font-size: large;
+    font-size: 60px;
+    height: 100px;
+    padding-top: 3%;
+    border-bottom: 3px solid #333;
+}
+.border{
+    border-bottom: 3px solid;
+}
+p{
+    font-size: 30px;
+    font-weight: bold;
+}
+.text{
+    height: 2em;
+    line-height: 1;
+}
+button{
+    width: 5em;
+    height: 2em;
+    font-size: 200%;
+    background-color:rgb(54, 147, 240) ;
+    color: white;
+    margin-bottom: 3px;
+}
