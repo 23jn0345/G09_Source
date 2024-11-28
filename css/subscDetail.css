@@ -1,0 +1,23 @@
+.detail {
+    position: relative;
+    text-align: center;
+
+}
+
+.detail ul {
+    position: relative;
+    margin-left: 1400px;
+    text-align: start;
+}
+
+.detail li {
+    padding: 5px;
+}
+.url {
+    margin-left: 840px;
+}
+input{
+    text-align: center;
+    
+}
+
