@@ -5,9 +5,9 @@
 .container-calendar {
   background: #ffffff;
   padding: 15px;
-  width: 100%;
-  margin: 0 auto;
-  overflow: auto;
+  width: 20%;
+  height: 100%;
+  margin-left: auto;
 }
 .button-container-calendar button {
   cursor: pointer;
