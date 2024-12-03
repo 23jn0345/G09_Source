@@ -21,20 +21,18 @@
     </nav>
   </header>
 
-  <form>
+  <form class="text">
     <p><br>
-      検索 <input type="text" name="Search">
+      検索 <input type="text" name="Search" size=75px class="text"></p>
   </form>
-  <button onclick="location.href='recommend.html'">お気に入り一覧</button></p>
-
-
+  <button class="reco_button" onclick="location.href='recommend.html'">お気に入り一覧</button></p>
   <div class="result">
-    <table border="1">
-
+    <div class="content">
+      <img src="netflix.png">
+    </div>
+    <table border="1" class="content">
       <tr>
-        <img src="netflix.png">
-        <th>NETFLIX<button onclick="location.href='changePlan.html'">変更・解除</button></th>
-
+        <th colspan="2">NETFLIX<button onclick="location.href='changePlan.html'">変更・解除</button></th>
       </tr>
       <tr>
         <th scope="row">支払い間隔</th>
@@ -44,15 +42,16 @@
         <th scope="row">金額</th>
         <td>890円</td>
       </tr>
-
     </table>
     <br>
+  </div>
+  <div class="result">
+    <div class="content">
+      <img src="unext.png">
+    </div>
     <table border="1">
-
       <tr>
-        <img src="unext.png">
-        <th>Unext<button onclick="location.href='changePlan.html'">変更・解除</button></th>
-
+        <th colspan="2">Unext<button onclick="location.href='changePlan.html'">変更・解除</button></th>
       </tr>
       <tr>
         <th scope="row">支払い間隔</th>
@@ -62,15 +61,16 @@
         <th scope="row">金額</th>
         <td>2180円</td>
       </tr>
-
     </table>
     <br>
-    <table border="1">
-
+  </div>
+  <div class="result">
+    <div class="content">
+      <img src="さぶすくpng">
+    </div>
+    <table border="1" class="content">
       <tr>
-        <img src="さぶすくpng">
-        <th>サブスク名<button onclick="location.href='changePlan.html'">変更・解除</button></th>
-
+        <th colspan="2">サブスク名<button onclick="location.href='changePlan.html'">変更・解除</button></th>
       </tr>
       <tr>
         <th scope="row">支払い間隔</th>
@@ -80,7 +80,6 @@
         <th scope="row">金額</th>
         <td>ーー円</td>
       </tr>
-
     </table>
   </div>
 
