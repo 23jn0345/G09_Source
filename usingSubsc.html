@@ -1,83 +1,93 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-<meta charset="utf-8">
-   
-        <title>利用中のサブスク一覧</title>
-<link rel="stylesheet" href="usingSubsc.css">
-    </head>
-    <body>
-        <header>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>利用中のサブスク一覧</title>
+  <link rel="stylesheet" href="css/usingSubsc.css">
+  <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+  <header>
+    <h1>サブスル</h1>
+    <nav>
+      <ul>
+        <li><a href="home.html">家計簿閲覧</a></li>
+        <li><a href="subscSearch.html">サブスク検索</a></li>
+        <li><a href="usingSubsc.html">利用中のサブスク</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <form>
+    <p><br>
+      検索 <input type="text" name="Search">
+  </form>
+  <button onclick="location.href='recommend.html'">お気に入り一覧</button></p>
 
 
-        </header>
-        
-        <form>
-        <p><br>
-           検索 <input type="text" name="Search">
-           </form>
-           <button onclick="location.href='recommend.html'">お気に入り一覧</button></p>
-          
-       
-           <div class="result">
-            <table border="1">
-            
-                <tr>
-                 <img src="netflix.png" >
-                      <th>NETFLIX<button onclick="location.href='changePlan.html'">変更・解除</button></th>
-    
-                  </tr>
-                  <tr>
-                    <th scope="row">支払い間隔</th>
-                  <td>１か月毎</td>
-                </tr>
-                <tr>
-                    <th scope="row">金額</th>
-                  <td>890円</td>
-                </tr>
+  <div class="result">
+    <table border="1">
 
-        </table>
-        <br>
-        <table border="1">
-            
-          <tr>
-            <img src="unext.png" >
-                <th>Unext<button onclick="location.href='changePlan.html'">変更・解除</button></th>
-
-            </tr>
-            <tr>
-              <th scope="row">支払い間隔</th>
-            <td>１か月毎</td>
-          </tr>
-          <tr>
-              <th scope="row">金額</th>
-            <td>2180円</td>
-          </tr>
-          
-  </table>
-  <br>
-  <table border="1">
-            
-    <tr>
-      <img src="さぶすくpng" >
-          <th>サブスク名<button onclick="location.href='changePlan.html'">変更・解除</button></th>
+      <tr>
+        <img src="netflix.png">
+        <th>NETFLIX<button onclick="location.href='changePlan.html'">変更・解除</button></th>
 
       </tr>
       <tr>
         <th scope="row">支払い間隔</th>
-      <td>１か月毎</td>
-    </tr>
-    <tr>
+        <td>１か月毎</td>
+      </tr>
+      <tr>
         <th scope="row">金額</th>
-      <td>ーー円</td>
-    </tr>
-    
-</table>
-          </div>
+        <td>890円</td>
+      </tr>
 
-       
-        
-      
-       
-        </body>
+    </table>
+    <br>
+    <table border="1">
+
+      <tr>
+        <img src="unext.png">
+        <th>Unext<button onclick="location.href='changePlan.html'">変更・解除</button></th>
+
+      </tr>
+      <tr>
+        <th scope="row">支払い間隔</th>
+        <td>１か月毎</td>
+      </tr>
+      <tr>
+        <th scope="row">金額</th>
+        <td>2180円</td>
+      </tr>
+
+    </table>
+    <br>
+    <table border="1">
+
+      <tr>
+        <img src="さぶすくpng">
+        <th>サブスク名<button onclick="location.href='changePlan.html'">変更・解除</button></th>
+
+      </tr>
+      <tr>
+        <th scope="row">支払い間隔</th>
+        <td>１か月毎</td>
+      </tr>
+      <tr>
+        <th scope="row">金額</th>
+        <td>ーー円</td>
+      </tr>
+
+    </table>
+  </div>
+
+
+
+
+
+</body>
+
 </html>
