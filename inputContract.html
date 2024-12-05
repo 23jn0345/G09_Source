@@ -4,18 +4,19 @@
 <meta charset="utf-8">
    
         <title>契約内容入力</title>
-<link rel="stylesheet" href="inputContract.css">
+<link rel="stylesheet" href="css/inputContract.css">
     </head>
     <body>
         <form>
         <h1>契約したサービスを入力してください</h1>
-        <select name="usingSubsc"></select>
-            <option value="subsc"></option>
-            <option value="subsc"></option>
-            <option value="subsc"></option>
-            <option value="subsc"></option>
+        <div class="name">
+        <select name="usingSubsc" >
+            <option value="subsc">NETFLIX</option>
+            <option value="subsc">U-NEXT</option>
+            <option value="subsc">Spotify</option>
+            <option value="subsc">AppleMusic</option>
         </select>
-        
+      </div>
         <p>次回支払日
             <select name="month">
                 <option value="1">1月</option>
@@ -64,8 +65,8 @@
                 <option value="29">29日</option>
                 <option value="30">30日</option>
                 <option value="31">31日</option>
-              </select></p><br><br>
-       
+              </select></p>
+            
               <p>支払い頻度
                 <select name="flequency">
                     <option value="1m">一か月</option>
@@ -73,7 +74,7 @@
                     <option value="1y">一年</option>
                 </select>
               </p>
-              <p>支払い料金</p>
+              <p>支払い料金<input type="text" value="1000円"></p>
               <br>
               <p>無料期間終了予定日</p>
               <div class="calendar-wrap">
@@ -142,6 +143,7 @@
               <br>
               </form>
               <button onclick="location.href='usingSubsc.html'">内容を確定</button><br>
+              <button onclick="location.href='subscDetail.html'">サブスク詳細画面に戻る</button><br>
           
 
        
