@@ -1,0 +1,58 @@
+button{
+    width: 7em;
+    height: 2em;
+    font-size: 200%;
+    background-color:rgb(54, 147, 240) ;
+    color: white;
+    margin-left: 1300px;
+    
+}
+.dli-arrow-right {
+    display: inline-block;
+    vertical-align: middle;
+    color: #333;
+    line-height: 1;
+    position: relative;
+    width: 1em;
+    height: 0.1em;
+    background: currentColor;
+  }
+  
+  .dli-arrow-right::before {
+    content: '';
+    width: 0.65em;
+    height: 0.65em;
+    border: 0.1em solid currentColor;
+    border-left: 0;
+    border-bottom: 0;
+    transform: rotate(45deg);
+    transform-origin: top right;
+    position: absolute;
+    top: 50%;
+    right: -0.05em;
+    box-sizing: border-box;
+  }
+  .after{
+    padding-left: 60%;
+   
+   
+   
+  }
+  .title{
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 10%;
+    border-bottom: solid 2px;
+    
+  }
+    
+    .block {
+    
+    
+    
+        top: 50px; /* #contents内の上から何pxか */
+    
+        left:750px; /* #contents内の左から何pxか */
+    
+    }
+    

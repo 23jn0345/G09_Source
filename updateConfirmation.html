@@ -4,13 +4,23 @@
 <meta charset="utf-8">
    
         <title>サブスク詳細更新確認</title>
-<link rel="stylesheet" href="updateConfirmation.css">
+<link rel="stylesheet" href="css/updateConfirmation.css">
+<link rel="stylesheet" href="css/adminiHeader.css">
     </head>
     <body>
         <header>
-
+            <h1>サブスル管理</h1>
+            <nav>
+                <ul>
+                    <li><a href="manageUser.html">利用者管理</a></li>
+                      <li><a href="manageSubsc.html">サブスク管理</a></li>
+                      
+                </ul>
+            </nav> 
 
         </header>
+        <div class="title">サブスク更新確認</div>
+    
         <img src="netflix.png" ><br>
 
         
@@ -18,14 +28,14 @@
         <p>サブスク名<br>
             <input type="text" name="ID" size="50px" value="NETFLIX" disabled></p>
         <p>略称<br>
-        <input type="text" name="password" size="50px" value="ネトフリ"　disabled>
+        <input type="text" name="password" size="50px" value="ネトフリ" disabled>
         </p>
         <p>別名<br>
-            <input type="text" name="password" size="50px" disabled value="nネットフリックス">
+            <input type="text" name="password" size="50px" disabled value="ネットフリックス">
             </p>
         </div>
         <div class="category">
-            <input type="checkbox" id="cate" name="1" disabled 　checked/>
+            <input type="checkbox" id="cate" name="1" disabled  checked/>
             <label for="cate">ジャンル１</label>
             <input type="checkbox" id="cate" name="2" disabled />
             <label for="cate">ジャンル2</label>
@@ -99,15 +109,17 @@
             </select></p>
             <br>
             </div>
-          <br>
+          
           <p>公式サイトURL<input type="text" disabled></p>
           <br>
+
           
-        
+                <div class="block"> →</div>
+            
+              
 
-       
-       <p>→</p>
-
+          <br>
+<span class="after">
        <img src="unext.png" ><br>
 
        
@@ -207,6 +219,6 @@
             <br>
             <button onclick="location.href='manageSubsc.html'">更新</button>
           </div>
-        
+        </span>
         </body>
 </html>
