@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-<meta charset="utf-8">
-   
-        <title>サブスク詳細</title>
-<link rel="stylesheet" href="subscDetail.css">
-    </head>
-    <body>
-       <header>
 
+<head>
+    <meta charset="utf-8">
 
-       </header>
-       
-       <img src="netflix.png" >
-       <h1>NETFLIX</h1>
-       <ul>
-        <li>月額890円</li>
-        <li>無料期間0日</li>
-       </ul>
-   
-       <br>
-       <p><a href="https://www.netflix.com/jp/">登録URL</a> </p>
-       <br>
-       <p><input type="checkbox">お気に入り
-        <button onclick="location.href='inputContract.html'"> 家計簿に反映</button></p>
-       
-       <br>
-       <p>Netflixは、受賞歴のあるドラマ、映画、アニメ、ドキュメンタリーなどの<br>
-        幅広いコンテンツを配信するサービスで、メンバーはあらゆるインターネット接続デバイスで視聴することができます<br>
-    定額、低価格で、いつでもどこでも、好きなだけ視聴することができます。映画やドラマは毎週追加されるので、<br>
-    いつでも新しい作品が見つかります。</p>
-        </body>
+    <title>サブスク詳細</title>
+    <link rel="stylesheet" href="css/subscDetail.css">
+    <link rel="stylesheet" href="css/header.css">
+</head>
+
+<body>
+    <header>
+        <h1>サブスル</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">家計簿閲覧</a></li>
+                <li><a href="subscSearch.html">サブスク検索</a></li>
+                <li><a href="usingSubsc.html">利用中のサブスク</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="result">
+        <div class="content">
+            <img src="netflix.png">
+        </div>
+        <h1>NETFLIX</h1>
+        <ul>
+            <li>月額890円</li>
+            <li>無料期間0日</li>
+        </ul>
+    </div>
+    <br>
+    <div class="detail">
+        <p><a href="https://www.netflix.com/jp/">登録URL</a> </p>
+    </div>
+    <div class="detail">
+        <p><input type="checkbox">お気に入り
+            <button onclick="location.href='inputContract.html'"> 家計簿に反映</button>
+        </p>
+    </div>
+    <br>
+    <p class="instruct">Netflixは、受賞歴のあるドラマ、映画、アニメ、ドキュメンタリーなどの
+        幅広いコンテンツを配信するサービスで、メンバーはあらゆるインターネット接続デバイスで視聴することができます
+        定額、低価格で、いつでもどこでも、好きなだけ視聴することができます。映画やドラマは毎週追加されるので、
+        いつでも新しい作品が見つかります。</p>
+    </div>
+</body>
+
 </html>
