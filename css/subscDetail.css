@@ -1,23 +1,76 @@
-.detail {
-    position: relative;
+.text {
     text-align: center;
-
-}
-
-.detail ul {
     position: relative;
-    margin-left: 1400px;
-    text-align: start;
+    line-height: 2;
 }
 
-.detail li {
-    padding: 5px;
+
+
+.container {
+    width: 200px;
+    border: solid 3px;
+    position: relative;
+    bottom: 500px;
+    margin-left: 80px;
+    float: left;
 }
-.url {
-    margin-left: 840px;
+
+.container h2 {
+    position: relative;
+    bottom: 3px;
+    text-align: center;
+    border-top: solid 3px;
+    border-bottom: solid 3px;
 }
-input{
+h2{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.result {
+    display: flex;
+    margin: 10px;
+    margin-left: 527px;
+    align-items: center;
+    
+}
+.result h1{
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 40px;
+    margin-left: 110px;
+}
+.result ul{
+    margin-left: 200px;
+}
+.detail {
+    display: flex;
+    margin-left: 840px;;
+    align-items: center;
     text-align: center;
     
 }
+
+
+
+.content img {
+    display: flex;
+    text-align: center;
+    width: 230px;
+    height: 150px;
+    vertical-align: auto;
+    align-items: center;
+}
+
+.instruct{
+    
+    margin: auto;
+    border: solid 2px;
+    width: 840px;
+    height: 300px;
+}
+
+
+
 
