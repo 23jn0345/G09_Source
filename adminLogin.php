@@ -1,18 +1,18 @@
 <?php 
-require_once 'DAO/MemberDAO.php';
-$memberid='';
+require_once 'DAO/adminDAO.php';
+$adminid='';
 $errs=[];
 session_start();
-if(!empty($_SESSION['member'])){
-    header('Location:home.php');
+if(!empty($_SESSION['admin'])){
+    header('Location:manageUser.php');
     exit;
 }
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $memberid=$_POST['ID'];
+    $adminid=$_POST['ID'];
     $password=$_POST['password'];
    
-    if($memberid==''){
-        $errs[]='IDを入力してください';
+    if($adminid==''){
+        $errs[]='管理者IDを入力してください';
     }
     
     if($password===''){
@@ -21,12 +21,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     if(empty($errs)){
 
     
-    $memberDAO=new MemberDAO();
-    $member=$memberDAO->get_member($memberid,$password);
+    $adminDAO=new adminDAO();
+    $admin=$adminDAO->get_admin($adminid,$password);
     if($member !==false){
         session_regenerate_id(true);
-        $_SESSION['member']=$member;
-        header('Location:home.php');
+        $_SESSION['admin']=$admin;
+        header('Location:manageUser.php');
         exit;
     }
     else{
@@ -40,23 +40,22 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     <head>
 <meta charset="utf-8">
    
-        <title>login</title>
-<link rel="stylesheet" href="css/login.css">
+        <title>管理者ログイン</title>
+<link rel="stylesheet" href="css/adminiLogin.css">
     </head>
     <body>
-        <h1>ログイン</h1>
+        <h1>管理者ログイン</h1>
         <form>
-        <p>ユーザーID<br>
+        <p>管理者ID<br>
             <input type="text" name="ID" size="50px" required class="text"></p>
-        <p>パスワード<br>
+        <p>管理者パスワード<br>
         <input type="password" name="password" size="50px" required class="text">
         </p>
         </form>
 
         <div class="btn">
-        <button onclick="location.href='home.html'">ログイン</button><br>
-        <button onclick="location.href='newRegistration.html'">新規登録</button>
-        </div>
+        <button onclick="location.href='manageUser.html'">ログイン</button><br>
+       </div>
        
        
         </body>

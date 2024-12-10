@@ -32,6 +32,7 @@ public function insert(Member $member){
     
     $stmt->bindValue(':memberid',$member->memberid,PDO::PARAM_STR);
     $stmt->bindValue(':password',$password,PDO::PARAM_STR);
+    
     $stmt->execute(); 
 }
 
