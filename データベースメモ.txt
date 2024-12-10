@@ -1,0 +1,65 @@
+データベースエンジン
+サーバー名：JNSV01\sotsu
+ログイン：23jn03_G09
+パスワード：23jn03_G09
+
+サブスクテーブル
+CREATE TABLE subsc (
+	SubID int IDENTITY(20001, 1) NOT NULL PRIMARY KEY,
+	SubName VARCHAR(20) NOT NULL,
+	Setumei VARCHAR(300) NOT NULL,
+	aliasName VARCHAR(20),
+	shortName VARCHAR(20),
+	image VARCHAR(200),
+	URL VARCHAR(200) NOT NULL,
+	GenreID int FOREIGN KEY 
+		REFERENCES genre(GenreID)
+)
+
+サブスクプランテーブル
+CREATE TABLE subscplan (
+	PlanID int IDENTITY(40001, 1) NOT NULL,
+	SubID int NOT NULL FOREIGN KEY
+		REFERENCES subsc(SubID),
+	Price VARCHAR(200) NOT NULL,
+	IntervalID int NOT NULL FOREIGN KEY
+		REFERENCES kikan(KikanID),
+	FreeTimeID int NOT NULL FOREIGN KEY
+		REFERENCES kikan(KikanID)
+)
+
+ジャンルテーブル
+CREATE TABLE genre (
+	GenreID int NOT NULL PRIMARY KEY,
+	GenreName VARCHAR(20) NOT NULL
+)
+
+会員テーブル
+CREATE TABLE member (
+	ID int IDENTITY(10001, 1) NOT NULL PRIMARY KEY,
+	Name VARCHAR(20) NOT NULL,
+	Pw VARCHAR(16) NOT NULL,
+	Sex bit NOT NULL,
+	BirthDay date NOT NULL
+)
+
+期間マスタ
+CREATE TABLE kikan (
+	KikanID int IDENTITY(60001, 1) NOT NULL PRIMARY KEY,
+	Kikanname Varchar(50) NOT NULL,
+	date int NOT NULL
+)
+
+お気に入りテーブル
+CREATE TABLE favorite (
+	ID int NOT NULL FOREIGN KEY
+		REFERENCES member(ID),
+	SabID int NOT NULL FOREIGN KEY
+		REFERENCES subsc(SubID)
+)
+
+管理者テーブル
+CREATE TABLE administrator (
+	managerID VARCHAR(20) NOT NULL PRIMARY KEY,
+	password VARCHAR(16) NOT NULL
+)
