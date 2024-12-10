@@ -7,7 +7,7 @@
 CREATE TABLE subsc (
 	SubID int IDENTITY(20001, 1) NOT NULL PRIMARY KEY,
 	SubName VARCHAR(20) NOT NULL,
-	Setumei VARCHAR(300) NOT NULL,
+	Setumei VARCHAR(Max) NOT NULL,
 	aliasName VARCHAR(20),
 	shortName VARCHAR(20),
 	image VARCHAR(200),
@@ -63,3 +63,12 @@ CREATE TABLE administrator (
 	managerID VARCHAR(20) NOT NULL PRIMARY KEY,
 	password VARCHAR(16) NOT NULL
 )
+
+INSERT文
+INSERT INTO dbo.subsc(SubName,Setumei,aliasName,shortName,image,URL,GenreID) 
+	Values('NETFLIX','Netflixは、受賞歴のあるドラマ、映画、アニメ、ドキュメンタリーなどの
+			幅広いコンテンツを配信するサービスで、メンバーはあらゆるインターネット接続デバイスで視聴することができます
+			定額、低価格で、いつでもどこでも、好きなだけ視聴することができます。映画やドラマは毎週追加されるので、
+			いつでも新しい作品が見つかります。',
+			'ネットフリックス','ネトフリ','Z:\xampp\htdocs\G09_Source\netflix.png',
+			'https://www.netflix.com/jp/',50001)
