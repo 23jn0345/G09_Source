@@ -21,19 +21,6 @@ if($admin!== false){
 }
 return false;
 }
-public function insert(Admin $admin){
-    $dbh=DAO::get_db_connect();
-    $sql="insert into Admin (adminid,password)
-    values(:adminid,:password)";
-    $stmt = $dbh->prepare($sql); 
 
-  $password=password_hash($admin->password,PASSWORD_DEFAULT);
-
-    
-    $stmt->bindValue(':adminid',$admin->adminid,PDO::PARAM_STR);
-    $stmt->bindValue(':password',$password,PDO::PARAM_STR);
-    
-    $stmt->execute(); 
-}
 
 }
