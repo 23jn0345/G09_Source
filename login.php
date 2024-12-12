@@ -1,6 +1,6 @@
 <?php 
 require_once 'DAO/MemberDAO.php';
-$memberid='';
+$name='';
 $errs=[];
 session_start();
 if(!empty($_SESSION['member'])){
@@ -8,10 +8,10 @@ if(!empty($_SESSION['member'])){
     exit;
 }
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $memberid=$_POST['ID'];
+    $name=$_POST['name'];
     $password=$_POST['password'];
    
-    if($memberid==''){
+    if($name==''){
         $errs[]='IDを入力してください';
     }
     
@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
 
     
     $memberDAO=new MemberDAO();
-    $member=$memberDAO->get_member($memberid,$password);
+    $member=$memberDAO->get_member($name,$password);
     if($member !==false){
         session_regenerate_id(true);
         $_SESSION['member']=$member;
@@ -47,14 +47,21 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         <h1>ログイン</h1>
         <form>
         <p>ユーザーID<br>
-            <input type="text" name="ID" size="50px" required class="text"></p>
+            <input type="text" name="ID" size="50px" required autofocus class="text"></p>
         <p>パスワード<br>
         <input type="password" name="password" size="50px" required class="text">
         </p>
+        <?php foreach($errs as $e) : ?>
+            <span style="color:red"><?=$e ?></span>
+            <br>
+            <?php endforeach; ?>
+            <div class="btn">
+            <input type="submit" value="ログイン" ><br>
+            </div>
         </form>
 
         <div class="btn">
-        <button onclick="location.href='home.html'">ログイン</button><br>
+        
         <button onclick="location.href='newRegistration.html'">新規登録</button>
         </div>
        

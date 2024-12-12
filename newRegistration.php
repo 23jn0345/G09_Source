@@ -1,35 +1,50 @@
 <?php 
 require_once './DAO/MemberDAO.php';
 if($_SERVER['REQUEST_METHOD']==='POST'){
-    $memberid=$_POST['ID'];
+    $name=$_POST['name'];
     $password=$_POST['password'];
-    $password2=$_POST['password2'];
-    $male=$_POST['male'];
-    $female=$_POST['female'];
+    $year=$_POST['year'];
+    $month=$_POST['month'];
+    $day=$_POST['day']; 
+    $birthday=$year."/".$month."/".$day;
+    $gender=$_POST['gender'];
     
 
     $memberDAO=new MemberDAO();
     
     if(!preg_match('/\A.{4,}\z/',$password)){
         $errs['password']='パスワードは４文字以上で入力してください';
-    }elseif($password!==$password2){
-        $errs['password']='パスワードが一致しません';
     }
-   
+    if($name===""){
+        $errs['name']='IDを入力してください';
+    }
+    if($gender===""){
+        $errs['gender']='性別を選択してください';
+    }
+    if($year===""){
+        $errs['year']='生年を入力してください';
+    }
+    if($month===""){
+        $errs['month']='生月を入力してください';
+    }
+    if($day===""){
+        $errs['day']='生日を入力してください';
+    }
 if(empty($errs)){
 
 
     $member=new Member();
-    $member->memberid=$memberid;
+    $member->name=$name;
     $member->password=$password;
+    $member->birthday=$birthday;
+    $member->gender=$gender;
     
 
-   
-
     $memberDAO->insert($member);
-    header('Location:home.php');
+    header('Location:login.php');
     exit;
 }
+
 }
 ?>
 <!DOCTYPE html>
@@ -42,17 +57,19 @@ if(empty($errs)){
     </head>
     <body>
         <h1>新規会員登録</h1>
-        <form>
+        <form action="" method="POST">
         <p>ユーザーID<br>
-            <input type="text" name="ID" size="50px" class="text"></p>
-        <p>パスワード<br>
-        <input type="text" name="password" size="50px" required class="text">
+            <input type="text" required autofocus name="name" size="50px" class="text" value="<?= @$name ?>"></p>
+            <span style="color:red"><?= @$errs['name'] ?></span>
+        <p>パスワード（4文字以上）<br>
+        <input type="text" name="password" size="50px" required class="text" value="<?= @$password ?>">
+        <span style="color:red"><?= @$errs['password'] ?></span>
         </p>
        
             <p>性別
-            <input type="radio" id="male" name="content" value="male" />
+            <input type="radio" name="gender" value="男" />
             <label for="male">男性</label>
-            <input type="radio" id="female" name="content" value="female" />
+            <input type="radio" name="gender" value="女" />
             <label for="female">女性</label>
         </p>
 
@@ -125,7 +142,7 @@ if(empty($errs)){
                 <option value="2001">2005</option>
                 <option value="2001">2006</option>
                 <option value="2001">2007</option>
-              </select>
+              </select>年<span style="color:red"><?= @$errs['year'] ?></span>
               <select name="month">
                 <option value="1">1</option>
                 <option value="2" selected>2</option>
@@ -139,7 +156,7 @@ if(empty($errs)){
                 <option value="10">10</option>
                 <option value="11">11</option>
                 <option value="12">12</option>
-              </select>
+              </select>月<span style="color:red"><?= @$errs['month'] ?></span>
               <select name="day">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -172,10 +189,11 @@ if(empty($errs)){
                 <option value="29">29</option>
                 <option value="30">30</option>
                 <option value="31">31</option>
-              </select></p><br><br>
-
+              </select>日<span style="color:red"><?= @$errs['day'] ?></span></p><br><br>
+<input type="submit" value="登録" class="button">
             </form>
-            <button onclick="location.href='home.html'">登録</button><br>
+ 
+           
             <br>
             <p>既に登録済みの方は<a href="login.html">ログイン</a> </p>
        

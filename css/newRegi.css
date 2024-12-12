@@ -21,7 +21,7 @@ p{
     height: 2em;
     line-height: 1;
 }
-button{
+.button{
     width: 5em;
     height: 2em;
     font-size: 200%;
