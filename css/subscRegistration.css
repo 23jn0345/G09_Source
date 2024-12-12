@@ -1,19 +1,34 @@
-body{
+body {
     text-align: center;
 }
-p{
+
+p {
     font-size: 20px;
 }
-.category{
+
+.category {
     font-size: 18px;
 }
-button{
+
+button {
     width: 7em;
     height: 2em;
     font-size: 200%;
-    background-color:rgb(54, 147, 240) ;
+    background-color: rgb(54, 147, 240);
     color: white;
 }
-.payterm{
-font-size: 18px;
+
+.payterm {
+    font-size: 18px;
+}
+
+.detail {
+    height: 150px;
+}
+
+.text {
+    display: flex;
+    margin-top: 0;
+
+    justify-content: center;
 }

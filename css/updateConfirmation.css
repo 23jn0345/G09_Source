@@ -34,7 +34,7 @@ button {
   box-sizing: border-box;
 }
 
-.form{
+.form {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -55,11 +55,22 @@ button {
   align-items: center;
   font-size: 80px;
   margin: 50px;
-  
-}
-img{
-  width: 230px;
-  height: 150px;
-  
+
 }
 
+img {
+  width: 230px;
+  height: 150px;
+
+}
+
+.detail {
+  height: 150px;
+}
+
+.text {
+  display: flex;
+  margin-top: 0;
+
+  justify-content: center;
+}
