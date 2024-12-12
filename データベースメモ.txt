@@ -18,7 +18,7 @@ CREATE TABLE subsc (
 
 サブスクプランテーブル
 CREATE TABLE subscplan (
-	PlanID int IDENTITY(40001, 1) NOT NULL,
+	PlanID int IDENTITY(40001, 1) NOT NULL PRIMARY KEY,
 	SubID int NOT NULL FOREIGN KEY
 		REFERENCES subsc(SubID),
 	Price VARCHAR(200) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE kikan (
 CREATE TABLE favorite (
 	ID int NOT NULL FOREIGN KEY
 		REFERENCES member(ID),
-	SabID int NOT NULL FOREIGN KEY
+	SubID int NOT NULL FOREIGN KEY
 		REFERENCES subsc(SubID)
 )
 
@@ -62,6 +62,20 @@ CREATE TABLE favorite (
 CREATE TABLE administrator (
 	managerID VARCHAR(20) NOT NULL PRIMARY KEY,
 	password VARCHAR(16) NOT NULL
+)
+
+利用中のサブスクテーブル
+CREATE TABLE usingsubsc (
+	UseSubID int IDENTITY(30001, 1) NOT NULL PRIMARY KEY,
+	ID int NOT NULL FOREIGN KEY
+		REFERENCES member(ID),
+	SubID int NOT NULL FOREIGN KEY
+		REFERENCES subsc(SubID),
+	PlanID int NOT NULL FOREIGN KEY
+		REFERENCES subscplan(PlanID),
+	RegistDate date NOT NULL,
+	EndFree date,
+	NextPay date NOT NULL
 )
 
 INSERT文
