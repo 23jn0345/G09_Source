@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         
 
         <div class="btn">
-        <button onclick="location.href='manageUser.html'">ログイン</button><br>
+        <input type="submit" value="ログイン"><br>
        </div>
        </form>
        
