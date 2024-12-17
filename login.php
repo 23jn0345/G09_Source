@@ -21,13 +21,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     if(empty($errs)){
 
     
-    $memberDAO=new MemberDAO();
-    $member=$memberDAO->get_member($name,$password);
-    if($member !==false){
-        session_regenerate_id(true);
-        $_SESSION['member']=$member;
-        header('Location:home.php');
-        exit;
+        $memberDAO=new MemberDAO();
+        $member=$memberDAO->get_member($name,$password);
+        if($member !==false){
+            session_regenerate_id(true);
+            $_SESSION['member']=$member;
+            header('Location:home.php');
+            exit;
     }
     else{
         $errs[]='IDまたはパスワードに誤りがあります。';
@@ -45,9 +45,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     </head>
     <body>
         <h1>ログイン</h1>
-        <form>
+        <form action="" method="POST">
         <p>ユーザーID<br>
-            <input type="text" name="ID" size="50px" required autofocus class="text"></p>
+            <input type="text" name="name" size="50px" required autofocus class="text"></p>
         <p>パスワード<br>
         <input type="password" name="password" size="50px" required class="text">
         </p>
@@ -55,14 +55,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             <span style="color:red"><?=$e ?></span>
             <br>
             <?php endforeach; ?>
-            <div class="btn">
-            <input type="submit" value="ログイン" ><br>
+            
+            <input type="submit" value="ログイン" class="btn"><br>
             </div>
         </form>
-
-        <div class="btn">
-        
-        <button onclick="location.href='newRegistration.html'">新規登録</button>
+          
+        <button onclick="location.href='newRegistration.php'" class="btn">新規登録</button>
         </div>
        
        

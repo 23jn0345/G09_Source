@@ -1,5 +1,5 @@
 <?php 
-require_once './DAO/MemberDAO.php';
+require_once 'DAO/MemberDAO.php';
 if($_SERVER['REQUEST_METHOD']==='POST'){
     $name=$_POST['name'];
     $password=$_POST['password'];
@@ -17,6 +17,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     }
     if($name===""){
         $errs['name']='IDを入力してください';
+    }elseif($memberDAO->id_exists($name)){
+        $errs['name']='このIDは既に使われています';
     }
     if($gender===""){
         $errs['gender']='性別を選択してください';
@@ -67,9 +69,9 @@ if(empty($errs)){
         </p>
        
             <p>性別
-            <input type="radio" name="gender" value="男" />
+            <input type="radio" name="gender" value="1" />
             <label for="male">男性</label>
-            <input type="radio" name="gender" value="女" />
+            <input type="radio" name="gender" value="0" />
             <label for="female">女性</label>
         </p>
 
@@ -195,7 +197,7 @@ if(empty($errs)){
  
            
             <br>
-            <p>既に登録済みの方は<a href="login.html">ログイン</a> </p>
+            <p>既に登録済みの方は<a href="login.php">ログイン</a> </p>
        
         </body>
 </html>
