@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($manager !==false){
             session_regenerate_id(true);
             $_SESSION['manager']=$manager;
-            header('Location:manageUser.php');
+            header('Location:manageUser.html');
             exit;
     }
     else{
