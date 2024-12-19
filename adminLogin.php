@@ -1,9 +1,5 @@
 <?php 
-<<<<<<< HEAD
 require_once './DAO/adminLoginDAO.php';
-=======
-require_once './DAO/adminDAO.php';
->>>>>>> b30609c6ca247c23c7456226724902a7365ede48
 $managerid='';
 $errs=[];
 session_start();
