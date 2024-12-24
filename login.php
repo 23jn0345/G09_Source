@@ -4,7 +4,7 @@ $name='';
 $errs=[];
 session_start();
 if(!empty($_SESSION['member'])){
-    header('Location:home.php');
+    header('Location:home.html');
     exit;
 }
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($member !==false){
             session_regenerate_id(true);
             $_SESSION['member']=$member;
-            header('Location:home.php');
+            header('Location:home.html');
             exit;
     }
     else{
