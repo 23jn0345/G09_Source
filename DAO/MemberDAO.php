@@ -1,5 +1,5 @@
 <?php require_once 'DAO.php';
-
+#[\AllowDynamicProperties]
 class Member{
    
     
@@ -8,6 +8,7 @@ class Member{
     public string $birthday;
     public string $gender;
 }
+#[\AllowDynamicProperties]
 class MemberDAO{
     public function get_member(string $name,string $password){
         $dbh=DAO::get_db_connect();
