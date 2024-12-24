@@ -4,7 +4,7 @@ $managerid='';
 $errs=[];
 session_start();
 if(!empty($_SESSION['manager'])){
-    header('Location:manageUser.php');
+    header('Location:manageUser.html');
     exit;
 }
 if($_SERVER['REQUEST_METHOD']==='POST'){

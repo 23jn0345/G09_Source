@@ -1,35 +1,6 @@
 <?php
     require_once './DAO/manageSubscDAO.php';
-
-    session_start();
-
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        if(isset($_POST['add'])){
-            $goodscode =$_POST['goodscode'];
-            $num =$_POST['num'];
-
-            $cartDAO = new CartDAO();
-            $cartDAO->insert($member->memberid,$goodscode,$num);
-        }else if(isset($_POST['change'])){
-            $goodscode =$_POST['goodscode'];
-            $num =$_POST['num'];
     
-            $cartDAO = new CartDAO();
-            $cartDAO->update($member->memberid,$goodscode,$num);
-        }else if(isset($_POST['delete'])){
-        $goodscode =$_POST['goodscode'];
-
-        $cartDAO = new CartDAO();
-        $cartDAO->Delete($member->memberid,$goodscode,);
-        }
-
-        header("Location:" . $_SERVER['PHP_SELF']);
-        exit;
-    }
-
-    $cartDAO = new CartDAO();
-    $cart_list = $cartDAO->get_cart_by_memberid($member->memberid);
-
 ?>
 
 <!DOCTYPE html>
