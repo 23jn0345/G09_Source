@@ -86,3 +86,11 @@ INSERT INTO dbo.subsc(SubName,Setumei,aliasName,shortName,image,URL,GenreID)
 			いつでも新しい作品が見つかります。',
 			'ネットフリックス','ネトフリ','Z:\xampp\htdocs\G09_Source\netflix.png',
 			'https://www.netflix.com/jp/',50001)
+
+サブスクデータ取得SQL
+SELECT subname,image,genreName,price,interval.kikanName,interval.date,freetime.kikanName,freetime.date as freedate
+	            FROM subsc 
+		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
+			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID
+				LEFT OUTER JOIN kikan as freetime ON subscplan.FreeTimeID = freetime.KikanID
+				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
