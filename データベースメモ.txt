@@ -84,7 +84,7 @@ INSERT INTO dbo.subsc(SubName,Setumei,aliasName,shortName,image,URL,GenreID)
 			幅広いコンテンツを配信するサービスで、メンバーはあらゆるインターネット接続デバイスで視聴することができます
 			定額、低価格で、いつでもどこでも、好きなだけ視聴することができます。映画やドラマは毎週追加されるので、
 			いつでも新しい作品が見つかります。',
-			'ネットフリックス','ネトフリ','Z:\xampp\htdocs\G09_Source\netflix.png',
+			'ネットフリックス','ネトフリ','netflix.png',
 			'https://www.netflix.com/jp/',50001)
 
 サブスクデータ取得SQL
