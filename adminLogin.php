@@ -1,10 +1,10 @@
 <?php 
-require_once './DAO/adminLoginDAO.php';
+require_once './DAO/adminDAO.php';
 $managerid='';
 $errs=[];
 session_start();
 if(!empty($_SESSION['manager'])){
-    header('Location:manageUser.html');
+    header('Location:manageUser.php');
     exit;
 }
 if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -23,7 +23,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($manager !==false){
             session_regenerate_id(true);
             $_SESSION['manager']=$manager;
-            header('Location:manageUser.html');
+            header('Location:manageUser.php');
             exit;
     }
     else{

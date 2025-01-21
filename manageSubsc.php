@@ -1,79 +1,79 @@
 <?php
     require_once './DAO/manageSubscDAO.php';
+
+    $subscDAO = new manageSubscDAO;
+    $subid = 0;
+    $subsc_list = $subscDAO->get_subsc();
     
+    if(isset($_GET['keyword']) && $_GET['keyword'] !== ''){
+      $keyword = $_GET['keyword'];
+      $subsc_list = $subscDAO->get_subsc_by_keyword($keyword);
+    }
+
+    
+
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-<meta charset="utf-8">
-   
-        <title>サブスク管理</title>
-<link rel="stylesheet" href="css/manageSubsc.css">
-<link rel="stylesheet" href="css/adminiHeader.css">
-    </head>
-    <body>
-        <header>
 
-            <h1>サブスル管理</h1>
-            <nav>
-                <ul>
-                    <li><a href="manageUser.html">利用者管理</a></li>
-                      <li><a href="manageSubsc.html">サブスク管理</a></li>
-                      
-                </ul>
-            </nav> 
-        </header>
-        <div class="title">
+<head>
+    <meta charset="utf-8">
+
+    <title>サブスク管理</title>
+    <link rel="stylesheet" href="css/manageSubsc.css">
+    
+</head>
+
+<body>
+    <?php include "adminHeader.php"; ?>
+    <div class="title">
         <h1>サブスク管理</h1>
     </div>
-            <button onclick="location.href='subscRegistration.html'" class="regi">新しいサブスクの登録</button><br>
-          <p>検索 <input type="text" name="ID" size="50px"></p> 
+    <button onclick="location.href='subscRegistration.php'" class="regi">新しいサブスクの登録</button><br>
+    <form action="managesubsc.php?keyword" method="GET">
+        <p ID="input">  検索 <input type="text" size="50px" name="keyword"> 
+        <input type="submit" value="検索">
+    </form> 
+
+    <?php if(isset($keyword) && $keyword !== '') : ?>
+              検索結果 : <?= htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8') ?>
+    <?php else :?>
+        <br>
+    <?php endif;?></h2>
+
+    <?php foreach($subsc_list as $subsc) : ?>
+    <div class="result">
+        <table border="1">
+            <tr>
+                <th rowspan="4"><img src="images/<?= $subsc->image ?>"></th>
+                <th colspan="2"><?= $subsc->subName ?></th>
+                <td rowspan="4" align ="center" ><button onclick="location.href='subscUpdate.php'">編集</button></td>
+            </tr>
             <br>
-            <div class="result">
-                <table border="1">
-                  <tr>
-                 <th rowspan="4" ><img src="netflix.png" ></th>
-                    <th colspan="2">NETFLIX</th>
-                    <th><button onclick="location.href='subscUpdate.html'">編集</button></th>
-                </tr>
-                <br>
-               <tr>
-                <th>支払い</th>
-                <td>１か月毎,半年から選択</td>
-               </tr>
-               <tr>
-                <th>料金</th>
-                <td>400円,1000,</td>
-               </tr>
-               <tr>
+            <?php $data_list = $subscDAO->get_subscdata($subsc->subId); ?>
+            <tr>
+                <th>料金/支払いスパン</th>
+                <?php foreach($data_list as $data) : ?>
+                    <td><?= $data->price?>円/<?= $data->intervalDate ?>日</td>
+                <?php endforeach?>
+            </tr>
+            <tr>
+                <th>無料期間</th>
+                <?php foreach($data_list as $data) : ?>
+                    <td><?= $data->freetimedate?>日</td>
+                <?php endforeach?>
+            </tr>
+            <tr>
                 <th>ジャンル</th>
-                <td>ジャンル２</td>
-               </tr>
-               <tr>
-                <th rowspan="4" ><img src="unext.png" ></th>
-                   <th colspan="2">U-NEXT</th>
-                   <th><button onclick="location.href='subscUpdate.html'">編集</button></th>
-               </tr>
-               <br>
-              <tr>
-               <th>支払い</th>
-               <td>１か月毎,半年から選択</td>
-              </tr>
-              <tr>
-               <th>料金</th>
-               <td>400円,1000,</td>
-              </tr>
-              <tr>
-               <th>ジャンル</th>
-               <td>ジャンル２</td>
-              </tr>
-              <tr>
-                
-              
-               </table>
-               </div>
-    
-       
-        </body>
+                <td><?= $subsc->genreName?></td>
+            </tr>
+
+        </table>
+    </div>
+    <?php endforeach ?>
+
+
+</body>
+
 </html>

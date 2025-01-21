@@ -30,8 +30,9 @@
       <form action="manageuser.php?keyword" method="GET">
         <p class="search">  検索 <input type="text" name="keyword"> 
         <input type="submit" value="検索">
-      </form>  
-        <h2>利用者一覧　　　　<?php if(isset($keyword) && $keyword !== '') : ?>
+      </form> 
+        <h2>利用者一覧　　　　
+          <?php if(isset($keyword) && $keyword !== '') : ?>
               検索結果 : <?= htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8') ?>
           <?php endif;?></h2>
           

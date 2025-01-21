@@ -43,7 +43,7 @@ class userDetailDAO{
     public function get_use_subsc(int $userid){
         
         $dbh = DAO::get_db_connect();
-
+        $subName =1;
         $sql = "SELECT subName 
 	            FROM member 
 		        LEFT OUTER JOIN usingsubsc ON member.id = usingsubsc.id
@@ -51,13 +51,17 @@ class userDetailDAO{
                 WHERE member.id = :id";
 
         $stmt = $dbh->prepare($sql);
-
-        $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
-
-        $stmt->execute();
         
-        while($row = $stmt->fetchObject('useSubsc')){
-            $data[]=$row;
+            $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
+
+            $stmt->execute();
+        if($stmt != 1){
+            while($row = $stmt->fetchObject('useSubsc')){
+                $data[]=$row;
+            }
+        }
+        else{
+            $data = NULL;
         }
 
         return $data;
