@@ -1,6 +1,8 @@
 <?php 
 require_once 'DAO/subscDAO.php';
+$subscDAO=new subscDAO();
 
+$favorite = $_POST['favorite'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -10,12 +12,20 @@ require_once 'DAO/subscDAO.php';
 
     <title>サブスク詳細</title>
     <link rel="stylesheet" href="css/changePlan.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 
 <body>
     <header>
 
-
+    <h1>サブスル</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">家計簿閲覧</a></li>
+                <li><a href="subscSearch.html">サブスク検索</a></li>
+                <li><a href="usingSubsc.html">利用中のサブスク</a></li>
+            </ul>
+        </nav>
     </header>
 
 
@@ -38,9 +48,10 @@ require_once 'DAO/subscDAO.php';
 
     <br>
     <div class="detail">
-        <p><input type="checkbox">お気に入り
-            <button onclick="location.href='usingSubsc.html'">登録解除</button>
-        </p>
+    <form method="post" action="">
+        <p><input type="checkbox" name="favorite" value="1">お気に入り</p>
+</form>
+        <p><button onclick="location.href='usingSubsc.html'">登録解除</button></p>
     </div>
     </div>
     <br>
