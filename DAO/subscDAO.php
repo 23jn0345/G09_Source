@@ -9,17 +9,17 @@ class subsc{
     public string $URL;
 }
 class subscDAO { 
-   /* public function get_subsc() {
+    public function get_subsc(string $subscName) {
        
         $dbh = DAO::get_db_connect();
         
-         $sql = "SELECT subName,setumei,aliasName,shortName,image,URL FROM subsc WHERE subscName=:subscName";
+         $sql = "SELECT subName,setumei,aliasName,shortName,image,URL FROM subsc WHERE SubName LIKE :subscName";
          $stmt = $dbh->prepare($sql); 
+         $stmt->bindValue(':subscName','%'.$subscName.'%',PDO::PARAM_STR);
          $stmt->execute(); 
-         $data = []; 
-         while($row = $stmt->fetchObject('subsc')) {
-            $data[] = $row;
-            } 
-            return $data; 
-           } 
-        } 
+         $data = $stmt->fetchAll(); 
+         return $data; 
+         
+}
+}
+    
