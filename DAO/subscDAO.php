@@ -29,7 +29,9 @@ public function add_favorite(){
     $sql="INSERT INTO favorite (ID, subID) VALUES (:ID, :subID)";
     $stmt = $dbh->prepare($sql); 
     $stmt->bindValue(':ID',$ID,PDO::PARAM_STR);
-    //作成中
+    $stmt->execute();
+    $data = $stmt->fetchAll(); 
+    return $data;
 }
 public function get_subsc(){
     $dbh = DAO::get_db_connect();
