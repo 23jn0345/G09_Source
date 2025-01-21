@@ -12,7 +12,7 @@ class subsc{
     
 }
 class subscDAO { 
-    public function search_subsc_by_name(string $subscName) {
+    public function search_subsc(string $subscName) {
        
         $dbh = DAO::get_db_connect();
         
