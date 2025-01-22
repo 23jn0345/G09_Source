@@ -6,7 +6,7 @@ if(isset($_POST['subID'])){
     $subsc=$subscDAO->get_subsc($_POST['subID']);
 }
 //test
-$subsc=$subscDAO->get_subsc('20002');
+//$subsc=$subscDAO->get_subsc('20002');
 
 $image=$subsc[0]['image'];
 $name=$subsc[0]['subname'];
@@ -67,13 +67,12 @@ if($favorite==1){
 </form>
         <p><button onclick="location.href='usingSubsc.html'">登録解除</button></p>
     </div>
-    
     <br>
-    
     <p class="instruct"><?=$subsc[0]['setumei']  ?></p>
     
     <br>
     <div class="change">
+
         <h2>変更内容</h2>
         <div class="flex">
             <div class="content">
@@ -85,7 +84,9 @@ if($favorite==1){
                     <input type="text" name="ID" size="50px" required class="text">
                 </p>
             </div>
+            <form action="usingsubsc.php" method="POST">
             <button onclick="location.href='usingSubsc.html'">変更内容を反映</button>
+            <form>
         </div>
     </div>
 </body>
