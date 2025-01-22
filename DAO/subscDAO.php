@@ -2,8 +2,9 @@
 require_once 'DAO.php';
 require_once 'memberDAO.php';
 $memberDAO= new memberDAO();
+#[\AllowDynamicProperties]
 class subsc{
-    public  string $subName;
+    public  string $subname;
     public string $setumei;
     public string $aliasName;
     public string $shortName;
@@ -11,6 +12,7 @@ class subsc{
     public string $URL;
     
 }
+#[\AllowDynamicProperties]
 class subscDAO { 
     public function search_subsc(string $subscName) {
        
@@ -33,18 +35,22 @@ public function add_favorite(){
     $data = $stmt->fetchAll(); 
     return $data;
 }
-public function get_subsc(){
+public function get_subsc(string $subID){
     $dbh = DAO::get_db_connect();
     $sql="SELECT subname,image,genreName,price,interval.kikanName,interval.date,freetime.kikanName,freetime.date as freedate
-	            FROM subsc 
+	            ,setumei,URL FROM subsc 
 		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
 			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID
 				LEFT OUTER JOIN kikan as freetime ON subscplan.FreeTimeID = freetime.KikanID
-				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID";
+				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
+                where subsc.SubID = :subID";
      $stmt = $dbh->prepare($sql); 
+     $stmt->bindValue(':subID',$subID,PDO::PARAM_STR);
+
      $stmt->execute(); 
      $data = $stmt->fetchAll(); 
      return $data; 
 }
+
 }
     
