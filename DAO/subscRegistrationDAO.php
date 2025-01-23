@@ -3,15 +3,15 @@ require_once 'DAO.php';
 
 
 #[\AllowDynamicProperties]
-class insertsubsc{
-    public int $subId;
-    public string $subName;
-    public string $setumei;
-    public int $price;
-    public string $image;
-    public string $genreId;
-    public string $aliasName;
-    public string $shortName;
+class regiSubsc{
+    public  string  $subName;
+    public  string  $detail;
+    public  string  $image;
+    public  string  $genreId;
+    public  string  $aliasName;
+    public  string  $shortName;
+    public  int     $intervalId;
+    public  int     $freeTimeId;
 }
 #[\AllowDynamicProperties]
 class freeTimeData{
