@@ -2,7 +2,6 @@
     require_once './DAO/manageSubscDAO.php';
 
     $subscDAO = new manageSubscDAO;
-    $subid = 0;
     $subsc_list = $subscDAO->get_subsc();
     
     if(isset($_GET['keyword']) && $_GET['keyword'] !== ''){

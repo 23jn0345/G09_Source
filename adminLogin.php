@@ -1,36 +1,36 @@
 <?php 
-require_once './DAO/adminDAO.php';
-$managerid='';
-$errs=[];
-session_start();
-if(!empty($_SESSION['manager'])){
-    header('Location:manageUser.php');
-    exit;
-}
-if($_SERVER['REQUEST_METHOD']==='POST'){
-    $managerid=$_POST['ID'];
-    $password=$_POST['password'];
-    if($managerid==''){
-        $errs[]='IDを入力してください';
+    require_once './DAO/adminDAO.php';
+    $managerid='';
+    $errs=[];
+    session_start();
+    if(!empty($_SESSION['manager'])){
+        header('Location:manageUser.php');
+        exit;
     }
-    
-    if($password===''){
-        $errs[]='パスワードを入力してください';
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+        $managerid=$_POST['ID'];
+        $password=$_POST['password'];
+        if($managerid==''){
+            $errs[]='IDを入力してください';
+        }
+        
+        if($password===''){
+            $errs[]='パスワードを入力してください';
+        }
+        if(empty($errs)){
+            $AdminDAO=new AdminDAO();
+            $manager=$AdminDAO->get_admin($managerid,$password);
+            if($manager !==false){
+                session_regenerate_id(true);
+                $_SESSION['manager']=$manager;
+                header('Location:manageUser.php');
+                exit;
+            }
+            else{
+                $errs[]='ログインIDまたはパスワードに誤りがあります。';
+            }
+        }
     }
-    if(empty($errs)){
-        $AdminDAO=new AdminDAO();
-        $manager=$AdminDAO->get_admin($managerid,$password);
-        if($manager !==false){
-            session_regenerate_id(true);
-            $_SESSION['manager']=$manager;
-            header('Location:manageUser.php');
-            exit;
-    }
-    else{
-        $errs[]='ログインIDまたはパスワードに誤りがあります。';
-    }
-}
-}
 ?>
 
 <!DOCTYPE html>
