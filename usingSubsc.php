@@ -8,11 +8,12 @@ if(empty($_SESSION['member'])){
     header('Location:login.php');
     exit;
     $member=$_SESSION['member'];
+
 if($_SERVER['REQUEST_METHOD']==='POST'){
     if(isset($_POST['add'])){
         $name=$_POST['subName'];
         
-        $usingsubscDAO=new CartDAO();
+        $usingsubscDAO=new subscDAO();
         $usingsubscDAO->subscribe($member->ID,$subID);
         /*
     }else if(isset($_POST['change'])){
@@ -92,6 +93,7 @@ $using_list=$usingsubscDAO->get_using_by_memberid($member->ID);
   </div>
   
 <?php endforeach; ?>
+<?php endif ?>
 </body>
 
 </html>
