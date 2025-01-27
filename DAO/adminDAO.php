@@ -17,9 +17,12 @@ class AdminDAO{
 
         $manager = $stmt->fetchObject('Manager');
         if($manager!== false){
-                return $manager;
+            return $manager;
         }
-        return false;
+        else{
+            return false;
+        }
+        
     }
 
 
