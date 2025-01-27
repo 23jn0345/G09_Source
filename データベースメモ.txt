@@ -94,3 +94,6 @@ SELECT subname,image,genreName,price,interval.kikanName,interval.date,freetime.k
 			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID
 				LEFT OUTER JOIN kikan as freetime ON subscplan.FreeTimeID = freetime.KikanID
 				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
+
+
+				test
