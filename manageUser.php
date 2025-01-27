@@ -3,10 +3,10 @@
 
     if(session_status()===PHP_SESSION_NONE){
       session_start();
-  }
-  if(!empty($_SESSION['manager'])){
-      $manager=$_SESSION['manager'];
-  }
+    }
+    if(!empty($_SESSION['manager'])){
+        $manager=$_SESSION['manager'];
+    }
 
     $userDAO = new userDAO();
     $user_list = $userDAO->get_user();
