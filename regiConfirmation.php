@@ -47,13 +47,12 @@
                 $free3=$_POST['free3'];
                 $detail=$_POST['detail'];
                 $url=$_POST['url'];
+
                 $retouch=$_POST['retouch'];
                 $_SESSION['retouch']=$retouch;
-                if($name=='' || $amount1=='' || $detail=='' || $url==''){
-                    $errs[]='入力漏れがあります';
-                }
-                
-                    if(empty($errs)){
+                if(isset($_POST['retouch'])){
+                        
+                    
                         $regiSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
                         $regiDate1 = [$interval1,$amount1,$free1];
                         
@@ -69,7 +68,7 @@
                             $_SESSION['regiData3']=$regiDate3;
                         }
                         if($regiSubsc !==false){
-                            $_SESSION['regiSubsc']=$regiSubsc;
+                            $_SESSION['returnSubsc']=$regiSubsc;
                             
                             header('Location:subscRegistration.php');
                             exit;
@@ -78,7 +77,8 @@
                             $errs[]='入力漏れがあります';
                         }
                         
-                    }
+                    
+                }
             }
             
 
@@ -119,7 +119,7 @@
     <p>アップロード画像</p>
          
     
-    <form method ="POST">
+    <form method = "POST" action="">
         <div class="name">
             <p>サブスク名<br>
                 <input type="text" name="name" size="50px" disabled value="<?= $name ?>">
@@ -195,9 +195,9 @@
     
 
     
-    <button type ="submit" name = "retouch" value ="修正">修正</button>
+    <button type ="submit" name = "retouch" value ="retouch">修正</button>
     <br>
-    <button type ="submit">登録</button>
+    <button type ="submit" name = "regist" value ="regist">登録</button>
     
 
     </form>

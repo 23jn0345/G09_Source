@@ -27,9 +27,9 @@
     <link rel="stylesheet" href="css/manageUser.css">
     
   </head>
-
-  <body>
     <?php include "adminHeader.php"; ?>
+  <body>
+    
             
     <div class="title">
       <h1>利用者管理</h1>
