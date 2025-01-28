@@ -73,7 +73,8 @@
 <?php include "adminHeader.php"; ?>
     <div class="title">サブスク登録確認</div>
     <p>アップロード画像</p>
-         
+    
+    <input type="file" name="image" disabled>
     
     <form method = "POST" action="">
         <div class="name">
