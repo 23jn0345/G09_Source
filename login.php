@@ -4,7 +4,7 @@ $name='';
 $errs=[];
 session_start();
 if(!empty($_SESSION['member'])){
-    header('Location:home.html');
+    header('Location:home.php');
     exit;
 }
 if($_SERVER['REQUEST_METHOD']==='POST'){
