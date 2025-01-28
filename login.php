@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($member !==false){
             session_regenerate_id(true);
             $_SESSION['member']=$member;
-            header('Location:home.html');
+            header('Location:home.php');
             exit;
     }
     else{

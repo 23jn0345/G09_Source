@@ -47,7 +47,7 @@
             <tr>
                 <th rowspan="4"><img src="images/<?= $subsc->image ?>"></th>
                 <th colspan="2"><?= $subsc->subName ?></th>
-                <td rowspan="4" align ="center" ><button onclick="location.href='subscUpdate.php'">編集</button></td>
+                <td rowspan="4" align ="center" ><button onclick="location.href='subscUpdate.html'">編集</button></td>
             </tr>
             <br>
             <?php $data_list = $subscDAO->get_subscdata($subsc->subId); ?>
