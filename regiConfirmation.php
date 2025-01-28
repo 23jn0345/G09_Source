@@ -30,56 +30,7 @@
 
 
         }
-            if($_SERVER['REQUEST_METHOD']==='POST'){
-                $image=$_POST['image'];
-                $name=$_POST['name'];
-                $shortName=$_POST['shortName'];
-                $aliasName=$_POST['aliasName'];
-                $category=$_POST['category'];
-                $interval1=$_POST['interval1'];
-                $interval2=$_POST['interval2'];
-                $interval3=$_POST['interval3'];
-                $amount1=$_POST['amount1'];
-                $amount2=$_POST['amount2'];
-                $amount3=$_POST['amount3'];
-                $free1=$_POST['free1'];
-                $free2=$_POST['free2'];
-                $free3=$_POST['free3'];
-                $detail=$_POST['detail'];
-                $url=$_POST['url'];
-
-                $retouch=$_POST['retouch'];
-                $_SESSION['retouch']=$retouch;
-                if(isset($_POST['retouch'])){
-                        
-                    
-                        $regiSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
-                        $regiDate1 = [$interval1,$amount1,$free1];
-                        
-                        session_regenerate_id(true);
-                        $_SESSION['regiData1']=$regiDate1;
-                        
-                        if($amount2 !== ''){
-                            $regiDate2 = [$interval2,$amount2,$free2];
-                            $_SESSION['regiData2']=$regiDate2;
-                        }
-                        if($amount3 !== ''){
-                            $regiDate3 = [$interval3,$amount3,$free3];
-                            $_SESSION['regiData3']=$regiDate3;
-                        }
-                        if($regiSubsc !==false){
-                            $_SESSION['returnSubsc']=$regiSubsc;
-                            
-                            header('Location:subscRegistration.php');
-                            exit;
-                        }
-                        else{
-                            $errs[]='入力漏れがあります';
-                        }
-                        
-                    
-                }
-            }
+            
             
 
 
