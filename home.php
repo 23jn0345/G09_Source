@@ -28,7 +28,7 @@ if(!empty($_SESSION['member'])){
                 <li><a href="usingSubsc.php">利用中のサブスク</a></li>
             
            <li> <?php if(isset($member)) : ?>
-            <?= $member->membername ?>さん
+            <?= $member->Name ?>さん
             <a href="logout.php">ログアウト</a>
            
             <?php else: ?>
