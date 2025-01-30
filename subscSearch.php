@@ -141,7 +141,9 @@ try {
                     <tr>
                         <th colspan="2">
                         <?= htmlspecialchars($result['SubName'], ENT_QUOTES, 'UTF-8') ?>
+                        <form action="subscDetail.php" method="post">
                         <button onclick="location.href='subscDetail.php?subid=<?= urlencode($result['SubID']) ?>'">詳細へ</button>
+        </form>
                         </th>
                     </tr>
                     <tr>

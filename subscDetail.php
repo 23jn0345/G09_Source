@@ -1,8 +1,9 @@
 <?php 
 require_once 'DAO/subscDAO.php';
-$subscDAO=new subscDAO();
-$subsc=$subscDAO->get_subsc(20002);
+
+
 if(isset($_POST['subID'])){
+    $subscDAO=new subscDAO();
     $subsc=$subscDAO->get_subsc($_POST['subID']);
 }
 ?>
@@ -30,9 +31,9 @@ if(isset($_POST['subID'])){
     </header>
     <div class="result">
         <div class="content">
-            <img src="<?=$subsc[0]['image'] ?>">
+            <img src="imeges/<?=$subsc->image ?>">
         </div>
-        <h1><?=$subsc[0]['subname'] ?></h1>
+        <h1><?=$subsc->subName ?></h1>
         <ul>
         <li>支払い間隔:<?=$subsc[0]['date'] ?>日</li>
         <li>無料期間:<?=$subsc[0]['freedate'] ?>日</li>
