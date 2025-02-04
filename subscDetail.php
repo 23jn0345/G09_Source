@@ -15,7 +15,7 @@ require_once 'DAO/subscDAO.php';
        }
        
     }
-
+echo var_dump($subID)
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -29,6 +29,7 @@ require_once 'DAO/subscDAO.php';
 </head>
 
 <body>
+    
     <header>
         <h1>サブスル</h1>
         <nav>

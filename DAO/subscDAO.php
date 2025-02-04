@@ -18,7 +18,7 @@ class subscDAO {
    
          
 
-public function add_favorite(){
+public function add_favorite(int $ID,int $subID){
     $dbh = DAO::get_db_connect();
     $sql="INSERT INTO favorite (ID, subID) VALUES (:ID, :subID)";
     $stmt = $dbh->prepare($sql); 
@@ -50,11 +50,12 @@ WHERE favorite.ID = :id
     $data = $stmt->fetchAll();
         return $data;
 }
-public function delete_favorite(int $ID){
+public function delete_favorite(int $ID,int $subID){
     $dbh = DAO::get_db_connect(); 
-    $sql = "delete from favorite where ID=:ID"; 
+    $sql = "delete from favorite where SubID=:SubID and ID=:ID"; 
     $stmt = $dbh->prepare($sql); 
     $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+    $stmt->bindValue(':SubID',$subID,PDO::PARAM_INT);
     $stmt->execute();
 }
 public function get_subsc(int $subID){
@@ -62,12 +63,12 @@ public function get_subsc(int $subID){
     $sql="SELECT subname,image,genreName,price,interval.kikanName,interval.date,freetime.kikanName,freetime.date as freedate
 	            ,setumei,URL FROM subsc 
 		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
-			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID
+			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.SubID
 				LEFT OUTER JOIN kikan as freetime ON subscplan.FreeTimeID = freetime.KikanID
 				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
-                where subsc.SubID = :subID";
+                where subsc.SubID = :SubID";
      $stmt = $dbh->prepare($sql); 
-     $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
+     $stmt->bindValue(':SubID',$subID,PDO::PARAM_INT);
 
      $stmt->execute(); 
      $data = $stmt->fetchAll(); 

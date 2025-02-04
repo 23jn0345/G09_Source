@@ -12,16 +12,18 @@
         font-size: 20px;
  
     }
-.table1 {
-    width:300px;
-   
-}
-.table1 th{
-    width: 300px;
-}
-.table1 td{
-    text-align: center;
-}
-.table1 th, td{
-    border: 1px solid;
-  }
+    .table1 td{
+        width:30000px;
+       
+    }
+    .table1 th{
+        width: 300px;
+        text-align: center;
+    }
+    .table1 td{
+        text-align: center;
+    }
+  
+    .table1 th, td{
+        border: 1px solid;
+      }
