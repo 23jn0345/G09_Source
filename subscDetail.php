@@ -1,10 +1,21 @@
 <?php 
 require_once 'DAO/subscDAO.php';
-$subscDAO=new subscDAO();
-$subsc=$subscDAO->get_subsc(20002);
-if(isset($_POST['subID'])){
-    $subsc=$subscDAO->get_subsc($_POST['subID']);
-}
+
+
+    if(isset($_GET['SubID'])){
+        $subID=$_GET['SubID'];
+        $subscDAO=new subscDAO();
+        $subsc=$subscDAO->get_subsc($subID);
+    }
+    if(isset($_GET['favorite'])){
+        $favorite=$_GET['favorite'];
+       if($favorite==1){
+        $subscDAO=new subscDAO();
+        $subscDAO->add_favorite();
+       }
+       
+    }
+echo var_dump($subID)
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -18,6 +29,7 @@ if(isset($_POST['subID'])){
 </head>
 
 <body>
+    
     <header>
         <h1>サブスル</h1>
         <nav>
@@ -30,27 +42,28 @@ if(isset($_POST['subID'])){
     </header>
     <div class="result">
         <div class="content">
-            <img src="<?=$subsc[0]['image'] ?>">
+            <?= var_dump($subsc) ?>
+            <img src="imeges/<?= $subsc['image'] ?>">
         </div>
-        <h1><?=$subsc[0]['subname'] ?></h1>
+        <h1><?= $subsc['SubName'] ?></h1>
         <ul>
-        <li>支払い間隔:<?=$subsc[0]['date'] ?>日</li>
-        <li>無料期間:<?=$subsc[0]['freedate'] ?>日</li>
+        <li>支払い間隔:<?=$subsc['date'] ?>日</li>
+        <li>無料期間:<?=$subsc['freedate'] ?>日</li>
         </ul>
     </div>
     <br>
     <div class="detail">
-        <p><a href="<?=$subsc[0]['URL'] ?>">登録URL</a></p>
+        <p><a href="<?=$subsc['URL'] ?>">登録URL</a></p>
     </div>
     <div class="detail">
         <form action="" method="GET">
-        <p><input type="checkbox" name="favorite" value="1">お気に入り
+        <p><input type="checkbox" name="favorite" value="1">お気に入り</p>
 </form>
-            <button onclick="location.href='inputContract.html'"> 家計簿に反映</button>
-        </p>
+       
+        
     </div>
     <br>
-    <p class="instruct"><?=$subsc[0]['setumei'] ?></p>
+    <p class="instruct"><?=$subsc['Setumei'] ?></p>
     </div>
 </body>
 

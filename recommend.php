@@ -1,24 +1,28 @@
 <?php
 require_once "DAO/subscDAO.php";
-$subscDAO=new subscDAO();
-$favorite_list= $subscDAO->get_favorite_by_id(10004);
+
+
 if(session_status()===PHP_SESSION_NONE){
     session_start();
 }
 if(empty($_SESSION['member'])){
     header('Location:login.php');
     exit;
-    $member=$_SESSION['member'];
-   
-if($_SERVER['REQUEST_METHOD']==='POST'){
-   
-       
-       
-       if(isset($_POST['release'])){
-        $subscDAO->delete_favorite($member->ID);
-       }
+}else{
+        $member=$_SESSION['member'];
+        $subscDAO=new subscDAO();
+        $favorite_list= $subscDAO->get_favorite_by_id($member->ID);
     }
-}
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+        if(isset($_POST['delete'])){
+            $subID=$_POST['SubID'];
+            $subscDAO=new subscDAO();
+            $subscDAO->delete_favorite($member->ID,$subID);
+            echo "お気に入りを解除しました";
+    }
+    }
+       
+
 
 ?>
 <!DOCTYPE html>
@@ -43,6 +47,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             </ul>
         </nav>
     </header>
+    
     <div class="title">
         <h1>お気に入り一覧</h1>
     </div>
@@ -50,33 +55,42 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     <?php if(empty($favorite_list)) : ?>
     <p>お気に入りのサブスクはありません</p>
     <?php else: ?>
+        
         <?php foreach($favorite_list as $favorite) : ?>
 
-
-    <div class="recommend">
-        <table border="1">
+ 
+ 
+    
+        <table class="table1">
 
             <tr>
-                <form action="subscDetail.php" method="POST">
-                <th scope="col"><a href="subscDetail.php"></a></th>
+                <form action="subscDetail.php" method="GET">
+                <th scope="col"> <a href="subscDetail.php?SubID=<? $favorite['SubID'] ?>">詳細</button></th>
         </form>
+                <th scope="col">サブスク名</th>
                 <th scope="col">料金</th>
                 <th scope="col">無料期間</th>
                 <th scope="col">説明</th>
             </tr>
-            <td scope="row"><img src="<?=$favorite->image ?>"></th>
-            <td><?=$favorite->subName ?></td>
-            <td><?=$favorite->price ?></td>
-            <td><?=$favorite->freedate ?></td>
-            <td><?=$favorite->setsumei ?></td>
+            <td scope="row"><img src="images/<?=$favorite['image'] ?> "></th>
+            
+            <td><?=$favorite['SubName'] ?></td>
+            <td><?=$favorite['Price'] ?></td>
+            <td><?=$favorite['freedate'] ?></td>
+            <td><?=$favorite['Setumei'] ?></td>
             <form action="" method="POST">
-            <td><button type="submit" name="release">解除</button></td>
+                <input type="hidden" value="<? $favorite['SubID'] ?>">
+            <td><button type="submit" name="delete">解除</button></td>
         </form>
+     
+   
+
+    
             </tr>
         </table>
         <?php endforeach ?>
       <?php endif ?>
-    </div>
+    
 
 
 
