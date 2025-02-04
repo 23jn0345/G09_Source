@@ -19,7 +19,7 @@ try {
         subsc.SubName, 
         subsc.image, 
         subscplan.Price, 
-        kikan.Kikanname AS intervalName
+        kikan.date AS intervalName
     FROM 
         subsc
     INNER JOIN subscplan ON subsc.SubID = subscplan.SubID
@@ -146,7 +146,7 @@ try {
                     </tr>
                     <tr>
                         <th>支払い間隔</th>
-                        <td><?= htmlspecialchars($result['intervalName'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars($result['intervalName'], ENT_QUOTES, 'UTF-8') ?>日</td>
                     </tr>
                     <tr>
                         <th>料金</th>
