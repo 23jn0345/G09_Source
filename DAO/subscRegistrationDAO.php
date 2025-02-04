@@ -67,6 +67,8 @@ class subscRegiDAO{
 
         return $data;
     }
+
+    
     
     
 }

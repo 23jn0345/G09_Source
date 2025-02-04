@@ -2,10 +2,9 @@
     if(session_status()===PHP_SESSION_NONE){
         session_start();
     }
-    require_once './DAO/RegiConfirmationDAO.php';
+    require_once './DAO/regiConfirmationDAO.php';
     $regiConfirmationDAO = new regiConfirmationDAO;
 
-        
         $interval2  ="";
         $amount2    ="";
         $free2      ="";
@@ -15,6 +14,7 @@
 
         if(isset($_SESSION['regiSubsc'])){
             $regiSubsc  = $_SESSION['regiSubsc'];
+            
             $name       = $regiSubsc[0];
             $detail     = $regiSubsc[1];
             $image      = $regiSubsc[2];
@@ -40,81 +40,62 @@
             }
             
 
-
         }
         if($_SERVER['REQUEST_METHOD']==='POST'){
-            $regist=$_POST['regist'];
-            $retouch = $_POST['retouch'];
-            if(!empty($_POST['retouch'])){
-                $image=$_POST['image'];
-                $name=$_POST['name'];
-                $shortName=$_POST['shortName'];
-                $aliasName=$_POST['aliasName'];
-                $category=$_POST['category'];
-                $detail=$_POST['detail'];
-                $url=$_POST['url'];
-                $returnSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
-                    
-                $_SESSION['returnSubsc']=$returnSubsc;
-                header('Location:subscRegistration.php');
-                exit;
-                
-            }elseif(!empty($_POST['regist'])){
-                $image=$_POST['image'];
-                $name=$_POST['name'];
-                $shortName=$_POST['shortName'];
-                $aliasName=$_POST['aliasName'];
-                $category=$_POST['category'];
-                $detail=$_POST['detail'];
-                $url=$_POST['url'];
+            
 
-                $regiConfirmationDAO->insert_subsc($name,$detail,$image,$category,$aliasName,$shortName,$url);
+            if(!empty($_POST['retouch'])){
+                $Image=$_POST['image'];
+                $Name=$_POST['name'];
+                $shortName=$_POST['shortName'];
+                $aliasName=$_POST['aliasName'];
+                $Category=$_POST['category'];
+                $Detail=$_POST['detail'];
+                $Url=$_POST['url'];
+                $returnSubsc = [$name,$detail,$image,$category,$aliasname,$shortname,$url];
+                $_SESSION['returnSubsc']=$returnSubsc;
+                
+                header('Location:subscRegistration.php');
+                
+                exit;
+            }elseif(!empty($_POST['regist'])){
+                $regiConfirmationDAO->insert_subsc($name,$detail,$image,$category,$aliasname,$shortname,$url);
                 $subID = $regiConfirmationDAO->get_ID($name);
                 $regiData1  = $_SESSION['regiData1'];
                 $interval1  = $regiData1[0];
                 $amount1    = $regiData1[1];
                 $free1      = $regiData1[2];
-                $regiConfirmationDAO->insert_kikandate($subID,$amount1,"支払いスパン",$interval1,"無料期間",$free1,);
+                $intervalID = $regiConfirmationDAO->get_kikanID("支払いスパン",$interval1);
+                $freeTimeID = $regiConfirmationDAO->get_kikanID("無料期間",$free1);
+                $regiConfirmationDAO->insert_plan($subID->subID,$amount1,$intervalID->kikanID,$freeTimeID->kikanID);
                 if(isset($_SESSION['regiData2'])){
                     $regiData2 = $_SESSION['regiData2'];
                     $interval2  = $regiData2[0];
                     $amount2    = $regiData2[1];
                     $free2      = $regiData2[2];
-                    $regiConfirmationDAO->insert_kikandate($subID,$amount2,"支払いスパン",$interval2,"無料期間",$free2);
+                    $intervalID = $regiConfirmationDAO->get_kikanID("支払いスパン",$interval2);
+                    $freeTimeID = $regiConfirmationDAO->get_kikanID("無料期間",$free2);
+                    $regiConfirmationDAO->insert_plan($subID->subID,$amount2,$intervalID->kikanID,$freeTimeID->kikanID);
                 }
                 if(isset($_SESSION['regiData3'])){
                     $regiData3 = $_SESSION['regiData3'];
                     $interval3  = $regiData3[0];
                     $amount3    = $regiData3[1];
                     $free3      = $regiData3[2];
-                    $regiConfirmationDAO->insert_kikandate($subID,$amount3,"支払いスパン",$interval3,"無料期間",$free3);
+                    $intervalID = $regiConfirmationDAO->get_kikanID("支払いスパン",$interval3);
+                    $freeTimeID = $regiConfirmationDAO->get_kikanID("無料期間",$free3);
+                    $regiConfirmationDAO->insert_plan($subID->subID,$amount3,$intervalID->kikanID,$freeTimeID->kikanID);
                 }
-                
+                session_destroy();
                 header('Location:manageSubsc.php');
-
+                
             }
         }
     
             
 
 
-    // if (isset($_POST['upload'])) {//送信ボタンが押された場合
-	// 	$image = uniqid(mt_rand(), true);//ファイル名をユニーク化
-	// 	$image .= '.' . substr(strrchr($_FILES['image']['name'], '.'), 1);//アップロードされたファイルの拡張子を取得
-	// 	$file = "images/$image";
-    //     $sql = "INSERT INTO images(name) VALUES (:image)";
-	// 	$stmt = $dbh->prepare($sql);
-	// 	$stmt->bindValue(':image', $image, PDO::PARAM_STR);
-	// 	if (!empty($_FILES['image']['name'])) {//ファイルが選択されていれば$imageにファイル名を代入
-	// 		move_uploaded_file($_FILES['image']['tmp_name'], './images/' . $image);//imagesディレクトリにファイル保存
-	// 		if (exif_imagetype($file)) {//画像ファイルかのチェック
-    //             $message = '画像をアップロードしました';
-    //             $stmt->execute();
-	// 		} else {
-	// 			$message = '画像ファイルではありません';
-	// 		}
-	// 	}
-	// }
+    
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -134,10 +115,9 @@
     <form method = "POST" action ="">
 
         <div class="title">サブスク登録確認</div>
-        
             <div class="name">
             <p>アップロード画像</p>
-            <input type="file" name="image" disabled>
+            <input type="file" name="image" value="<?php if($image !== "") :?> <?= $image ?> <?php endif ?>" disabled>
                 <p>サブスク名<br>
                     <input type="text" name="name" size="50px" disabled value="<?= $name ?>">
                 </p>
@@ -149,7 +129,7 @@
                 </p>
             </div>
             <div class="category">
-                <input type="radio" id="50001" name="category" disabled <?php if($category == "50001") :?> checked <?php endif ?> />
+                <input type="radio" id="50001" name="category" disabled <?php if($category == "50001") :?> checked <?php endif ?>/>
                 <label for="cate">動画配信</label>
                 <input type="radio" id="50001" name="category" disabled <?php if($category == "50002") :?> checked <?php endif ?>/>
                 <label for="cate">音楽配信</label>
@@ -212,8 +192,8 @@
                 <?php endfor ?>
 
             </div>
-            <p class="text">説明　　　　　<input type="text" class="detail" size="55px" name="detail" disabled value="<?= $detail ?>"></p>
-            <p>公式サイトURL<input type="text"  size="55px" name="url" disabled value ="<?= $url ?>"></p>
+            <p class="text">説明　　　　　<input type="text" class="detail" name="detail" size="55px"  disabled value="<?= $detail ?>" ></p>
+            <p>公式サイトURL<input type="text"  size="55px" name="url" disabled value ="<?= $url ?>" ></p>
             </div>
 
         

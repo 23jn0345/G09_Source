@@ -27,10 +27,10 @@ class manageSubscDAO{
 
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT subsc.subId,subName,image,genreName,price
+        $sql = "SELECT subsc.subId,subName,image,genreName
 	            FROM subsc 
-		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
-			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID";
+		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID";
+			    
 
         $stmt = $dbh->prepare($sql);
 

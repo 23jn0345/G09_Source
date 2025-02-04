@@ -1,36 +1,17 @@
 <?php
 require_once 'DAO.php';
 #[\AllowDynamicProperties]
-class insertsubsc{
-    
-    public string $subName;
-    public string $setumei;
-    public int $price;
-    public string $image;
-    public string $genreId;
-    public string $aliasName;
-    public string $shortName;
-}
-#[\AllowDynamicProperties]
-class insertPlanData{
-    public int $subId;
-    public int $price;
-    public string $intervalName;
-    public int $intervalDate;
-    public string $freeTimeName;
-    public int $freeTimeDate;
-}
-#[\AllowDynamicProperties]
 class subID{
-    public int $subId;
+    public int $subID;
+    
 }
+#[\AllowDynamicProperties]
 class kikanID{
-    public int $kikanId;
+    public int $kikanID;
 }
 
 #[\AllowDynamicProperties]
 class regiConfirmationDAO{
-    
 
     public function insert_subsc($subName,$setumei,$image,$genreId,$aliasName,$shortName,$url){
 
@@ -53,49 +34,78 @@ class regiConfirmationDAO{
 
         $stmt->execute();
 
-        $data =[];
-        while($row = $stmt->fetchObject('insertsubsc')){
-            $data[] = $row;
-        }
+        
+    }
 
-        return $data;
+    public function delete_subsc($subName,$genreId){
+
+        $dbh = DAO::get_db_connect();
+
+        $sql = "DELETE FROM subsc WHERE subname = :subName and genreId =:genreId";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':subName',$subName ,PDO::PARAM_STR);
+        $stmt->bindValue(':genreId',$genreId ,PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        
     }
 
     public function get_ID($subName){
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT subID
+        $sql = "SELECT subID 
 	            FROM subsc 
-		        WHERE subname =:subname";
+		        WHERE SubName =:subName";
 
         $stmt = $dbh->prepare($sql);
-
+        $stmt->bindValue(':subName',$subName ,PDO::PARAM_STR);
+       
         $stmt->execute();
 
-        $data =$stmt->fetchObject('subID');
+        $data = $stmt->fetchObject('subID');
 
         return $data;
     }
 
-    public function insert_kikandate($kikanName,$kikanDate){
+    public function get_kikanID($kikanName,$Date){
 
         $dbh = DAO::get_db_connect();
 
         $sql = "SELECT kikanID
 	            FROM kikan 
-                WHERE kikanname =:kikanname and date =:date";
+                WHERE kikanname =:kikanName and date =:date";
 		        
 				
 
         $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':kikanname',$kikanName,PDO::PARAM_STR);
-        $stmt->bindValue(':date',$kikanDate,PDO::PARAM_INT);
+        $stmt->bindValue(':kikanName',$kikanName,PDO::PARAM_STR);
+        $stmt->bindValue(':date',$Date,PDO::PARAM_INT);
 
         $stmt->execute();
 
         $data =$stmt->fetchObject('kikanID');
 
         return $data;
+    }
+    public function insert_plan($subId,$price,$intervalId,$freeTimeId){
+        $dbh = DAO::get_db_connect();
+
+        $sql = "INSERT INTO dbo.subscplan(subId,price,intervalId,freeTimeId) 
+                Values(:subId,:price,:intervalId,:freeTimeId)";
+		        
+				
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':subId',$subId,PDO::PARAM_INT);
+        $stmt->bindValue(':price',$price,PDO::PARAM_INT);
+        $stmt->bindValue(':intervalId',$intervalId,PDO::PARAM_INT);
+        $stmt->bindValue(':freeTimeId',$freeTimeId,PDO::PARAM_INT);
+
+        $stmt->execute();
+
     }
 
     
