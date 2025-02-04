@@ -46,11 +46,10 @@
                 <?php endif;?>
             </td>
             <td>
-            <?php if($$useSubsc_list != 1) : ?>
                 <?php foreach($useSubsc_list as $useSubsc) : ?>
                         <?= $useSubsc->subName ?><br>
                 <?php endforeach ?></td>
-            <?php endif ?>
+            
         </tr>
         </table>
         <br>
