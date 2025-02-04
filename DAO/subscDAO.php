@@ -11,6 +11,7 @@ class subsc{
     public string $image;
     public string $URL;
     
+    
 }
 #[\AllowDynamicProperties]
 class subscDAO { 
@@ -56,7 +57,7 @@ public function delete_favorite(int $ID){
     $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
     $stmt->execute();
 }
-public function get_subsc(string $subID){
+public function get_subsc(int $subID){
     $dbh = DAO::get_db_connect();
     $sql="SELECT subname,image,genreName,price,interval.kikanName,interval.date,freetime.kikanName,freetime.date as freedate
 	            ,setumei,URL FROM subsc 
@@ -66,7 +67,7 @@ public function get_subsc(string $subID){
 				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
                 where subsc.SubID = :subID";
      $stmt = $dbh->prepare($sql); 
-     $stmt->bindValue(':subID',$subID,PDO::PARAM_STR);
+     $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
 
      $stmt->execute(); 
      $data = $stmt->fetchAll(); 

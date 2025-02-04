@@ -53,26 +53,24 @@ if(empty($_SESSION['member'])){
         
         <?php foreach($favorite_list as $favorite) : ?>
 
- <?= var_dump($favorite) ?>
- <?php if(empty($favorite)) : ?>
-    <p>サブスクはありません</p>
-    <?php endif ?>
-    <div class="recommend">
-        <table border="1">
+ 
+ 
+    
+        <table class="table1">
 
             <tr>
-                
-                <th scope="col"> <a href="subscDetail.php?subID=<?= $favorite->subID ?>"></button></th>
-        
+                <form action="subscDetail.php" method="GET">
+                <th scope="col"> <a href="subscDetail.php?SubID=<? $favorite['SubID'] ?>">詳細</button></th>
+                <th scope="col">サブスク名</th>
                 <th scope="col">料金</th>
                 <th scope="col">無料期間</th>
                 <th scope="col">説明</th>
             </tr>
-            <td scope="row"><img src="images/<?=$favorite->image ?> "></th>
-            <td><?=$favorite->subName ?></td>
-            <td><?=$favorite->price ?></td>
-            <td><?=$favorite->freedate ?></td>
-            <td><?=$favorite->setsumei ?></td>
+            <td scope="row"><img src="images/<?=$favorite['image'] ?> "></th>
+            <td><?=$favorite['SubName'] ?></td>
+            <td><?=$favorite['Price'] ?></td>
+            <td><?=$favorite['freedate'] ?></td>
+            <td><?=$favorite['Setumei'] ?></td>
             <form action="" method="POST">
             <td><button type="submit" name="release">解除</button></td>
         </form>
@@ -80,7 +78,7 @@ if(empty($_SESSION['member'])){
         </table>
         <?php endforeach ?>
       <?php endif ?>
-    </div>
+    
 
 
 
