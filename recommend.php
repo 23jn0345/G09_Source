@@ -45,6 +45,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             </ul>
         </nav>
     </header>
+    
     <div class="title">
         <h1>お気に入り一覧</h1>
     </div>
@@ -52,9 +53,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     <?php if(empty($favorite_list)) : ?>
     <p>お気に入りのサブスクはありません</p>
     <?php else: ?>
+        
         <?php foreach($favorite_list as $favorite) : ?>
 
-
+ <?= var_dump($favorite->image) ?>
     <div class="recommend">
         <table border="1">
 

@@ -30,11 +30,19 @@ public function add_favorite(){
 
 public function get_favorite_by_id(int $ID){
     $dbh = DAO::get_db_connect(); 
-    $sql = "SELECT  subsc.SubName,subsc.image,subscplan.Price,kikan.date AS freedate, subsc.Setumei FROM favorite
+    $sql = "SELECT  
+    subsc.SubID, 
+    subsc.SubName, 
+    subsc.image, 
+    subscplan.Price, 
+    kikan.date AS freedate, 
+    subsc.Setumei 
+FROM favorite
 INNER JOIN subsc ON favorite.SubID = subsc.SubID
 INNER JOIN subscplan ON subsc.SubID = subscplan.SubID
 INNER JOIN kikan ON subscplan.FreeTimeID = kikan.KikanID
-WHERE favorite.ID = :id";
+WHERE favorite.ID = :id
+";
     $stmt = $dbh->prepare($sql); // SQLを実行する 
     $stmt->bindValue(':id',$ID,PDO::PARAM_INT);
     $stmt->execute();

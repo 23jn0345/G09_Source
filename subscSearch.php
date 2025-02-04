@@ -53,7 +53,7 @@ $subsc_list=$subscDAO->get_subsc_by_keyword($keyword);
     </div>
     <table border="1" class="content">
       <tr>
-        <th colspan="2"><?=$subsc->subName ?><button onclick="location.href='subscDetail.html'">詳細へ</button></th>
+        <th colspan="2"><?=$subsc->subName ?><button onclick="location.href='subscDetail.php'">詳細へ</button></th>
         
       </tr>
       <br>
