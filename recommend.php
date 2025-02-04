@@ -13,13 +13,10 @@ if(empty($_SESSION['member'])){
         $favorite_list= $subscDAO->get_favorite_by_id($member->ID);
     }
    
-   
-if($_SERVER['REQUEST_METHOD']==='POST'){
-   
        if(isset($_POST['release'])){
         $subscDAO->delete_favorite($member->ID);
        }
-    }
+    
 
 
 ?>
@@ -56,7 +53,10 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         
         <?php foreach($favorite_list as $favorite) : ?>
 
- <?= var_dump($favorite->image) ?>
+ <?= var_dump($favorite) ?>
+ <?php if(empty($favorite)) : ?>
+    <p>サブスクはありません</p>
+    <?php endif ?>
     <div class="recommend">
         <table border="1">
 
