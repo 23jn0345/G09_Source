@@ -1,24 +1,26 @@
 <?php
 require_once "DAO/subscDAO.php";
 $subscDAO=new subscDAO();
-$favorite_list= $subscDAO->get_favorite_by_id(10004);
+
 if(session_status()===PHP_SESSION_NONE){
     session_start();
 }
 if(empty($_SESSION['member'])){
     header('Location:login.php');
     exit;
-    $member=$_SESSION['member'];
+}else{
+        $member=$_SESSION['member'];
+        $favorite_list= $subscDAO->get_favorite_by_id($member->ID);
+    }
+   
    
 if($_SERVER['REQUEST_METHOD']==='POST'){
    
-       
-       
        if(isset($_POST['release'])){
         $subscDAO->delete_favorite($member->ID);
        }
     }
-}
+
 
 ?>
 <!DOCTYPE html>
@@ -57,14 +59,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         <table border="1">
 
             <tr>
-                <form action="subscDetail.php" method="POST">
-                <th scope="col"><a href="subscDetail.php"></a></th>
-        </form>
+                
+                <th scope="col"> <a href="subscDetail.php?subID=<?= $favorite->subID ?>"></button></th>
+        
                 <th scope="col">料金</th>
                 <th scope="col">無料期間</th>
                 <th scope="col">説明</th>
             </tr>
-            <td scope="row"><img src="<?=$favorite->image ?>"></th>
+            <td scope="row"><img src="images/<?=$favorite->image ?> "></th>
             <td><?=$favorite->subName ?></td>
             <td><?=$favorite->price ?></td>
             <td><?=$favorite->freedate ?></td>

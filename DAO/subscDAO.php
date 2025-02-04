@@ -36,12 +36,9 @@ INNER JOIN subscplan ON subsc.SubID = subscplan.SubID
 INNER JOIN kikan ON subscplan.FreeTimeID = kikan.KikanID
 WHERE favorite.ID = :id";
     $stmt = $dbh->prepare($sql); // SQLを実行する 
-    $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+    $stmt->bindValue(':id',$ID,PDO::PARAM_INT);
     $stmt->execute();
-    $data=[];
-    while($row=$stmt->fetchObject('favorite')){
-        $data[]=$row;
-    }
+    $data = $stmt->fetchAll();
         return $data;
 }
 public function delete_favorite(int $ID){
