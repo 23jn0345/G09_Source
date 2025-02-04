@@ -1,3 +1,4 @@
+
 .text {
     text-align: center;
     position: relative;
@@ -11,7 +12,7 @@
     width: 200px;
     border: solid 3px;
     position: relative;
-    bottom: 500px;
+    bottom: 50px;
     margin-left: 80px;
     float: left;
 }
@@ -64,6 +65,3 @@ th.detail_button{
     width: 50px;
     text-align: right;
 }
-
-
-

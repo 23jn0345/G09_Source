@@ -14,18 +14,9 @@ class subsc{
 }
 #[\AllowDynamicProperties]
 class subscDAO { 
-    public function search_subsc(string $subName) {
-       
-        $dbh = DAO::get_db_connect();
-        
-         $sql = "SELECT subName,setumei,aliasName,shortName,image,URL FROM subsc WHERE SubName LIKE :subscName";
-         $stmt = $dbh->prepare($sql); 
-         $stmt->bindValue(':subscName','%'.$subName.'%',PDO::PARAM_STR);
-         $stmt->execute(); 
-         $data = $stmt->fetchAll(); 
-         return $data; 
+   
          
-}
+
 public function add_favorite(){
     $dbh = DAO::get_db_connect();
     $sql="INSERT INTO favorite (ID, subID) VALUES (:ID, :subID)";
@@ -81,24 +72,26 @@ public function get_subsc_by_keyword(string $keyword){
     $dbh = DAO::get_db_connect();
 
     $keyword = "%".$keyword."%";
-    $sql = "SELECT subname,image,genreName,price
-            FROM subsc 
-            LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
-            LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID
-            LEFT OUTER JOIN kikan as freetime ON subscplan.FreeTimeID = freetime.KikanID
-            LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
-            WHERE subId LIKE :subId OR subname LIKE :subname OR aliasName LIKE :aliasName OR shortName LIKE :shortName OR genreName LIKE :genreName";
+    $sql = "SELECT subname,image,price,interval.date,genreName
+	             FROM subsc 
+		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
+			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID
+				LEFT OUTER JOIN kikan as freetime ON subscplan.FreeTimeID = freetime.KikanID
+				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
+           where subname LIKE :subname OR aliasName LIKE :aliasName OR shortName LIKE :shortName OR genreName LIKE :genreName";
 
     
     $stmt = $dbh->prepare($sql);
 
-    $stmt->bindValue(':subId',$keyword ,PDO::PARAM_STR);
+    $stmt->bindValue(':aliasName',$keyword ,PDO::PARAM_STR);
     $stmt->bindValue(':subname',$keyword ,PDO::PARAM_STR);
+    $stmt->bindValue(':shortName',$keyword ,PDO::PARAM_STR);
+    $stmt->bindValue(':genreName',$keyword ,PDO::PARAM_STR);
 
     $stmt->execute();
 
     $data =[];
-    while($row=$stmt->fetchObject('user')){
+    while($row=$stmt->fetchObject('subsc')){
         $data[] =$row;
     }
     return $data;
