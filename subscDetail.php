@@ -3,8 +3,9 @@ require_once 'DAO/subscDAO.php';
 
 
 if(isset($_POST['subID'])){
+    $subid=$_POST['subID'];
     $subscDAO=new subscDAO();
-    $subsc=$subscDAO->get_subsc('20002');
+    $subsc=$subscDAO->get_subsc($subid);
 }
 ?>
 <!DOCTYPE html>
