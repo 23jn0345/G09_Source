@@ -11,7 +11,7 @@
 
 
     
-
+        $errs = "";
         $image ="";
         $returnname       = "";
         $returndetail     = "";
@@ -35,8 +35,7 @@
         
         }elseif($_SERVER['REQUEST_METHOD']==='POST'){    
 
-            if(isset($_SESSION['submit'])){
-
+            if(!empty($_POST['submit'])){
                 $file = "images/$image";
                 $image=$_POST['image'];
                 $name=$_POST['name'];
@@ -55,45 +54,45 @@
                 $detail=$_POST['detail'];
                 $url=$_POST['url'];
 
-            
-            
-            if($name=='' || $amount1=='' || $detail=='' || $url==''){
-                $errs[]='入力漏れがあります';
-            }
-            
-            if(empty($errs)){
-                $regiSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
-                $regiDate1 = [$interval1,$amount1,$free1];
                 
-                session_regenerate_id(true);
-                $_SESSION['regiData1']=$regiDate1;
                 
-                if($amount2 !== ''){
-                    $regiDate2 = [$interval2,$amount2,$free2];
-                    $_SESSION['regiData2']=$regiDate2;
-                }
-                if($amount3 !== ''){
-                    $regiDate3 = [$interval3,$amount3,$free3];
-                    $_SESSION['regiData3']=$regiDate3;
-                }
-                if($regiSubsc !==false){
-                    $_SESSION['regiSubsc']=$regiSubsc;
-                    header('Location:regiConfirmation.php');
-                    exit;
-                }
-                else{
-                    $errs[]='入力漏れがあります';
+                if($name=='' || $amount1=='' || $detail=='' || $url==''){
+                    $errs='入力漏れがあります';
                 }
                 
-            }
+                
+                if(empty($errs)){
+                    $regiSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
+                    $regiDate1 = [$interval1,$amount1,$free1];
+                    
+                    session_regenerate_id(true);
+                    $_SESSION['regiData1']=$regiDate1;
+                    
+                    if($amount2 !== ''){
+                        $regiDate2 = [$interval2,$amount2,$free2];
+                        $_SESSION['regiData2']=$regiDate2;
+                    }
+                    if($amount3 !== ''){
+                        $regiDate3 = [$interval3,$amount3,$free3];
+                        $_SESSION['regiData3']=$regiDate3;
+                    }
+                    if($regiSubsc !==false){
+                        $_SESSION['regiSubsc']=$regiSubsc;
+                        header('Location:regiConfirmation.php');
+                        exit;
+                    }
+                
+                }
 
+            }
+            elseif(!empty($_POST['return'])){
+                
+                header('Location:manageSubsc.php');
+                exit;
+            }
+            
+        
         }
-        elseif(!empty($_POST['return'])){
-            header('Location:manageSubsc.php');
-            exit;
-        }
- 
-    }
     
     
 ?>
@@ -103,35 +102,37 @@
 
 <head>
     <meta charset="utf-8">
-    <title>サブスク詳細登録</title>
+    <title>サブスク更新</title>
     <link rel="stylesheet" href="css/subscRegistration.css">
 </head>
 
 <body>
     <?php include "adminHeader.php"; ?>
-    
         <div class="title">
-            <h1>サブスク詳細登録</h1>
+            <h1>サブスク更新</h1>
         </div>
 
     <form method = "POST" action ="">
+    <?php if($errs!=null): ?>
+        <spam style="color:red"><?= $errs ?></span>
+    <?php endif ?>
         <div class="name">
         <p>アップロード画像</p>
         <input type="file" name="image">
         
             <p>サブスク名<br>
-                <input type="text" name="name" size="50px" value ="<?php if($returnname != ""): ?> <?=$returnname ?><?php endif ?>">
+                <input type="text" name="name" size="50px" value ="<?php if($subName !="" ) :?> <? $subName ?> <?php elseif($returnname != ""): ?> <?=$returnname ?><?php endif ?>">
             </p>
             <p>略称<br>
-                <input type="text" name="shortName" size="50px" value ="<?php if($returnshortname != ""): ?> <?=$returnshortname ?><?php endif ?>">
+                <input type="text" name="shortName" size="50px" value ="<?php if($shortName !="" ) :?> <? $shortName ?> <?php elseif($returnshortname != ""): ?> <?=$returnshortname ?><?php endif ?>">
             </p>
             <p>別名<br>
-                <input type="text" name="aliasName" size="50px" value ="<?php if($returnaliasname != ""): ?> <?=$returnaliasname ?><?php endif ?>">
+                <input type="text" name="aliasName" size="50px" value ="<?php if($aliasName !="" ) :?> <? $aliasName ?> <?php elseif($returnaliasname != ""): ?> <?=$returnaliasname ?><?php endif ?>">
             </p>
             <br>
         </div>
         <div class="category">
-            <input type="radio" id="50001" name="category" value="50001" <?php if($returncategory == ""): ?>checked<?php elseif($returncategory == "50001") :?> checked <?php endif ?>  />
+            <input type="radio" id="50001" name="category" value="50001" <?php if($category !="" ) :?> checked <?php elseif($returncategory == ""): ?>checked<?php elseif($returncategory == "50001") :?> checked <?php endif ?>  />
             <label for="cate">動画配信</label>
             <input type="radio" id="50002" name="category" value="50002" <?php if($returncategory == "50002"): ?>checked <?php endif ?>/>
             <label for="cate">音楽配信</label>
@@ -147,23 +148,21 @@
                     <p>支払い<?= $i ?>
 
                         <select name="interval<?= $i?>">
-                            <option value="" selected hidden disabled>選択してください</option>
-                            <?php foreach($interval_list as $interval): ?>
+                        <?php foreach($interval_list as $interval): ?>
                                 <option value =<?= $interval->date ?>><?= $interval->date ?>日</option>
-                            <?php endforeach ?>
+                        <?php endforeach ?>
                         </select>
                         料金<?= $i ?>
                         <?php if($i==1): ?>
-                            <input type="text" name="amount1" size="30px">
+                            <input type="text" name="amount1" size="30px" >
                         <?php else :?>
                             <input type="text" name="amount<?=$i?>" size="30px" >
                         <?php endif ?>
                         無料期間
                         <select name="free<?= $i?>">
-                            <option value="" selected hidden disabled>選択してください</option>
-                            <?php foreach($freeTime_list as $freeTime): ?>
-                                <option value=<?= $freeTime->date ?>><?= $freeTime->date ?>日</option>
-                            <?php endforeach ?>
+                        <?php foreach($freeTime_list as $freeTime): ?>
+                            <option value=<?= $freeTime->date ?>><?= $freeTime->date ?>日</option>
+                        <?php endforeach ?>
 
                         </select>
                     </p>
@@ -173,17 +172,13 @@
         </div>
 
         <br>
-        <p>説明　　　　　<input type="text" class="detail" size="55px" name="detail" value ="<?php if($returndetail != ""): ?> <?=$returndetail ?><?php endif ?>"></p>
-        <p>公式サイトURL<input type="text" name = "url" size="55px" value ="<?php if($returnurl != ""): ?> <?=$returnurl ?><?php endif ?>"></p>
+        <p>説明　　　　　<input type="text" class="detail" size="55px" name="detail" value ="<?php if($returndetail != ""): ?> <?=$returndetail ?><?php endif ?>" ></p>
+        <p>公式サイトURL<input type="text" name = "url" size="55px" value ="<?php if($returnurl != ""): ?> <?=$returnurl ?><?php endif ?>" ></p>
         <br>
         <button type="submit" name = submit value = "submit">確認画面へ</button>
         <button type="submit" name = return value = "return">管理画面へ戻る</button>
     </form>
     
-
-
-
-
 </body>
 
 </html>

@@ -2,7 +2,7 @@
 <?php 
 require_once 'DAO/subscDAO.php';
 
-$subscDAO = new subscDAO(); 
+$subscDAO = new subscDAO();
 
 if(isset($_GET['keyword'])){
 $keyword=$_GET['keyword'];

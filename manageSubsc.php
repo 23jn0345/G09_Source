@@ -47,21 +47,21 @@
             <tr>
                 <th rowspan="4"><img src="images/<?= $subsc->image ?>"></th>
                 <th colspan="2"><?= $subsc->subName ?></th>
-                <td rowspan="4" align ="center" ><button onclick="location.href='subscUpdate.html'">編集</button></td>
+                <td rowspan="4" align ="center" ><button onclick="location.href='subscUpdate.php'">編集</button></td>
             </tr>
             <br>
             <?php $data_list = $subscDAO->get_subscdata($subsc->subId); ?>
             <tr>
                 <th>料金/支払いスパン</th>
-                <?php foreach($data_list as $data) : ?>
-                    <td><?= $data->price?>円/<?= $data->intervalDate ?>日</td>
-                <?php endforeach?>
+                
+                    <td><?php foreach($data_list as $data) : ?><?= $data->price?>円/<?= $data->intervalDate ?>日　　　<?php endforeach?></td>
+                
             </tr>
             <tr>
                 <th>無料期間</th>
-                <?php foreach($data_list as $data) : ?>
-                    <td><?= $data->freetimedate?>日</td>
-                <?php endforeach?>
+                
+                    <td><?php foreach($data_list as $data) : ?><?= $data->freetimedate?>日/<?php endforeach?></td>
+                
             </tr>
             <tr>
                 <th>ジャンル</th>

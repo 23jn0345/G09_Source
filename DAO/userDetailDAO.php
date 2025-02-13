@@ -8,6 +8,7 @@ class userDetail{
     public string $password;
     public string $birthday;
     public int $gender;
+    public string $useSubId;
 }
 
 #[\AllowDynamicProperties]

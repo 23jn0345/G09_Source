@@ -1,10 +1,17 @@
 <?php
     require_once './DAO/userDetailDAO.php';
     
+        $errs = "";
         $id = $_GET['id'];
         $userDetailDAO = new userDetailDAO();
         $userDetail = $userDetailDAO->get_user($id);
-        $useSubsc_list = $userDetailDAO->get_use_subsc($id)
+        $subid =$userDetail->useSubId;
+        if($subid !=""){
+            $useSubsc_list = $userDetailDAO->get_use_subsc($id);
+        }else{
+            $errs ="なし";
+        }
+            
 
 ?>
 
@@ -46,10 +53,14 @@
                 <?php endif;?>
             </td>
             <td>
-                <?php foreach($useSubsc_list as $useSubsc) : ?>
-                        <?= $useSubsc->subName ?><br>
-                <?php endforeach ?></td>
-            
+                <?php if($errs !=""): ?>
+                    <?php foreach($useSubsc_list as $useSubsc) : ?>
+                            <?= $useSubsc->subName ?><br>
+                    <?php endforeach ?>
+                <?php elseif($errs =="なし"): ?>
+                    <?= $errs ?> 
+                <?php endif ?>
+            </td>
         </tr>
         </table>
         <br>

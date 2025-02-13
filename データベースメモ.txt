@@ -96,4 +96,4 @@ SELECT subname,image,genreName,price,interval.kikanName,interval.date,freetime.k
 				LEFT OUTER JOIN kikan as interval ON subscplan.IntervalID = interval.KikanID
 
 
-				test
+				
