@@ -33,6 +33,11 @@
   text-align: center;
   vertical-align: top;
 }
+.date-picker.endfree {
+  font-weight: bold;
+  color: #fff;
+  background: lightblue;
+}
 .date-picker.selected {
   font-weight: bold;
   color: #fff;
