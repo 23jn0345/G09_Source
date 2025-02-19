@@ -1,21 +1,31 @@
 <?php 
-require_once 'DAO/subscDAO.php';
+    require_once 'DAO/subscDAO.php';
 
+session_start();
 
-    if(isset($_GET['SubID'])){
-        $subID=$_GET['SubID'];
+    $isFavorite =false;
+
+    if(isset($_GET['subid'])){
+        $subID=$_GET['subid'];
         $subscDAO=new subscDAO();
         $subsc=$subscDAO->get_subsc($subID);
+        if(!empty($_SESSION['member'])){
+            $userID = (int)$_SESSION['member']->ID;
+            $isFavorite = $subscDAO->is_favorite($userID,$subID);
+            var_dump($isFavorite);
+
+        }
     }
+    /*
     if(isset($_GET['favorite'])){
         $favorite=$_GET['favorite'];
        if($favorite==1){
         $subscDAO=new subscDAO();
         $subscDAO->add_favorite();
+        
        }
        
-    }
-echo var_dump($subID)
+    }*/
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -42,29 +52,31 @@ echo var_dump($subID)
     </header>
     <div class="result">
         <div class="content">
-            <?= var_dump($subsc) ?>
-            <img src="imeges/<?= $subsc['image'] ?>">
+            
+            <img src="images/<?= $subsc[0]['image'] ?>">
         </div>
-        <h1><?= $subsc['SubName'] ?></h1>
+        <h1><?= $subsc[0]['subname'] ?></h1>
         <ul>
-        <li>支払い間隔:<?=$subsc['date'] ?>日</li>
-        <li>無料期間:<?=$subsc['freedate'] ?>日</li>
+        <li>支払い間隔:<?=$subsc[0]['date'] ?>日</li>
+        <li>無料期間:<?=$subsc[0]['freedate'] ?>日</li>
         </ul>
     </div>
     <br>
     <div class="detail">
-        <p><a href="<?=$subsc['URL'] ?>">登録URL</a></p>
+        <p><a href="<?=$subsc[0]['URL'] ?>">登録URL</a></p>
     </div>
     <div class="detail">
-        <form action="" method="GET">
-        <p><input type="checkbox" name="favorite" value="1">お気に入り</p>
-</form>
+
+        <p><input type="checkbox" id="favorite" <?= $isFavorite ? 'checked' : ''?> value="<?= $subID ?>">お気に入り</p>
        
-        
+        <p><a href="<?="./inputContract.php?subid=$subID"?>">家計簿に登録</a></p>
+
     </div>
     <br>
-    <p class="instruct"><?=$subsc['Setumei'] ?></p>
+    <p class="instruct"><?=$subsc[0]['setumei'] ?></p>
     </div>
+    <script src="js/checkbox_favorite.js" ></script>
+
 </body>
 
 </html>

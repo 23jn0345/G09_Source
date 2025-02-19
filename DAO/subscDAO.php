@@ -38,8 +38,7 @@ public function add_favorite(int $ID,int $subID){
     $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
     $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
     $stmt->execute();
-    $data = $stmt->fetchAll(); 
-    return $data;
+    return ;
 }
 
 public function get_favorite_by_id(int $ID){
@@ -199,5 +198,25 @@ public function get_all_subsc(){
         return $data;
     }
 
+    public function is_favorite(int $ID, int $subID){
+        $dbh = DAO::get_db_connect();
+
+        $sql = "SELECT * FROM favorite WHERE ID = :ID and subID = :subID";
+        $stmt = $dbh->prepare($sql); 
+        $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+        $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll(); 
+        $lowCnt = count($data);
+        if($lowCnt > 0){
+            return true;
+        }
+        return false; 
+    
+    
+    }
+
 }
+
+
     
