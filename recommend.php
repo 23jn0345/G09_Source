@@ -13,14 +13,7 @@ if(empty($_SESSION['member'])){
         $subscDAO=new subscDAO();
         $favorite_list= $subscDAO->get_favorite_by_id($member->ID);
     }
-    if($_SERVER['REQUEST_METHOD']==='POST'){
-        if(isset($_POST['delete'])){
-            $subID=$_POST['SubID'];
-            $subscDAO=new subscDAO();
-            $subscDAO->delete_favorite($member->ID,$subID);
-            echo "お気に入りを解除しました";
-    }
-    }
+    
        
 
 
@@ -65,7 +58,7 @@ if(empty($_SESSION['member'])){
 
             <tr>
                 <form action="subscDetail.php" method="GET">
-                <th scope="col"> <a href="subscDetail.php?SubID=<? $favorite['SubID'] ?>">詳細</button></th>
+                <th scope="col"> <a href="subscDetail.php?subid=<?= $favorite['SubID'] ?>">詳細</button></th>
         </form>
                 <th scope="col">サブスク名</th>
                 <th scope="col">料金</th>
@@ -78,10 +71,7 @@ if(empty($_SESSION['member'])){
             <td><?=$favorite['Price'] ?></td>
             <td><?=$favorite['freedate'] ?></td>
             <td><?=$favorite['Setumei'] ?></td>
-            <form action="" method="POST">
-                <input type="hidden" value="<? $favorite['SubID'] ?>">
-            <td><button type="submit" name="delete">解除</button></td>
-        </form>
+          
      
    
 
