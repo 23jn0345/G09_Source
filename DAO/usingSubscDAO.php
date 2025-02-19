@@ -13,7 +13,7 @@ public int $price;
 class UsingSubscDAO{
     public function get_using_by_id(int $ID){
         $dbh = DAO::get_db_connect(); 
-        $sql = "SELECT  subsc.image,subsc.SubName,subscplan.Price,kikan.date FROM usingsubsc
+        $sql = "SELECT  subsc.image,subsc.SubName,subscplan.Price,kikan.date as date FROM usingsubsc
 INNER JOIN subsc ON usingsubsc.SubID = subsc.SubID
 INNER JOIN subscplan ON usingsubsc.PlanID = subscplan.PlanID
 INNER JOIN kikan ON subscplan.IntervalID = kikan.KikanID

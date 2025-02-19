@@ -65,10 +65,14 @@ th.detail_button{
     text-align: right;
 }
 .reco_button{
-    float: right;
-    line-height: 4;
-    width: 250px;
+    
     margin-right: 170px;
     position: relative;
-    margin-top: -60px;
+    margin-top: 60px;
+    width: 14em;
+    height: 4em;
+   font-size: 25px;
+    background-color:rgb(54, 147, 240) ;
+    color: white;
+  
 }

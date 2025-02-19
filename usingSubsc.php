@@ -11,7 +11,7 @@ if(empty($_SESSION['member'])){
 
 if($_SERVER['REQUEST_METHOD']==='POST'){
     if(isset($_POST['add'])){
-        $name=$_POST['subName'];
+        $name=$_POST['SubName'];
         
         $usingsubscDAO=new subscDAO();
         $usingsubscDAO->subscribe($member->ID,$subID);
@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         $usingsubscDAO->update($member->ID,$subID);
         */
     }else if(isset($_POST['delete'])){
-        $subID=$_POST['subID'];
+        $subID=$_POST['SubID'];
         $usingsubscDAO=new usingsubscDAO();
         $usingsubscDAO->delete($member->ID,$subID);
 }
@@ -56,10 +56,7 @@ $using_list=$usingsubscDAO->get_using_by_memberid($member->ID);
     </nav>
   </header>
 
-  <form action="" method="GET">
-    <p><br>
-      検索 <input type="text" name="Search" size=75px class="text"></p>
-  </form>
+  
   
   <button class="reco_button" onclick="location.href='recommend.php'">お気に入り一覧</button></p>
   <div class="result">
@@ -71,22 +68,22 @@ $using_list=$usingsubscDAO->get_using_by_memberid($member->ID);
           <table border="1" class="content">
             <tr>
                 <td>
-                 <img src="<?= $using->image ?>">
+                 <img src="<?= $using['image'] ?>">
               </td>
     
     
       <tr>
-        <form action ="changePlan.php" method="POST" value="<?= $using->subID ?>">
-        <th colspan="2"><?= $using->name ?><button onclick="location.href='changePlan.php'">変更・解除</button></th>
+        <form action ="changePlan.php" method="POST" value="<?= $using['SubID'] ?>">
+        <th colspan="2"><?= $using['SubName'] ?><button onclick="location.href='changePlan.php'">変更・解除</button></th>
         </form>
       </tr>
       <tr>
         <th scope="row">支払い間隔</th>
-        <td><?= $using->date ?></td>
+        <td><?= $using['date'] ?></td>
       </tr>
       <tr>
         <th scope="row">料金</th>
-        <td><?= $using->price ?></td>
+        <td><?= $using['Price'] ?></td>
       </tr>
     </table>
     <br>
