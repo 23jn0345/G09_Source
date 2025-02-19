@@ -47,14 +47,19 @@ WHERE usingsubsc.ID = :ID";
     }
 
     
-    public function subscribe(int $ID,int $subID){
+    public function subscribe(int $ID,int $subID,int $planID,string $endFree, string $nextPay){
         $dbh = DAO::get_db_connect(); 
         if(!$this->using_Now($ID,$subID)){
-            $sql = "insert into usingsubsc (ID,subID,planID) values (:ID,:subID,:planID)"; 
+            $sql = "insert into usingsubsc (ID,SubID,PlanID,RegistDate,EndFree,NextPay) values (:ID,:subID,:planID,:RegistDate,:EndFree,:NextPay)"; 
             $stmt = $dbh->prepare($sql); // SQLを実行する 
             $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
             $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
             $stmt->bindValue(':planID',$planID,PDO::PARAM_INT);
+            $today = date('Y-m-d');
+            $stmt->bindValue(':RegistDate',$today,PDO::PARAM_INT);
+            $stmt->bindValue(':EndFree',$endFree,PDO::PARAM_INT);
+            $stmt->bindValue(':NextPay',$nextPay,PDO::PARAM_INT);
+
             $stmt->execute();
             $cnt=0;
             $cnt+1;
