@@ -1,14 +1,50 @@
 
 <?php 
+require_once 'DAO/DAO.php'; // DAOクラスを読み込む
 require_once 'DAO/subscDAO.php';
-
 $subscDAO = new subscDAO();
 
-if(isset($_GET['keyword'])){
-$keyword=$_GET['keyword'];
-$term_list=$subscDAO->get_term();
-$subsc_list=$subscDAO->get_subsc_by_keyword($keyword);
-}
+  // データベース接続を取得
+  $dbh = DAO::get_db_connect();
+
+  // フォーム入力値の取得
+  $searchKeyword = isset($_GET['search']) ? trim($_GET['search']) : '';
+  $genres = isset($_GET['genres']) ? $_GET['genres'] : [];
+
+  // ベースSQL
+  $sql = "
+      SELECT 
+      subsc.SubID, -- SubID を追加
+      subsc.SubName, 
+      subsc.image, 
+      subscplan.Price, 
+      kikan.date AS intervalName
+  FROM 
+      subsc
+  INNER JOIN subscplan ON subsc.SubID = subscplan.SubID
+  INNER JOIN kikan ON subscplan.IntervalID = kikan.KikanID
+  WHERE 1=1
+  ";
+
+  //$params = [];
+  
+  //$stmt = $dbh->prepare($sql);
+  //$stmt->execute($params);
+  $results =$subscDAO->get_all_subsc();
+  // キーワード検索
+  if(isset($_GET['search']) && $_GET['search'] !== ''){
+      $keyword = $_GET['search'];
+      $results = $subscDAO->get_subsc_by_keyword($keyword);
+    }
+  if(isset($_GET['genres']) && $_GET['genres'] !== ''){
+      $genre = $_GET['genres'];
+      $results = $subscDAO->get_subsc_by_genre($genre);
+  }
+  if(isset($_GET['genres']) && $_GET['genres'] !== '' && isset($_GET['search']) && $_GET['search'] !== ''){
+      $keyword = $_GET['search'];
+      $genre = $_GET['genres'];
+      $results = $subscDAO->get_subsc_by_keywordgenre($keyword,$genre);
+  }
 
 ?>
 
@@ -33,82 +69,47 @@ $subsc_list=$subscDAO->get_subsc_by_keyword($keyword);
         </nav>
     </header>
 
-  
-    <p><br>
     <form action="" method="GET">
-    <input type="text" name="keyword" size=75px class="text" value="<?=@$keyword ?>"></p>
-                
-                <? htmlspecialchars($keyword,ENT_QUOTES,'UTF-8'); ?>
-            <input type="submit" value="検索">
-            <p><?php if(!empty($keyword)){  ?>
-  <?= "検索結果：", htmlspecialchars(@$keyword,ENT_QUOTES,'UTF-8'); ?> 
- <?php } ?></p>
-<?php foreach($subsc_list as $subsc) : ?>
+        <input type="text" name="search" size="75" class="text" placeholder="検索キーワード" value="<?= htmlspecialchars($searchKeyword, ENT_QUOTES, 'UTF-8') ?>">
 
-      
-  </form>
-  <div class="result">
-    <div class="content">
-      <img src="netflix.png">
-    </div>
-    <table border="1" class="content">
-      <tr>
-        <th colspan="2"><?=$subsc->subName ?><button onclick="location.href='subscDetail.php'">詳細へ</button></th>
-        
-      </tr>
-      <br>
-      <tr>
-        <th>支払い間隔</th>
-        <td><?=$term_list->interval ?> </td>
-      </tr>
-      <tr>
-        <th>料金</th>
-        <td>890円</td>
-      </tr>
-    </table>
-  </div>
-  <?php endforeach ?>
-
-  <div class="container">
-    <form>
-
-      <h2>支払い</h2>
-        <div class="frequency">
-          <input type="checkbox" id="week" />
-          <label for="week">毎週</label><br>
-          <input type="checkbox" id="month" />
-          <label for="month">1カ月</label><br>
-          <input type="checkbox" id="harf-year" />
-          <label for="harf-year">半年</label><br>
-          <input type="checkbox" id="year" />
-          <label for="year">１年</label><br>
+        <div class="container"> 
+        <h2>ジャンル</h2>
+            <input type="radio" name="genres" value="50001" > 動画配信<br>
+            <input type="radio" name="genres" value="50002" > 音楽配信<br>
+            <input type="radio" name="genres" value="50003" > 電子書籍<br>
+            <input type="radio" name="genres" value="50004" > 食品<br>
         </div>
-        <br>
-      <h2>ジャンル</h2>
-      <div class="category">
-        <input type="checkbox" id="1" />
-        <label for="1">ジャンル１</label><br>
-        <input type="checkbox" id="2" />
-        <label for="2">ジャンル２</label><br>
-        <input type="checkbox" id="3" />
-        <label for="3">ジャンル３</label><br>
-        <input type="checkbox" id="4" />
-        <label for="3">ジャンル４</label><br>
-      </div>
-      <br>
-      <h2>金額</h2>
-      <div class="fee">
-        <input type="checkbox" id="under500" />
-        <label for="under500">５００円以下</label><br>
-        <input type="checkbox" id="under1000" />
-        <label for="under1000">５００～１０００円</label><br>
-        <input type="checkbox" id="under3000" />
-        <label for="under3000">１０００～３０００円</label><br>
-        <input type="checkbox" id="under5000" />
-        <label for="under5000">３０００～５０００円</label><br>
-      </div>
-      <br>
+        <button type="submit">検索</button>
     </form>
-  </div>
+
+    <h2>検索結果</h2>
+    
+    <?php if ($results): ?>
+        <?php foreach ($results as $result): ?>
+            <div class="result">
+                <div class="content">
+                    <img src="images/<?= $result->image?>" alt="画像">
+                </div>
+                <table border="1" class="content">
+                    <tr>
+                        <th colspan="2">
+                        <?= $result->subname?>
+                        <button onclick="location.href='subscDetail.php?subid=<?= $result->subID ?>'">詳細へ</button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>支払い間隔</th>
+                        <td><?= $result->date?>日</td>
+                    </tr>
+                    <tr>
+                        <th>料金</th>
+                        <td><?= $result->price?>円</td>
+                    </tr>
+                </table>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>検索結果が見つかりませんでした。</p>
+    <?php endif; ?>
 </body>
 </html>
