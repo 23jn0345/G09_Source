@@ -47,7 +47,7 @@ checkbox.addEventListener('change', async function(event) {
         }
     } else {
         // セッション情報を確認するAPIを呼び出し
-        const response = await fetch('http://localhost/G09_Source/check_session.php');
+        const response = await fetch('./check_session.php');
         const data = await response.json();
         console.log('ログインは　',data);
 
