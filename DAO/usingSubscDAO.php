@@ -1,6 +1,5 @@
 <?php
 require_once 'DAO.php';
-#[\AllowDynamicProperties]
 class UsingSubsc{
 public int $ID;
 public int $subID;
@@ -8,16 +7,14 @@ public string $subName;
 public string $image;
 public string $setumei;
 public int $intervalDate;
-public int $endfree;
-public int $nextpay;
+public int $freeDate;
 public int $price;
-
 }
 #[\AllowDynamicProperties]
 class UsingSubscDAO{
     public function get_using_by_id(int $ID){
         $dbh = DAO::get_db_connect(); 
-        $sql = "SELECT  subsc.image,subsc.SubName,subscplan.Price,kikan.date FROM usingsubsc
+        $sql = "SELECT  subsc.image,subsc.SubName,subscplan.Price,kikan.date as date,subsc.SubID FROM usingsubsc
 INNER JOIN subsc ON usingsubsc.SubID = subsc.SubID
 INNER JOIN subscplan ON usingsubsc.PlanID = subscplan.PlanID
 INNER JOIN kikan ON subscplan.IntervalID = kikan.KikanID
@@ -25,11 +22,8 @@ WHERE usingsubsc.ID = :ID";
         $stmt = $dbh->prepare($sql); // SQLを実行する 
         $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
         $stmt->execute();
-        $data=[];
-        while($row=$stmt->fetchObject('usingsubsc')){
-            $data[]=$row;
-        }
-            return $data;
+        $data = $stmt->fetchAll();
+        return $data;
     }
          
     public function using_Now(int $ID,int $subID){
@@ -60,6 +54,8 @@ WHERE usingsubsc.ID = :ID";
             $cnt+1;
     }
     }
+
+   
     /*
     public function update(int $ID,int $subID){
         $dbh = DAO::get_db_connect(); 
@@ -79,26 +75,5 @@ WHERE usingsubsc.ID = :ID";
         $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
         $stmt->execute();
     }
-
-    public function get_using_by_id_home(int $ID){
-        $dbh = DAO::get_db_connect(); 
-        $sql = "SELECT endFree,nextPay FROM usingsubsc
-        WHERE ID = :ID"; 
-        $stmt = $dbh->prepare($sql); // SQLを実行する 
-        $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
-        $stmt->execute();
-        $data=[];
-        while($row=$stmt->fetchObject('usingsubsc')){
-            $data[]=$row;
-        }
-            return $data;
-    }
-    
 }
-    if(isset($_POST['action']) == true && $_POST['action'] === 'get_using_by_id_home'){
-        $using = new UsingSubscDAO();
-        $result = $using->get_using_by_id_home($_POST['param']);
-        echo json_encode(['result' => $result]);
-        exit();
-    }
 

@@ -76,7 +76,7 @@ if(empty($_SESSION['member'])){
    
 
     
-            </tr>
+            
         </table>
         <?php endforeach ?>
       <?php endif ?>

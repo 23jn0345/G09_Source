@@ -7,72 +7,39 @@
 
 
 
-.container {
-    width: 200px;
-    border: solid 3px;
-    position: relative;
-    bottom: 500px;
-    margin-left: 80px;
-    float: left;
+.table1 td{
+    width:30000px;
+   
 }
-
-.container h2 {
-    position: relative;
-    bottom: 3px;
-    text-align: center;
-    border-top: solid 3px;
-    border-bottom: solid 3px;
-}
-h2{
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.result {
-    display: flex;
-    margin: 10px;
-    margin-left: 520px;
-    
-}
-
-
-
-.content img {
-    display: flex;
-    text-align: center;
-    width: 230px;
-    height: 150px;
-    vertical-align: auto;
-    align-items: center;
-}
-.intel{
-    display: flex;
-    width: 500px;
-    height: 150px;
-    align-items: center;
-    vertical-align: auto;
-    text-align: center;
-}
-th{
-    width: 300px;
-}
-td{
+.table1 th{
     width: 300px;
     text-align: center;
 }
-th.detail_button{
-    width: 50px;
-    text-align: right;
+.table1 td{
+    text-align: center;
 }
+
+.table1 th, td{
+    border: 1px solid;
+  }
 .reco_button{
     
-    margin-right: 170px;
+    margin-left: 1500px;
+    margin-top: 20px;
     position: relative;
-    margin-top: 60px;
+   
     width: 14em;
     height: 4em;
-   font-size: 25px;
+   font-size: large;
     background-color:rgb(54, 147, 240) ;
     color: white;
-  
+   
+}
+.planbutton{
+    width: 5em;
+    height: 2em;
+    font-size: 150%;
+    background-color:rgb(54, 147, 240) ;
+    color: white;
+    margin-bottom: 20px;
 }

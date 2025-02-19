@@ -7,30 +7,13 @@ if(session_status()===PHP_SESSION_NONE){
 if(empty($_SESSION['member'])){
     header('Location:login.php');
     exit;
-    $member=$_SESSION['member'];
+}
 
-if($_SERVER['REQUEST_METHOD']==='POST'){
-    if(isset($_POST['add'])){
-        $name=$_POST['SubName'];
-        
-        $usingsubscDAO=new subscDAO();
-        $usingsubscDAO->subscribe($member->ID,$subID);
-        /*
-    }else if(isset($_POST['change'])){
-        $subID=$_POST['subID'];
-        $usingsubscDAO=new  usingsubscDAO();
-        $usingsubscDAO->update($member->ID,$subID);
-        */
-    }else if(isset($_POST['delete'])){
-        $subID=$_POST['SubID'];
-        $usingsubscDAO=new usingsubscDAO();
-        $usingsubscDAO->delete($member->ID,$subID);
-}
-header("Location:" . $_SERVER['PHP_SELF']);
-exit;
-}
+
+else{
+  $member=$_SESSION['member'];
 $usingsubscDAO =new usingsubscDAO();
-$using_list=$usingsubscDAO->get_using_by_memberid($member->ID);
+$using_list=$usingsubscDAO->get_using_by_id($member->ID);
 }
 ?>
 <!DOCTYPE html>
@@ -65,30 +48,25 @@ $using_list=$usingsubscDAO->get_using_by_memberid($member->ID);
     <p>利用中のサブスクはありません</p>
     <?php else: ?>
         <?php foreach($using_list as $using) : ?>
-          <table border="1" class="content">
-            <tr>
-                <td>
-                 <img src="<?= $using['image'] ?>">
-              </td>
-    
-    
-      <tr>
-        <form action ="changePlan.php" method="POST" value="<?= $using['SubID'] ?>">
-        <th colspan="2"><?= $using['SubName'] ?><button onclick="location.href='changePlan.php'">変更・解除</button></th>
-        </form>
-      </tr>
-      <tr>
-        <th scope="row">支払い間隔</th>
+          
+          <table class="table1">
+           
+        <th scope="col"><?= $using['SubName'] ?>
+       
+        <th scope="col">支払い間隔</th>
+        <th scope="col">料金</th>
+        </tr>
+             
+        <td scope="row"> <img src="images/<?= $using['image'] ?>"></td>
         <td><?= $using['date'] ?></td>
-      </tr>
-      <tr>
-        <th scope="row">料金</th>
         <td><?= $using['Price'] ?></td>
-      </tr>
+        <form action ="changePlan.php" method="POST" value="<?= $using['SubID'] ?>">
+        <th><button class="planbutton" onclick="location.href='changePlan.php'">変更・解除</button></th>
+        </form>
     </table>
     <br>
   </div>
-  
+        </div>
 <?php endforeach; ?>
 <?php endif ?>
 </body>
