@@ -2,8 +2,8 @@
 #[\AllowDynamicProperties]
 class Member{
    
-    
-   public  string $name;
+    public int $id;
+    public string $name;
     public string $password;
     public string $birthday;
     public string $gender;
