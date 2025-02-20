@@ -58,8 +58,8 @@ $using_list=$usingsubscDAO->get_using_by_id($member->ID);
         </tr>
              
         <td scope="row"> <img src="images/<?= $using['image'] ?>"></td>
-        <td><?= $using['date'] ?></td>
-        <td><?= $using['Price'] ?></td>
+        <td><?= $using['date'] ?>日</td>
+        <td><?= $using['Price'] ?>円</td>
         
         <th><button class="planbutton" onclick="location.href='changePlan.php?subID=<?php echo urlencode($using['SubID']); ?>'">変更・解除</button></th>
      
