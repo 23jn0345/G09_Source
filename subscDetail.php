@@ -12,8 +12,7 @@ session_start();
         if(!empty($_SESSION['member'])){
             $userID = (int)$_SESSION['member']->ID;
             $isFavorite = $subscDAO->is_favorite($userID,$subID);
-            var_dump($isFavorite);
-
+            
         }
     }
     /*

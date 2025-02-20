@@ -218,7 +218,7 @@ public function get_all_subsc(){
 
     public function get_Plans_by_subID($subID){
         $dbh = DAO::get_db_connect();
-        
+
 
         $sql = "select * from subsc 
 	    inner  join  subscplan ON subsc.SubID = subscplan.SubID  
@@ -233,6 +233,22 @@ public function get_all_subsc(){
 
     }
 
+    public function get_Plans_and_subsc(int $ID, int $subID){
+        $dbh = DAO::get_db_connect();
+        $sql = "	select * from subsc 
+	    inner  join  subscplan ON subsc.SubID = subscplan.SubID  
+	    inner join kikan on IntervalID = KikanID 
+		inner join usingsubsc on subsc.SubID = usingsubsc.SubID
+	    where subsc.SubID = :subID and ID = :ID";
+        $stmt = $dbh->prepare($sql); 
+        $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+
+        $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
+        $stmt->execute();
+        $data = $stmt->fetchAll(); 
+        return $data; 
+
+    }
 }
 
 
