@@ -1,22 +1,25 @@
-.text {
+
+
+.title{
     text-align: center;
-    position: relative;
-    line-height: 2;
-    margin-right: 9px;
+    font-size: 40px;
+
+}
+.table1{
+    margin-left: 500px;
 }
 
 
-
-.table1 td{
-    width:30000px;
-   
-}
 .table1 th{
-    width: 300px;
+    width: 200px;
     text-align: center;
+    font-size: 120%;
 }
 .table1 td{
     text-align: center;
+    font-size: 150%;
+    width:200px;
+   
 }
 
 .table1 th, td{
@@ -24,7 +27,7 @@
   }
 .reco_button{
     
-    margin-left: 1500px;
+    margin-left: 1300px;
     margin-top: 20px;
     position: relative;
    
@@ -36,9 +39,9 @@
    
 }
 .planbutton{
-    width: 5em;
+   
     height: 2em;
-    font-size: 150%;
+    font-size: 20px;
     background-color:rgb(54, 147, 240) ;
     color: white;
     margin-bottom: 20px;

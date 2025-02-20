@@ -40,7 +40,7 @@ $using_list=$usingsubscDAO->get_using_by_id($member->ID);
   </header>
 
   
-  
+  <p class="title">利用中のサブスク</p>
   <button class="reco_button" onclick="location.href='recommend.php'">お気に入り一覧</button></p>
   <div class="result">
     <div class="content">
@@ -58,11 +58,11 @@ $using_list=$usingsubscDAO->get_using_by_id($member->ID);
         </tr>
              
         <td scope="row"> <img src="images/<?= $using['image'] ?>"></td>
-        <td><?= $using['date'] ?></td>
-        <td><?= $using['Price'] ?></td>
-        <form action ="changePlan.php" method="POST" value="<?= $using['SubID'] ?>">
-        <th><button class="planbutton" onclick="location.href='changePlan.php'">変更・解除</button></th>
-        </form>
+        <td><?= $using['date'] ?>日</td>
+        <td><?= $using['Price'] ?>円</td>
+        
+        <th><button class="planbutton" onclick="location.href='changePlan.php?subid=<?= $using['SubID'] ?>'">変更・解除</button></th>
+       
     </table>
     <br>
   </div>

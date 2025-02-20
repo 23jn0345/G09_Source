@@ -68,8 +68,8 @@ if(empty($_SESSION['member'])){
             <td scope="row"><img src="images/<?=$favorite['image'] ?> "></th>
             
             <td><?=$favorite['SubName'] ?></td>
-            <td><?=$favorite['Price'] ?></td>
-            <td><?=$favorite['freedate'] ?></td>
+            <td><?=$favorite['Price'] ?>円</td>
+            <td><?=$favorite['freedate'] ?>日</td>
             <td><?=$favorite['Setumei'] ?></td>
           
      
