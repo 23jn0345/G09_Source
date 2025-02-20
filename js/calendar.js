@@ -1,15 +1,20 @@
 function callPhpMethod(ID){
+  console.log("ID→",ID);
 
   fetch('./DAO/usingSubscDAO.php',{
     method: 'POST',
     headers:{'Content-Type': 'application/x-www-form-urlencoded',},
-    body:'action=get_using_by_id_home&param='+encodeURIComponent(ID)
+    body:'action=get_using_by_id_efnp&param='+encodeURIComponent(ID)
   })
   .then(response => response.json()).then(data =>{
     // 日付を使用した処理を実行
     // 変数に入れたり return したり
+      console.log("レスポンス→",response)
+      console.log("data→",data[1]);
       var endfree = data[0].endfree;
       var nextpay = data[0].nextpay;
+      console.log("無料期間終了日→",endfree);
+      console.log("次回支払い日→",nextpay);
       var data = [
         [endfree,nextpay]
       ];
@@ -109,10 +114,9 @@ function generate_year_range(start, end) {
                 }
 
                 /* ここに無料期間と次回支払いを取得してカレンダーに反映する処理？ */
-                var endFree = callPhpMethod(document.getElementById("hidden"));
-                if ( date === endFree.getDate() && year === endFree.getFullYear() && month === endFree.getMonth() ){
-                  cell.className = "date-picker endfree"
-                }
+                var memberid = document.getElementById("memberID");
+                var endFree = callPhpMethod(memberid.value);
+                //console.log("無料期間終了日→",endFree);
                 row.appendChild(cell);
                 date++;
             }

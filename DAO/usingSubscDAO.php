@@ -7,7 +7,8 @@ public string $subName;
 public string $image;
 public string $setumei;
 public int $intervalDate;
-public int $freeDate;
+public string $endfree;
+public string $nextpay;
 public int $price;
 }
 #[\AllowDynamicProperties]
@@ -94,6 +95,43 @@ WHERE usingsubsc.ID = :ID";
 
         $stmt->execute();
     }
+    public function get_using_by_id_home(int $ID){
+        $dbh = DAO::get_db_connect(); 
+        $sql = "SELECT subName,endfree,nextpay FROM usingsubsc
+        INNER JOIN subsc ON usingsubsc.SubID = subsc.SubID
+        WHERE ID = :ID"; 
+        $stmt = $dbh->prepare($sql); // SQLを実行する 
+        $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+        $stmt->execute();
+        $data=[];
+        while($row=$stmt->fetchObject('usingsubsc')){
+            $data[]=$row;
+        }
+            return $data;
+    }
 
+    public function get_using_by_id_efnp(int $ID){
+        $dbh = DAO::get_db_connect(); 
+        $sql = "SELECT endfree,nextpay FROM usingsubsc
+        INNER JOIN subsc ON usingsubsc.SubID = subsc.SubID
+        WHERE ID = :ID"; 
+        $stmt = $dbh->prepare($sql); // SQLを実行する 
+        $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+        $stmt->execute();
+        $data=[];
+        while($row=$stmt->fetchObject('usingsubsc')){
+            $data[]=$row;
+        }
+            return $data;
+    }
+    
 }
+    if(isset($_POST['action']) == true && $_POST['action'] === 'get_using_by_id_efnp'){
+        $using = new UsingSubscDAO();
+        $result = $using->get_using_by_id_home($_POST['param']);
+        echo json_encode(['result' => $result]);
+        exit();
+    }
+
+
 

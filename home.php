@@ -1,11 +1,19 @@
 <?php 
 require_once 'DAO/MemberDAO.php';
+require_once 'DAO/usingSubscDAO.php';
 if(session_status()===PHP_SESSION_NONE){
     session_start();
 }
 if(!empty($_SESSION['member'])){
     $member=$_SESSION['member'];
 }
+else{
+    header('Location:login.php');
+    exit;
+}
+$usingsubscDAO =new usingSubscDAO();
+$using_list=$usingsubscDAO->get_using_by_id_home($member->ID);
+var_dump($using_list);
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -86,13 +94,14 @@ if(!empty($_SESSION['member'])){
     <div class="border">
         <h1>通知一覧</h1>
         <ul>
-            <li> </li>
+            <li></li>
             <li> </li>
             <li> </li>
         </ul>
 
 
     </div>
+    <input type="hidden" name="id" value="<?= $member->ID?>" id="memberID">
     <script src="js/calendar.js" type="text/javascript"></script>
     
 </body>
