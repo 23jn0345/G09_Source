@@ -3,23 +3,48 @@
     if(session_status()===PHP_SESSION_NONE){
         session_start();
     }
-
+    
     require_once './DAO/subscRegistrationDAO.php';
+    require_once './DAO/subscUpdateDAO.php';
+    
+
+        $subName    = "";
+        $detail     = "";
+        $image      = "";
+        $category   = "";
+        $aliasName  = "";
+        $shortName  = "";
+        $url        = "";
+
+    
+        $errs               = "";
+        $image              = "";
+        $returnname         = "";
+        $returndetail       = "";
+        $returnimage        = "";
+        $returncategory     = "";
+        $returnaliasname    = "";
+        $returnshortname    = "";
+        $returnurl          = "";
+
+    if(!empty($_SESSION['update'])){
+        $subscid  = $_SESSION['update'];
+        $subscUpdateDAO = new SubscUpdateDAO;
+        $subscData=$subscUpdateDAO->getsubsc($subscid);
+        $subName    = $subscData[0];
+        $detail     = $subscData[1];
+        $image      = $subscData[2];
+        $category   = $subscData[3];
+        $aliasName  = $subscData[4];
+        $shortName  = $subscData[5];
+        $url        = $subscData[6];
+       
+    }
+
     $subscRegiDAO = new subscRegiDAO;
     $freeTime_list = $subscRegiDAO->get_freetime();
     $interval_list = $subscRegiDAO->get_interval();
-
-
-    
-        $errs = "";
-        $image ="";
-        $returnname       = "";
-        $returndetail     = "";
-        $returnimage      = "";
-        $returncategory   = "";
-        $returnaliasname  = "";
-        $returnshortname  = "";
-        $returnurl        = "";
+        
         
        
         if(isset($_SESSION['returnSubsc'])){  
@@ -31,7 +56,7 @@
             $returnaliasname  = $returnSubsc[4];
             $returnshortname  = $returnSubsc[5];
             $returnurl        = $returnSubsc[6];
-            session_destroy();
+            
         
         }elseif($_SERVER['REQUEST_METHOD']==='POST'){    
 
@@ -117,6 +142,7 @@
         <spam style="color:red"><?= $errs ?></span>
     <?php endif ?>
         <div class="name">
+        <?= var_dump($_SESSION['update'])?>
         <p>アップロード画像</p>
         <input type="file" name="image">
         

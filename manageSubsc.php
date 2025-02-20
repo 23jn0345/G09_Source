@@ -9,7 +9,16 @@
       $subsc_list = $subscDAO->get_subsc_by_keyword($keyword);
     }
 
-    
+    if($_SERVER['REQUEST_METHOD']==='POST'){
+            
+
+        if(!empty($_POST['updata'])){
+            $_SESSION['updata']=$_POST['updata'];
+            header('Location:subscUpdate.php');
+            exit;
+            
+        }
+    }
 
 ?>
 
@@ -40,14 +49,16 @@
     <?php else :?>
         <br>
     <?php endif;?></h2>
-
+    <?= var_dump($_SESSION['update'])?>
     <?php foreach($subsc_list as $subsc) : ?>
     <div class="result">
         <table border="1">
+        <form action="" method="POST">
             <tr>
                 <th rowspan="4"><img src="images/<?= $subsc->image ?>"></th>
                 <th colspan="2"><?= $subsc->subName ?></th>
-                <td rowspan="4" align ="center" ><button onclick="location.href='subscUpdate.php'">編集</button></td>
+                <td rowspan="4" align ="center" ><button type="submit" name="updata" value ="<?= $subsc->subId ?>">編集</button></td>
+                
             </tr>
             <br>
             <?php $data_list = $subscDAO->get_subscdata($subsc->subId); ?>
@@ -67,7 +78,7 @@
                 <th>ジャンル</th>
                 <td><?= $subsc->genreName?></td>
             </tr>
-
+            </form>
         </table>
     </div>
     <?php endforeach ?>

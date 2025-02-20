@@ -1,35 +1,24 @@
 <?php
 require_once 'DAO.php';
 #[\AllowDynamicProperties]
-class regiSubsc{
+class subsc{
     public  string  $subName;
     public  string  $detail;
-    public  string  $image;
-    public  string  $genreId;
     public  string  $aliasName;
     public  string  $shortName;
+    public  string  $image;
     public  string  $url; 
-}
-#[\AllowDynamicProperties]
-class freeTimeData{
-    public int $kikanId;
-    public string $name;
-    public int $date;
-}
-#[\AllowDynamicProperties]
-class intervalData{
-    public int $kikanId;
-    public string $name;
-    public int $date;
+    public  string  $genreId;
 }
 
+
 #[\AllowDynamicProperties]
-class regiConfirmationDAO{
+class subscUpdateDAO{
 
     public function get_subsc($subID){
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT *
+        $sql = "SELECT subName,detail,aliasName,shortName,image,url,genreId
 	            FROM subsc 
 		        WHERE SubID =:subID";
 

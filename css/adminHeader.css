@@ -1,0 +1,28 @@
+header a{	
+	text-decoration:none;
+	border-radius:10px;
+	background:#dcdcdc;
+	margin:5px;
+	padding:5px;
+	display: block;
+	width: 205px;
+	
+}
+nav ul{
+	margin: 0px;
+	padding-left: 0px;
+	overflow: hidden;
+	
+}
+nav li{
+	list-style-type: none;
+	float: left;
+	padding-left: 490px;
+	
+}
+header{
+	color: indigo;
+    text-align: center;
+    font-size: 17px;
+}
+
