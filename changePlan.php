@@ -122,6 +122,7 @@ if(isset($_GET['subID'])){
     align-items: center;
     gap: 20px;  /* チェックボックスとボタンの間隔 */
     margin: 20px 0;
+    margin-left: 500px;
     }
 
         .favorite-checkbox {
@@ -145,9 +146,9 @@ if(isset($_GET['subID'])){
         <h1>サブスル</h1>
         <nav>
             <ul>
-                <li><a href="home.html">家計簿閲覧</a></li>
-                <li><a href="subscSearch.html">サブスク検索</a></li>
-                <li><a href="usingSubsc.html">利用中のサブスク</a></li>
+                <li><a href="home.php">家計簿閲覧</a></li>
+                <li><a href="subscSearch.php">サブスク検索</a></li>
+                <li><a href="usingSubsc.php">利用中のサブスク</a></li>
             </ul>
         </nav>
     </header>

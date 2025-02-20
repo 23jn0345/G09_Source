@@ -43,29 +43,32 @@ $using_list=$usingsubscDAO->get_using_by_id($member->ID);
   <p class="title">利用中のサブスク</p>
   <button class="reco_button" onclick="location.href='recommend.php'">お気に入り一覧</button></p>
   <div class="result">
-    <div class="content">
+   
     <?php if(empty($using_list)) : ?>
     <p>利用中のサブスクはありません</p>
     <?php else: ?>
         <?php foreach($using_list as $using) : ?>
-          
+          <div class="content">
+          <img src="images/<?= $using['image'] ?>">
+          </div>
           <table class="table1">
-           
-        <th scope="col"><?= $using['SubName'] ?>
-       
+           <tr>
+        <th colspan="2"><?= $using['SubName'] ?><button class="planbutton" onclick="location.href='changePlan.php?subID=<?php echo urlencode($using['SubID']); ?>'">変更・解除</button>
+        </th></tr>
+        <tr>
         <th scope="col">支払い間隔</th>
         <th scope="col">料金</th>
         </tr>
              
-        <td scope="row"> <img src="images/<?= $using['image'] ?>"></td>
+         
         <td><?= $using['date'] ?>日</td>
         <td><?= $using['Price'] ?>円</td>
         
-        <th><button class="planbutton" onclick="location.href='changePlan.php?subID=<?php echo urlencode($using['SubID']); ?>'">変更・解除</button></th>
+        
      
     </table>
     <br>
-  </div>
+  
         </div>
 <?php endforeach; ?>
 <?php endif ?>

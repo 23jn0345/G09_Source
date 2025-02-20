@@ -5,11 +5,22 @@
     font-size: 40px;
 
 }
-.table1{
+ .table1{
+
+display: flex;
+margin: 10px;
+margin-left: 520px;
+ }
+
+.content {
+    
+   
+    position: relative;
+    
     margin-left: 500px;
+    float: left;
+   
 }
-
-
 .table1 th{
     width: 200px;
     text-align: center;
@@ -44,5 +55,14 @@
     font-size: 20px;
     background-color:rgb(54, 147, 240) ;
     color: white;
-    margin-bottom: 20px;
+    margin-left: 25px;
+}
+.content img {
+    display: flex;
+    text-align: center;
+    width: 230px;
+    height: 120px;
+    vertical-align: auto;
+    align-items: center;
+    padding-top: 5px;
 }

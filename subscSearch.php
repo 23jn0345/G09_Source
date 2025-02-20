@@ -89,7 +89,7 @@ $subscDAO = new subscDAO();
             <div class="result">
                 <div class="content">
                     <img src="images/<?= $result->image?>" alt="画像">
-                </div>
+        </div>
                 <table border="1" class="content">
                     <tr>
                         <th colspan="2">
@@ -106,6 +106,7 @@ $subscDAO = new subscDAO();
                         <td><?= $result->price?>円</td>
                     </tr>
                 </table>
+            </div>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
