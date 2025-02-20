@@ -80,5 +80,20 @@ WHERE usingsubsc.ID = :ID";
         $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
         $stmt->execute();
     }
+    public function update_subscribe(int $ID,int $subID,int $planID,string $endFree, string $nextPay){
+        $dbh = DAO::get_db_connect(); 
+
+        $sql = "update  usingsubsc set PlanID = :planID,EndFree = :EndFree,NextPay=:NextPay where  ID = :ID and SubID = :subID"; 
+        $stmt = $dbh->prepare($sql); // SQLを実行する 
+        $stmt->bindValue(':ID',$ID,PDO::PARAM_INT);
+        $stmt->bindValue(':subID',$subID,PDO::PARAM_INT);
+        $stmt->bindValue(':planID',$planID,PDO::PARAM_INT);
+
+        $stmt->bindValue(':EndFree',$endFree,PDO::PARAM_INT);
+        $stmt->bindValue(':NextPay',$nextPay,PDO::PARAM_INT);
+
+        $stmt->execute();
+    }
+
 }
 

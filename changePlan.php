@@ -175,10 +175,10 @@ if(isset($_GET['subID'])){
 
         <div class="action-row">
             <label class="favorite-checkbox">
-                <input type="checkbox" id="favorite" <?= $isFavorite ? 'checked' : ''?> value="<?= $subID ?>">
+                <input type="checkbox" id="favorite" <?= $isFavorite ? 'checked' : ''?> value="<?= $_GET['subID'] ?>">
                 お気に入り
             </label>
-            <button type="submit">サブスル登録変更</button>
+            <button onclick="location.href='updateContract.php?subID=<?php echo urlencode($_GET['subID']); ?>'">サブスル登録変更</button>
              
         </div>
 
