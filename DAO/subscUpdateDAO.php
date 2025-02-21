@@ -3,7 +3,7 @@ require_once 'DAO.php';
 #[\AllowDynamicProperties]
 class subsc{
     public  string  $subName;
-    public  string  $detail;
+    public  string  $setumei;
     public  string  $aliasName;
     public  string  $shortName;
     public  string  $image;
@@ -18,7 +18,7 @@ class subscUpdateDAO{
     public function get_subsc($subID){
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT subName,detail,aliasName,shortName,image,url,genreId
+        $sql = "SELECT subName,setumei,aliasName,shortName,image,url,genreId
 	            FROM subsc 
 		        WHERE SubID =:subID";
 

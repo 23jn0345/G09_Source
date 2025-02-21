@@ -1,17 +1,23 @@
 <?php
     require_once './DAO/userDetailDAO.php';
     
+    // if(isset($_SESSION['subCount'])){
+        // $subCount  = $_SESSION['subCount'];
         $errs = "";
         $id = $_GET['id'];
+        // $subCount = $_GET['subCount'];
         $userDetailDAO = new userDetailDAO();
         $userDetail = $userDetailDAO->get_user($id);
-        $subid =$userDetail->useSubId;
-        if($subid !=""){
-            $useSubsc_list = $userDetailDAO->get_use_subsc($id);
-        }else{
-            $errs ="なし";
-        }
-            
+        $useSubsc_list = $userDetailDAO->get_use_subsc($id);
+        // if($subCount != 0){
+        //     $useSubId=$userDetail->useSubId;
+        //     if($useSubId != null){
+        //         $useSubsc_list = $userDetailDAO->get_use_subsc($id);
+        //     }else{
+        //         $err ="なし";
+        //     }
+        // }
+    // }
 
 ?>
 
@@ -31,37 +37,37 @@
         </div>
             
         <br>
-
+    
         <div class="user">
-                    <table border="1">
-            
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">名前
-            <th scope="col">生年月日</th> 
-            <th scope="col">性別</th> 
-            <th scope="col">登録サブスク</th>
-        </tr>
-        <tr>
-            <td scope="row"><?= $userDetail->id ?></td>
-            <td scope="row"><?= $userDetail->name ?></td>
-            <td scope="row"><?= $userDetail->BirthDay ?></td>
-            <td><?php if($userDetail->gender == 0) : ?>
-                    男 
-                <?php else: ?>
-                    女
-                <?php endif;?>
-            </td>
-            <td>
-                <?php if($errs !=""): ?>
-                    <?php foreach($useSubsc_list as $useSubsc) : ?>
-                            <?= $useSubsc->subName ?><br>
-                    <?php endforeach ?>
-                <?php elseif($errs =="なし"): ?>
-                    <?= $errs ?> 
-                <?php endif ?>
-            </td>
-        </tr>
+        <table border="1">
+        <?php var_dump($userDetail) ?>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">名前
+                <th scope="col">生年月日</th> 
+                <th scope="col">性別</th> 
+                <th scope="col">登録サブスク</th>
+            </tr>
+            <tr>
+                <td scope="row"><?= $userDetail->id ?></td>
+                <td scope="row"><?= $userDetail->name ?></td>
+                <td scope="row"><?= $userDetail->BirthDay ?></td>
+                <td><?php if($userDetail->gender == 0) : ?>
+                        男 
+                    <?php else: ?>
+                        女
+                    <?php endif;?>
+                </td>
+                <td>
+                    <?php if($errs ==""): ?>
+                        <?php foreach($useSubsc_list as $useSubsc) : ?>
+                                <?= $useSubsc->subName ?><br>
+                        <?php endforeach ?>
+                    <?php elseif($errs =="なし"): ?>
+                        <?= $errs ?> 
+                    <?php endif ?>
+                </td>
+            </tr>
         </table>
         <br>
         <button type="submit" name="delete">削除</button>

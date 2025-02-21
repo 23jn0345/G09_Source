@@ -3,12 +3,12 @@ require_once 'DAO.php';
 
 #[\AllowDynamicProperties]
 class userDetail{
-    public string $id;
+    public int $id;
     public string $name;
     public string $password;
-    public string $birthday;
+    public int $birthday;
     public int $gender;
-    public string $useSubId;
+    public int $useSubId;
 }
 
 #[\AllowDynamicProperties]
@@ -24,7 +24,7 @@ class userDetailDAO{
 
         $dbh = DAO::get_db_connect();
 
-        $sql = "SELECT member.id,name,BirthDay,gender,UseSubId
+        $sql = "SELECT member.id,name,BirthDay,gender,useSubId
 	            FROM member 
 		        LEFT OUTER JOIN usingsubsc ON member.id = usingsubsc.id
                 WHERE member.id = :id";
@@ -44,7 +44,7 @@ class userDetailDAO{
     public function get_use_subsc(int $userid){
         
         $dbh = DAO::get_db_connect();
-        $subName =1;
+        
         $sql = "SELECT subName 
 	            FROM member 
 		        LEFT OUTER JOIN usingsubsc ON member.id = usingsubsc.id
@@ -52,17 +52,13 @@ class userDetailDAO{
                 WHERE member.id = :id";
 
         $stmt = $dbh->prepare($sql);
-        
-            $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
+    
+        $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
 
-            $stmt->execute();
-        if($stmt != 1){
-            while($row = $stmt->fetchObject('useSubsc')){
-                $data[]=$row;
-            }
-        }
-        else{
-            $data = NULL;
+        $stmt->execute();
+            
+        while($row = $stmt->fetchObject('useSubsc')){
+            $data[]=$row;
         }
 
         return $data;

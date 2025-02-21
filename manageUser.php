@@ -10,11 +10,12 @@
 
     $userDAO = new userDAO();
     $user_list = $userDAO->get_user();
-
+    $subCount = 0;
     if(isset($_GET['keyword']) && $_GET['keyword'] !== ''){
       $keyword = $_GET['keyword'];
       $user_list = $userDAO->get_user_by_keyword($keyword);
     }
+    
 
 ?>
 
@@ -45,33 +46,37 @@
           
         <div class="user">
           <table border="1">
-            <thead>
-              <tr>
-                <th scope="col">ID</a></th>
-                <th scope="col">ユーザー名</a></th>
-                <th scope="col">生年月日</th>
-                <th scope="col">性別</th>
-                <th scope="col">登録サブスク数</th>
-              </tr>
-            </thead>
             
-            <?php foreach($user_list as $user) : ?>
-              <tbody>
+              <thead>
                 <tr>
-                  <td scope="row"><?= $user->id ?></td>
-                  <td scope="row"><?= $user->name ?></td>
-                  <td><?= $user->BirthDay ?></td>
-                  <td><?php if($user->gender == 0) : ?>
-                        男 
-                      <?php else: ?>
-                        女
-                      <?php endif;?>
-                  </td>
-                  <td><?= $user->subCount ?></td>
-                  <td><a href="userDetail.php?id=<?= $user->id ?>">利用者詳細</td>
+                  <th scope="col">ID</a></th>
+                  <th scope="col">ユーザー名</a></th>
+                  <th scope="col">生年月日</th>
+                  <th scope="col">性別</th>
+                  <th scope="col">登録サブスク数</th>
                 </tr>
-              </tbody>
-            <?php endforeach ?>
+              </thead>
+              
+              <?php foreach($user_list as $user) : ?>
+                <tbody>
+                  <tr>
+                    <td scope="row"><?= $user->id ?></td>
+                    <td scope="row"><?= $user->name ?></td>
+                    <td><?= $user->BirthDay ?></td>
+                    <td><?php if($user->gender == 0) : ?>
+                          男 
+                        <?php else: ?>
+                          女
+                        <?php endif;?>
+                    </td>
+                    <td><?= $subCount=$user->subCount ?></td>
+                    <td><a href="userDetail.php?id=<?= $user->id ?>">利用者詳細 </a></td>
+                    
+                  </tr>
+                </tbody>
+              <?php endforeach ?>
+              
+            </form>
           </table>
         </div>
           <br>

@@ -27,17 +27,11 @@
         $returnshortname    = "";
         $returnurl          = "";
 
-    if(!empty($_SESSION['update'])){
-        $subscid  = $_SESSION['update'];
+    if(!empty($_SESSION['id'])){
+        $subscid  = $_SESSION['id'];
         $subscUpdateDAO = new SubscUpdateDAO;
-        $subscData=$subscUpdateDAO->getsubsc($subscid);
-        $subName    = $subscData[0];
-        $detail     = $subscData[1];
-        $image      = $subscData[2];
-        $category   = $subscData[3];
-        $aliasName  = $subscData[4];
-        $shortName  = $subscData[5];
-        $url        = $subscData[6];
+        $subscData=$subscUpdateDAO->get_subsc($subscid);
+        
        
     }
 
@@ -138,33 +132,34 @@
         </div>
 
     <form method = "POST" action ="">
+    
     <?php if($errs!=null): ?>
         <spam style="color:red"><?= $errs ?></span>
     <?php endif ?>
         <div class="name">
-        <?= var_dump($_SESSION['update'])?>
+        <?php var_dump($subscData ) ?>
         <p>アップロード画像</p>
         <input type="file" name="image">
         
             <p>サブスク名<br>
-                <input type="text" name="name" size="50px" value ="<?php if($subName !="" ) :?> <? $subName ?> <?php elseif($returnname != ""): ?> <?=$returnname ?><?php endif ?>">
+                <input type="text" name="name" size="50px" value ="<?php if($subscData->subName !="" ) :?> <?=$subscData->subName ?> <?php elseif($returnname != ""): ?> <?=$returnname ?><?php endif ?>">
             </p>
             <p>略称<br>
-                <input type="text" name="shortName" size="50px" value ="<?php if($shortName !="" ) :?> <? $shortName ?> <?php elseif($returnshortname != ""): ?> <?=$returnshortname ?><?php endif ?>">
+                <input type="text" name="shortName" size="50px" value ="<?php if($subscData->shortName !="" ) :?> <?=$subscData->shortName ?> <?php elseif($returnshortname != ""): ?> <?=$returnshortname ?><?php endif ?>">
             </p>
             <p>別名<br>
-                <input type="text" name="aliasName" size="50px" value ="<?php if($aliasName !="" ) :?> <? $aliasName ?> <?php elseif($returnaliasname != ""): ?> <?=$returnaliasname ?><?php endif ?>">
+                <input type="text" name="aliasName" size="50px" value ="<?php if($subscData->aliasName !="" ) :?> <?=$subscData->aliasName ?> <?php elseif($returnaliasname != ""): ?> <?=$returnaliasname ?><?php endif ?>">
             </p>
             <br>
         </div>
         <div class="category">
-            <input type="radio" id="50001" name="category" value="50001" <?php if($category !="" ) :?> checked <?php elseif($returncategory == ""): ?>checked<?php elseif($returncategory == "50001") :?> checked <?php endif ?>  />
+            <input type="radio" id="50001" name="category" value="50001" <?php if($subscData->genreId =="50001" ) :?> checked <?php elseif($returncategory == "50001") :?> checked <?php endif ?>  />
             <label for="cate">動画配信</label>
-            <input type="radio" id="50002" name="category" value="50002" <?php if($returncategory == "50002"): ?>checked <?php endif ?>/>
+            <input type="radio" id="50002" name="category" value="50002" <?php if($subscData->genreId =="50002" ) :?> checked <?php elseif($returncategory == "50002") :?> checked <?php endif ?>  />
             <label for="cate">音楽配信</label>
-            <input type="radio" id="50003" name="category" value="50003" <?php if($returncategory == "50003"): ?>checked <?php endif ?>/>
+            <input type="radio" id="50003" name="category" value="50003" <?php if($subscData->genreId =="50003" ) :?> checked <?php elseif($returncategory == "50003") :?> checked <?php endif ?>  />
             <label for="cate">書籍</label>
-            <input type="radio" id="50004" name="category" value="50004" <?php if($returncategory == "50004"): ?>checked <?php endif ?>/>
+            <input type="radio" id="50004" name="category" value="50004" <?php if($subscData->genreId =="50004" ) :?> checked <?php elseif($returncategory == "50004") :?> checked <?php endif ?>  />
             <label for="cate">食品</label>
         </div>
         <br>
@@ -175,7 +170,8 @@
 
                         <select name="interval<?= $i?>">
                         <?php foreach($interval_list as $interval): ?>
-                                <option value =<?= $interval->date ?>><?= $interval->date ?>日</option>
+                            <option value=-1 selected hidden >選択してください</option>
+                            <option value =<?= $interval->date ?>><?= $interval->date ?>日</option>
                         <?php endforeach ?>
                         </select>
                         料金<?= $i ?>
@@ -187,6 +183,7 @@
                         無料期間
                         <select name="free<?= $i?>">
                         <?php foreach($freeTime_list as $freeTime): ?>
+                            <option value=-1 selected hidden >選択してください</option>
                             <option value=<?= $freeTime->date ?>><?= $freeTime->date ?>日</option>
                         <?php endforeach ?>
 
@@ -198,11 +195,12 @@
         </div>
 
         <br>
-        <p>説明　　　　　<input type="text" class="detail" size="55px" name="detail" value ="<?php if($returndetail != ""): ?> <?=$returndetail ?><?php endif ?>" ></p>
-        <p>公式サイトURL<input type="text" name = "url" size="55px" value ="<?php if($returnurl != ""): ?> <?=$returnurl ?><?php endif ?>" ></p>
+        <p>説明　　　　　<textarea  class="detail" rows ="4"cols="50" name="detail" ><?php if($subscData->setumei !=""):?> <?= $subscData->setumei ?> <?php elseif($returndetail != ""): ?> <?=$returndetail ?><?php endif ?></textarea></p>
+        <p>公式サイトURL<input type="text" name = "url" size="55px" value ="<?php if($subscData->url !=""):?> <?= $subscData->url ?> <?php elseif($returnurl != ""): ?> <?=$returnurl ?><?php endif ?>" ></p>
         <br>
         <button type="submit" name = submit value = "submit">確認画面へ</button>
         <button type="submit" name = return value = "return">管理画面へ戻る</button>
+        
     </form>
     
 </body>
