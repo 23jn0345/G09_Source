@@ -1,25 +1,18 @@
-function callPhpMethod(ID){
-  console.log("ID→",ID);
+async function callPhpMethod(ID){
 
-  fetch('./DAO/usingSubscDAO.php',{
+  response = await fetch('./DAO/usingSubscDAO.php',{
     method: 'POST',
     headers:{'Content-Type': 'application/x-www-form-urlencoded',},
     body:'action=get_using_by_id_efnp&param='+encodeURIComponent(ID)
-  })
-  .then(response => response.json()).then(data =>{
+  });
+  const data = await response.json();
     // 日付を使用した処理を実行
     // 変数に入れたり return したり
-      console.log("レスポンス→",response)
-      console.log("data→",data[1]);
-      var endfree = data[0].endfree;
-      var nextpay = data[0].nextpay;
-      console.log("無料期間終了日→",endfree);
-      console.log("次回支払い日→",nextpay);
-      var data = [
+      const { endfree, nextpay } = data.result[0];
+      var resultdata = [
         [endfree,nextpay]
       ];
-      return data;
-  })
+      return resultdata;
 }
 
 function generate_year_range(start, end) {
@@ -75,7 +68,7 @@ function generate_year_range(start, end) {
     showCalendar(currentMonth, currentYear);
   }
   
-  function showCalendar(month, year) {
+  async function showCalendar(month, year) {
   
     var firstDay = ( new Date( year, month ) ).getDay();
   
@@ -108,15 +101,36 @@ function generate_year_range(start, end) {
                 cell.setAttribute("data-month_name", months[month]);
                 cell.className = "date-picker";
                 cell.innerHTML = "<span>" + date + "</span>";
-  
+                //console.log("today.getMonth()    ",today.getMonth() );
+
                 if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
                     cell.className = "date-picker selected";
                 }
+                
 
                 /* ここに無料期間と次回支払いを取得してカレンダーに反映する処理？ */
-                var memberid = document.getElementById("memberID");
-                var endFree = callPhpMethod(memberid.value);
-                //console.log("無料期間終了日→",endFree);
+                const memberid = document.getElementById("memberID");
+                const all = await callPhpMethod(memberid.value);
+                const endfree = all[0][0];
+                const nextpay = all[0][1];
+                var days;
+                if ( date < 10 && month < 10){
+                  days = year + "-0" + month + "-0" + date;
+                }
+                else if( date < 10 && month >= 10){
+                  days = year + "-" + month + "-0" + date;
+                }
+                else if( date >= 10 && month < 10){
+                  days = year + "-0" + month + "-" + date;
+                }
+                else{
+                  days = year + "-" + month + "-" + date;
+                }
+                console.log("endfree→",endfree);
+                console.log("days→",days);
+                if ( endfree === days){
+                  cell.className = "date-picker.endfree";
+                }
                 row.appendChild(cell);
                 date++;
             }
