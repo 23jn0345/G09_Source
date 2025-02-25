@@ -8,10 +8,13 @@ async function callPhpMethod(ID){
   const data = await response.json();
     // 日付を使用した処理を実行
     // 変数に入れたり return したり
-      const { endfree, nextpay } = data.result[0];
+    for(var i = 0; i < data.result.length; i++){
+      const { endfree, nextpay } = data.result[i];
       var resultdata = [
         [endfree,nextpay]
       ];
+    }
+      
       return resultdata;
 }
 
@@ -92,6 +95,8 @@ function generate_year_range(start, end) {
                 cell.appendChild(cellText);
                 row.appendChild(cell);
             } else if (date > daysInMonth(month, year)) {
+                console.log("year ==>",year);
+
                 break;
             } else {
                 cell = document.createElement("td");
@@ -101,36 +106,57 @@ function generate_year_range(start, end) {
                 cell.setAttribute("data-month_name", months[month]);
                 cell.className = "date-picker";
                 cell.innerHTML = "<span>" + date + "</span>";
-                //console.log("today.getMonth()    ",today.getMonth() );
+                // console.log("today.getMonth()    ",today.getMonth() );
 
                 if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
                     cell.className = "date-picker selected";
                 }
                 
 
-                /* ここに無料期間と次回支払いを取得してカレンダーに反映する処理？ */
+                // 無料期間と次回支払いを取得してカレンダーに反映する処理
                 const memberid = document.getElementById("memberID");
                 const all = await callPhpMethod(memberid.value);
-                const endfree = all[0][0];
-                const nextpay = all[0][1];
-                var days;
-                if ( date < 10 && month < 10){
-                  days = year + "-0" + month + "-0" + date;
+                console.log("start month ==>",month);
+                month = month + 1;
+                if(date < 10){
+                  date = "0" + date;
                 }
-                else if( date < 10 && month >= 10){
-                  days = year + "-" + month + "-0" + date;
+                if(month < 10 && String(month).length < 2){
+                  month = "0" + month;
                 }
-                else if( date >= 10 && month < 10){
-                  days = year + "-0" + month + "-" + date;
+                
+                for(var i = 0; i < all.length; i++){
+                  const endfree = all[i][0];
+                  console.log(endfree);
+                  const nextpay = all[i][1];
+                  console.log(nextpay);
+                  const [endyear,endmonth,endday] = endfree.split('-');
+                  const [payyear,paymonth,payday] = nextpay.split('-');                              
+                  /*console.log("payday→",payday);
+                  console.log("date→",date);
+                  console.log("paymonth→",paymonth);
+                  console.log("month→",month);
+                  console.log("payyear→",payyear);
+                  console.log("year→",year);*/
+                  if(date == endday && year == endyear && month == endmonth){
+                      cell.className = "date-picker endfree";
+                  }
+                  if(date == payday && year == payyear && month == paymonth){
+                      cell.className = "date-picker nextpay";
+                  }
+                }               
+                if(date < 10){
+                  date = date.replace("0","");
+                  date = parseInt(date);
                 }
-                else{
-                  days = year + "-" + month + "-" + date;
+                if(month < 10){
+                  month = month.replace("0","");
+                  month = parseInt(month);
                 }
-                console.log("endfree→",endfree);
-                console.log("days→",days);
-                if ( endfree === days){
-                  cell.className = "date-picker.endfree";
-                }
+                console.log("end month ==>",month);
+
+                month = month - 1;
+
                 row.appendChild(cell);
                 date++;
             }

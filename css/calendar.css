@@ -36,7 +36,12 @@
 .date-picker.endfree {
   font-weight: bold;
   color: #fff;
-  background: lightblue;
+  background: blue;
+}
+.date-picker.nextpay {
+  font-weight: bold;
+  color: black;
+  background: yellow;
 }
 .date-picker.selected {
   font-weight: bold;
