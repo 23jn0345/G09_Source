@@ -10,7 +10,7 @@
 
     $userDAO = new userDAO();
     $user_list = $userDAO->get_user();
-    $subCount = 0;
+    
     if(isset($_GET['keyword']) && $_GET['keyword'] !== ''){
       $keyword = $_GET['keyword'];
       $user_list = $userDAO->get_user_by_keyword($keyword);
@@ -46,7 +46,7 @@
           
         <div class="user">
           <table border="1">
-            
+          
               <thead>
                 <tr>
                   <th scope="col">ID</a></th>
@@ -69,14 +69,17 @@
                           女
                         <?php endif;?>
                     </td>
-                    <td><?= $subCount=$user->subCount ?></td>
-                    <td><a href="userDetail.php?id=<?= $user->id ?>">利用者詳細 </a></td>
-                    
+                    <form action="userDetail.php?id" method="GET">
+                    <td><?= $user->subCount ?></td>
+                    <td><input type ="submit" name="submit" value="利用者詳細">
+                        <input type ="hidden" name="id[]" value="<?= $user->id ?>">
+                        <input type="hidden" name="id[]" value ="<?= $user->subCount ?>"></td>
+                      </form>
                   </tr>
                 </tbody>
               <?php endforeach ?>
               
-            </form>
+            
           </table>
         </div>
           <br>

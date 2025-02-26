@@ -53,7 +53,7 @@
     <?php else :?>
         <br>
     <?php endif;?></h2>
-    <?php var_dump($_SESSION['id'] ) ?>
+    
     <?php foreach($subsc_list as $subsc) : ?>
     <div class="result">
         <table border="1">

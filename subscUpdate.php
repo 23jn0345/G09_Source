@@ -81,23 +81,23 @@
                 
                 
                 if(empty($errs)){
-                    $regiSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
-                    $regiDate1 = [$interval1,$amount1,$free1];
+                    $updateSubsc = [$name,$detail,$image,$category,$aliasName,$shortName,$url];
+                    $updateDate1 = [$interval1,$amount1,$free1];
                     
                     session_regenerate_id(true);
-                    $_SESSION['regiData1']=$regiDate1;
+                    $_SESSION['updateData1']=$updateDate1;
                     
                     if($amount2 !== ''){
-                        $regiDate2 = [$interval2,$amount2,$free2];
-                        $_SESSION['regiData2']=$regiDate2;
+                        $updateDate2 = [$interval2,$amount2,$free2];
+                        $_SESSION['updateData2']=$updateDate2;
                     }
                     if($amount3 !== ''){
-                        $regiDate3 = [$interval3,$amount3,$free3];
-                        $_SESSION['regiData3']=$regiDate3;
+                        $updateDate3 = [$interval3,$amount3,$free3];
+                        $_SESSION['updateData3']=$updateDate3;
                     }
-                    if($regiSubsc !==false){
-                        $_SESSION['regiSubsc']=$regiSubsc;
-                        header('Location:regiConfirmation.php');
+                    if($updateSubsc !==false){
+                        $_SESSION['updateSubsc']=$updateSubsc;
+                        header('Location:updateConfirmation.php');
                         exit;
                     }
                 
@@ -137,7 +137,7 @@
         <spam style="color:red"><?= $errs ?></span>
     <?php endif ?>
         <div class="name">
-        <?php var_dump($subscData ) ?>
+        
         <p>アップロード画像</p>
         <input type="file" name="image">
         

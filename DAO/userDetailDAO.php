@@ -10,6 +10,14 @@ class userDetail{
     public int $gender;
     public int $useSubId;
 }
+class nonSubscUser{
+    public int $id;
+    public string $name;
+    public string $password;
+    public int $birthday;
+    public int $gender;
+    
+}
 
 #[\AllowDynamicProperties]
 class useSubsc{
@@ -37,6 +45,27 @@ class userDetailDAO{
 
         
         $data = $stmt->fetchObject('userDetail');
+
+        return $data;
+    }
+
+    public function get_non_subsc_user(int $userid){
+
+        $dbh = DAO::get_db_connect();
+
+        $sql = "SELECT member.id,name,BirthDay,gender
+	            FROM member 
+		        LEFT OUTER JOIN usingsubsc ON member.id = usingsubsc.id
+                WHERE member.id = :id";
+
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        
+        $data = $stmt->fetchObject('nonSubscUser');
 
         return $data;
     }

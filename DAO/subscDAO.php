@@ -91,7 +91,7 @@ public function get_subsc_by_keyword(string $keyword){
     $dbh = DAO::get_db_connect();
 
     $keyword = "%".$keyword."%";
-    $sql = "SELECT subname,image,price,interval.date,genreName
+    $sql = "SELECT subname,image,price,interval.date,genreName,subsc.subID
 	             FROM subsc 
 		        LEFT OUTER JOIN genre ON subsc.GenreID = genre.GenreID
 			    LEFT OUTER JOIN subscplan ON subsc.SubID = subscplan.subID

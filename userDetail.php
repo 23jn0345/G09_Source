@@ -1,23 +1,29 @@
 <?php
     require_once './DAO/userDetailDAO.php';
     
-    // if(isset($_SESSION['subCount'])){
-        // $subCount  = $_SESSION['subCount'];
+    
+        
         $errs = "";
-        $id = $_GET['id'];
-        // $subCount = $_GET['subCount'];
+        $id_count[] = $_GET['id'];
+        
+        $id = (int)$id_count[0][0];
+        $subCount = (int)$id_count[0][1];
+        
         $userDetailDAO = new userDetailDAO();
-        $userDetail = $userDetailDAO->get_user($id);
-        $useSubsc_list = $userDetailDAO->get_use_subsc($id);
-        // if($subCount != 0){
-        //     $useSubId=$userDetail->useSubId;
-        //     if($useSubId != null){
-        //         $useSubsc_list = $userDetailDAO->get_use_subsc($id);
-        //     }else{
-        //         $err ="なし";
-        //     }
-        // }
-    // }
+        if($subCount == 0){
+            if($id != null){
+                $userDetail = $userDetailDAO->get_non_subsc_user($id);
+            }else{
+                $err ="なし";
+                $useSubsc_list =[0,0,0];
+            }
+        }elseif($subCount !=0){
+            $userDetail = $userDetailDAO->get_user($id);
+            $useSubsc_list = $userDetailDAO->get_use_subsc($id);
+        }
+        
+        
+    
 
 ?>
 
@@ -33,6 +39,7 @@
 <body>
     <?php include "adminHeader.php"; ?>
         <div class="title">
+        <?php var_dump($subCount) ?>
             <h1>利用者詳細</h1>
         </div>
             
@@ -40,7 +47,8 @@
     
         <div class="user">
         <table border="1">
-        <?php var_dump($userDetail) ?>
+        <?php var_dump($id) ?>
+        
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">名前
@@ -59,12 +67,12 @@
                     <?php endif;?>
                 </td>
                 <td>
-                    <?php if($errs ==""): ?>
+                    <?php if($errs =="なし"): ?>
+                        <?= $errs ?>
+                    <?php elseif($errs ==""): ?>
                         <?php foreach($useSubsc_list as $useSubsc) : ?>
                                 <?= $useSubsc->subName ?><br>
                         <?php endforeach ?>
-                    <?php elseif($errs =="なし"): ?>
-                        <?= $errs ?> 
                     <?php endif ?>
                 </td>
             </tr>
