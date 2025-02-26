@@ -1,6 +1,7 @@
 <?php 
 require_once 'DAO/MemberDAO.php';
 require_once 'DAO/usingSubscDAO.php';
+require_once 'DAO/PaymentDAO.php';
 if(session_status()===PHP_SESSION_NONE){
     session_start();
 }
@@ -82,14 +83,47 @@ $today = date("Y-m-d");
             </div>
         </div>
         <table class="amount" border="1">
+            <?php
+            try {
+                // PaymentDAOのインスタンス化
+                $paymentDAO = new PaymentDAO();
+                
+                // 現在の年月とユーザーID取得
+                $currentYear = date('Y');
+                $currentMonth = date('m', strtotime(date('Y-m-01').'+1 month'));//翌月月初を支払いの最終日とする
+                $userID = $_SESSION['member']->ID;
+
+                
+                $nextMonth = date('m', strtotime(date('Y-m-01').'+2 month'));//来月分の処理
+                // 支払い情報の計算
+
+
+
+                $result = $paymentDAO->calculate_MonthlyPayments($userID, $currentYear, $currentMonth);
+                $monthlyTotal = $result['total'];
+                $paymentDetails = $result['details'];
+                $nextresult = $paymentDAO->calculate_MonthlyPayments($userID, $currentYear, $nextMonth);
+                $nextmonthlyTotal = $nextresult['total'];
+                $nextpaymentDetails = $nextresult['details'];
+
+            ?>
+   
+
+            <?php
+            } catch (Exception $e) {
+                echo "<p>エラーが発生しました。管理者にお問い合わせください。 $e</p>";
+            }
+            ?>
+            
             <tr>
-                <th>2024年10月</th>
-                <th>2024年11月</th>
+                <th><?php echo $currentYear; ?>年<?php echo $currentMonth - 1; ?>月</th>
+                <th><?php echo $currentYear; ?>年<?php echo $nextMonth - 1; ?>月</th>
             </tr>
             <tr>
-                <td>3000円</td>
-                <td>3000円</td>
+                <td><?php echo number_format($monthlyTotal); ?>円</td>
+                <td><?php echo number_format($nextmonthlyTotal); ?>円</td>
             </tr>
+            
         </table>
    
         

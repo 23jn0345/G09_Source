@@ -2,6 +2,32 @@
 require_once 'DAO.php';  // 基本的なDB接続用クラス
 
 class PaymentDAO {
+
+    /**
+ * 指定された月数分減算する
+ *
+ * @param DateTimeInterface $before 減算前のDateTimeオブジェクト
+ * @param int 月数（指定ない場合は1ヶ月）
+ * @return DateTime DateTimeオブジェクト
+ */
+function subMonth(DateTimeInterface $before, int $month = 1) {
+    // 変更前の月を取得する
+    $beforeMonth = $before->format("n");
+  
+    // 減算する
+    $after       = $before->sub(new DateInterval("P" . $month . "M"));
+    $afterMonth  = $after->format("n");
+  
+    // 減算結果が期待値と異なる場合は、前月の最終日に修正する
+    $tmpAfterMonth = $beforeMonth - $month;
+    $expectAfterMonth = $tmpAfterMonth <= 0 ? $tmpAfterMonth + 12 : $tmpAfterMonth;
+  
+    if ($expectAfterMonth != $afterMonth) {
+      $after = $after->modify("last day of last month");
+    }
+  
+    return $after;
+  }
     // 特定ユーザーの支払い情報を取得
     public function get_payment_Info($userID) {
         try {
@@ -40,6 +66,8 @@ class PaymentDAO {
         try {
             // 支払い情報の取得
             $paymentInfo = $this->get_payment_Info($userID);
+            //var_dump("paymentInfo..",$paymentInfo);
+
             $monthlyTotal = 0;
             $paymentDetails = [];
             
@@ -49,16 +77,17 @@ class PaymentDAO {
                 $interval = new DateInterval('P' . $row['PaymentInterval'] . 'D');
                 $currentDate = new DateTime("$year-$month-01");
 
-              
 
 
-                while ($baseDate <= $currentDate) {
+                while ($baseDate < $currentDate) {
                     $paymentMonth = $baseDate->format('Y-m');
                     $currentYearMonth = $currentDate->format('Y-m');
-                    var_dump("paymentMonth..",$paymentMonth);
-                    var_dump("currentYearMonth..",$currentYearMonth);
+                    $strCurrentYearMonth = date( $currentYearMonth);
+                    $date = new DateTimeImmutable( $strCurrentYearMonth);
+                    $lastMonth = $this->subMonth($date,1)->format('Y-m');
 
-                    if ($paymentMonth === $currentYearMonth) {
+
+                    if ($paymentMonth === $lastMonth) {
                         $monthlyTotal += $row['Price'];
                         $paymentDetails[] = [
                             'SubName' => $row['SubName'],
@@ -70,7 +99,7 @@ class PaymentDAO {
                     }
                     $baseDate->add($interval);
                     $baseDate->add(new DateInterval('P1D')); 
-                    var_dump("baseDate..",$baseDate);
+                    
                 }
             }
             
@@ -84,4 +113,5 @@ class PaymentDAO {
             throw $e;
         }
     }
+
 }

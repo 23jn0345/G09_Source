@@ -8,13 +8,11 @@ async function callPhpMethod(ID){
   const data = await response.json();
     // 日付を使用した処理を実行
     // 変数に入れたり return したり
+    var resultdata =[];
     for(var i = 0; i < data.result.length; i++){
       const { endfree, nextpay } = data.result[i];
-      var resultdata = [
-        [endfree,nextpay]
-      ];
-    }
-      
+      resultdata.push([endfree, nextpay]);
+    } 
       return resultdata;
 }
 
