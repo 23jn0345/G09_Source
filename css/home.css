@@ -7,3 +7,10 @@
     position: relative;
 }
 
+.border {
+    margin: auto;
+    margin-top: 120px;
+    position: relative;
+    top: 120px;
+}
+
