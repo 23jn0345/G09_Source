@@ -13,7 +13,7 @@ else{
 }
 $usingsubscDAO =new usingSubscDAO();
 $using_list=$usingsubscDAO->get_using_by_id_home($member->ID);
-var_dump($using_list);
+$today = date("Y-m-d"); 
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -76,6 +76,9 @@ var_dump($using_list);
                     <option value=11>12月</option>
                 </select>
                 <select id="year" onchange="jump()"></select>
+                <p>🟥今日の日付</p>
+                <p>🟦無料期間終了日</p>
+                <p>🟨次回支払い日</p>
             </div>
         </div>
         <table class="amount" border="1">
@@ -89,14 +92,19 @@ var_dump($using_list);
             </tr>
         </table>
    
-    
+        
 
     <div class="border">
         <h1>通知一覧</h1>
         <ul>
-            <li></li>
-            <li> </li>
-            <li> </li>
+            <?php for($i = 0; $i < count($using_list); $i++){?>
+                <?php if($using_list[$i]->endfree !== null){?>
+                    <?php if(strtotime($using_list[$i]->endfree) > strtotime($today)){?>
+                        <li><?= $using_list[$i]->endfree ?>に<?= $using_list[$i]->subName ?>の無料期間が終了します。</li>
+                    <?php } ?>                   
+                <?php } ?>
+                <li><?= $using_list[$i]->nextpay ?>に<?= $using_list[$i]->subName ?>の支払いがあります。</li> 
+            <?php } ?>        
         </ul>
 
 
