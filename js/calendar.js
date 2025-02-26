@@ -95,7 +95,6 @@ function generate_year_range(start, end) {
                 cell.appendChild(cellText);
                 row.appendChild(cell);
             } else if (date > daysInMonth(month, year)) {
-                console.log("year ==>",year);
 
                 break;
             } else {
@@ -116,7 +115,6 @@ function generate_year_range(start, end) {
                 // 無料期間と次回支払いを取得してカレンダーに反映する処理
                 const memberid = document.getElementById("memberID");
                 const all = await callPhpMethod(memberid.value);
-                console.log("start month ==>",month);
                 month = month + 1;
                 if(date < 10){
                   date = "0" + date;
@@ -127,17 +125,9 @@ function generate_year_range(start, end) {
                 
                 for(var i = 0; i < all.length; i++){
                   const endfree = all[i][0];
-                  console.log(endfree);
                   const nextpay = all[i][1];
-                  console.log(nextpay);
                   const [endyear,endmonth,endday] = endfree.split('-');
                   const [payyear,paymonth,payday] = nextpay.split('-');                              
-                  /*console.log("payday→",payday);
-                  console.log("date→",date);
-                  console.log("paymonth→",paymonth);
-                  console.log("month→",month);
-                  console.log("payyear→",payyear);
-                  console.log("year→",year);*/
                   if(date == endday && year == endyear && month == endmonth){
                       cell.className = "date-picker endfree";
                   }
@@ -153,7 +143,6 @@ function generate_year_range(start, end) {
                   month = month.replace("0","");
                   month = parseInt(month);
                 }
-                console.log("end month ==>",month);
 
                 month = month - 1;
 
