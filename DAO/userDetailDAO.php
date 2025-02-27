@@ -10,6 +10,7 @@ class userDetail{
     public int $gender;
     public int $useSubId;
 }
+#[\AllowDynamicProperties]
 class nonSubscUser{
     public int $id;
     public string $name;
@@ -55,7 +56,6 @@ class userDetailDAO{
 
         $sql = "SELECT member.id,name,BirthDay,gender
 	            FROM member 
-		        LEFT OUTER JOIN usingsubsc ON member.id = usingsubsc.id
                 WHERE member.id = :id";
 
         $stmt = $dbh->prepare($sql);
@@ -91,6 +91,37 @@ class userDetailDAO{
         }
 
         return $data;
+    }
+
+    public function delete_user(int $userid){
+
+        $dbh = DAO::get_db_connect();
+
+        $sql = "DELETE FROM favorite WHERE id = :id";
+
+        $stmt = $dbh->prepare($sql);
+    
+        $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        $sql = "DELETE FROM usingsubsc WHERE id = :id";
+
+        $stmt = $dbh->prepare($sql);
+    
+        $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
+
+        $stmt->execute();
+
+        
+        $sql = "DELETE FROM member WHERE id = :id";
+
+        $stmt = $dbh->prepare($sql);
+    
+        $stmt->bindValue(':id',$userid,PDO::PARAM_INT);
+
+        $stmt->execute();
+            
     }
 
 }

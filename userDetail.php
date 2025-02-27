@@ -5,24 +5,25 @@
         
         $errs = "";
         $id_count[] = $_GET['id'];
-        
+        $userDetailDAO = new userDetailDAO();
         $id = (int)$id_count[0][0];
         $subCount = (int)$id_count[0][1];
         
-        $userDetailDAO = new userDetailDAO();
+        
+        
         if($subCount == 0){
-            if($id != null){
-                $userDetail = $userDetailDAO->get_non_subsc_user($id);
-            }else{
-                $err ="なし";
-                $useSubsc_list =[0,0,0];
-            }
+            $userDetail = $userDetailDAO->get_non_subsc_user($id);
+            $errs ="なし";
+            
         }elseif($subCount !=0){
             $userDetail = $userDetailDAO->get_user($id);
             $useSubsc_list = $userDetailDAO->get_use_subsc($id);
         }
         
-        
+        if(isset($_POST['delete'])){
+            $userDetailDAO->delete_user($id);
+            header('Location:manageUser.php');
+        }
     
 
 ?>
@@ -39,7 +40,7 @@
 <body>
     <?php include "adminHeader.php"; ?>
         <div class="title">
-        <?php var_dump($subCount) ?>
+        
             <h1>利用者詳細</h1>
         </div>
             
@@ -47,7 +48,7 @@
     
         <div class="user">
         <table border="1">
-        <?php var_dump($id) ?>
+        
         
             <tr>
                 <th scope="col">ID</th>
@@ -69,6 +70,7 @@
                 <td>
                     <?php if($errs =="なし"): ?>
                         <?= $errs ?>
+                        
                     <?php elseif($errs ==""): ?>
                         <?php foreach($useSubsc_list as $useSubsc) : ?>
                                 <?= $useSubsc->subName ?><br>
@@ -78,6 +80,8 @@
             </tr>
         </table>
         <br>
-        <button type="submit" name="delete">削除</button>
+        <form method = "POST" action ="">
+            <button type="submit" name="delete">削除</button>
+        </form>
     </body>
 </html>

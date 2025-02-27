@@ -54,7 +54,7 @@
                 $Url=$_POST['url'];
                 $returnSubsc = [$name,$detail,$image,$category,$aliasname,$shortname,$url];
                 $_SESSION['returnSubsc']=$returnSubsc;
-                
+                array_map('unlink', glob("image/$image.*"));
                 header('Location:subscRegistration.php');
                 
                 exit;
@@ -117,6 +117,7 @@
         <div class="title">サブスク登録確認</div>
             <div class="name">
             <p>アップロード画像</p>
+            <img src="images/<?= $image ?>">
             <input type="file" name="image" value="<?php if($image !== "") :?> <?= $image ?> <?php endif ?>" disabled>
                 <p>サブスク名<br>
                     <input type="text" name="name" size="50px" disabled value="<?= $name ?>">

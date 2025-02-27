@@ -54,7 +54,7 @@
                 $Url=$_POST['url'];
                 $returnSubsc = [$name,$detail,$image,$category,$aliasname,$shortname,$url];
                 $_SESSION['returnSubsc']=$returnSubsc;
-                
+                array_map('unlink', glob("image/$image.*"));
                 header('Location:subscUpdate.php');
                 
                 exit;
@@ -123,15 +123,16 @@
         <div class="title">サブスク登録確認</div>
             <div class="name">
             <p>アップロード画像</p>
-            <input type="file" name="image" value="<?php if($image !== "") :?> <?= $image ?> <?php endif ?>" disabled>
+            <img src="images/<?=$image ?>">
+            <input type="file" name="image" id="image" value="<?php if($image !== "") :?><?= $image ?><?php endif ?>" disabled>
                 <p>サブスク名<br>
                     <input type="text" name="name" size="50px" disabled value="<?= $name ?>">
                 </p>
                 <p>略称<br>
-                    <input type="text" name="shortName" size="50px" disabled value="<?php if($shortname !== "") :?> <?= $shortname ?> <?php endif ?>">
+                    <input type="text" name="shortName" size="50px" disabled value="<?php if($shortname !== "") :?><?= $shortname ?><?php endif ?>">
                 </p>
                 <p>別名<br>
-                    <input type="text" name="aliasName" size="50px" disabled value="<?php if($aliasname !== "") :?> <?= $aliasname ?> <?php endif ?>">
+                    <input type="text" name="aliasName" size="50px" disabled value="<?php if($aliasname !== "") :?><?= $aliasname ?><?php endif ?>">
                 </p>
             </div>
             <div class="category">

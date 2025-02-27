@@ -36,9 +36,18 @@
         }elseif($_SERVER['REQUEST_METHOD']==='POST'){    
 
             if(isset($_POST['submit'])){
+                $path           = "images/";
+                $temporary_file = $_FILES['file_name']['tmp_name']; # 一時ファイル名
+                $true_file = $_FILES['file_name']['name']; # 本来のファイル名
+                # is_uploaded_fileメソッドで、一時的にアップロードされたファイルが本当にアップロード処理されたかの確認
+                if (is_uploaded_file($temporary_file)) {
+                    if (move_uploaded_file($temporary_file , $true_file )) {
+                        move_uploaded_file( $_FILES['file1']['tmp_name'], $path.'upload_pic.jpg');
+                    }
+                }
 
-                $file           = "images/$image";
-                $image          = $_POST['image'];
+                
+                $true_file      = $_POST['image'];
                 $name           = $_POST['name'];
                 $shortName      = $_POST['shortName'];
                 $aliasName      = $_POST['aliasName'];
@@ -118,16 +127,17 @@
             <?php echo($errs) ?>
             <div class="name">
             <p>アップロード画像</p>
-            <input type="file" name="image">
+            
+            <input type="file" name="file_name" value ="<?php if($returnimage != ""): ?><?= $returnimage?><?php endif?>">
             
                 <p>サブスク名<br>
-                    <input type="text" name="name" size="50px" value ="<?php if($returnname != ""): ?> <?=$returnname ?><?php endif ?>">
+                    <input type="text" name="name" size="50px" value ="<?php if($returnname != ""): ?><?=$returnname ?><?php endif ?>">
                 </p>
                 <p>略称<br>
-                    <input type="text" name="shortName" size="50px" value ="<?php if($returnshortname != ""): ?> <?=$returnshortname ?><?php endif ?>">
+                    <input type="text" name="shortName" size="50px" value ="<?php if($returnshortname != ""): ?><?=$returnshortname ?><?php endif ?>">
                 </p>
                 <p>別名<br>
-                    <input type="text" name="aliasName" size="50px" value ="<?php if($returnaliasname != ""): ?> <?=$returnaliasname ?><?php endif ?>">
+                    <input type="text" name="aliasName" size="50px" value ="<?php if($returnaliasname != ""): ?><?=$returnaliasname ?><?php endif ?>">
                 </p>
                 <br>
             </div>
@@ -174,8 +184,8 @@
             </div>
 
             <br>
-            <p>説明　　　　　<input type="text" class="detail" size="55px" name="detail" value ="<?php if($returndetail != ""): ?> <?=$returndetail ?><?php endif ?>"></p>
-            <p>公式サイトURL<input type="text" name = "url" size="55px" value ="<?php if($returnurl != ""): ?> <?=$returnurl ?><?php endif ?>"></p>
+            <p>説明　　　　　<input type="text" class="detail" size="55px" name="detail" value ="<?php if($returndetail != ""): ?><?=$returndetail ?><?php endif ?>"></p>
+            <p>公式サイトURL<input type="text" name = "url" size="55px" value ="<?php if($returnurl != ""): ?><?=$returnurl ?><?php endif ?>"></p>
             <br>
             <button type="submit" name = "submit" value = "submit">確認画面へ</button>
             <button type="submit" name = "return" value = "return">管理画面へ戻る</button>
