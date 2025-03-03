@@ -52,9 +52,16 @@
                 $Category=$_POST['category'];
                 $Detail=$_POST['detail'];
                 $Url=$_POST['url'];
-                $returnSubsc = [$name,$detail,$image,$category,$aliasname,$shortname,$url];
+                $returnSubsc = [$name,$detail,$Image,$category,$aliasname,$shortname,$url];
+                
+                $interval1 = $_POST['interval1'];
+                $amount1 = $_POST['amount1'];
+                $free1 = $_POST['free1'];
+                $returnRegiData1=[$interval1,$amount1,$free1];
+                $_SESSION['returnRegiData1'] = $returnRegiData1;
                 $_SESSION['returnSubsc']=$returnSubsc;
-                array_map('unlink', glob("image/$image.*"));
+                $deletePath="images/$image";
+                if(unlink($deletePath));
                 header('Location:subscRegistration.php');
                 
                 exit;
@@ -112,13 +119,13 @@
 <body>
 <?php include "adminHeader.php"; ?>
     
-    <form method = "POST" action ="">
-
+    <form method = "POST" action ="" enctype="multipart/form-data">
+    <?php var_dump($image) ?>
         <div class="title">サブスク登録確認</div>
             <div class="name">
             <p>アップロード画像</p>
             <img src="images/<?= $image ?>">
-            <input type="file" name="image" value="<?php if($image !== "") :?> <?= $image ?> <?php endif ?>" disabled>
+            <input type="hidden" name="image" value="<?php if($image !== "") :?> <?= $image ?> <?php endif ?>" disabled>
                 <p>サブスク名<br>
                     <input type="text" name="name" size="50px" disabled value="<?= $name ?>">
                 </p>

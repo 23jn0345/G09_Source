@@ -10,6 +10,10 @@ class subsc{
     public  string  $url; 
     public  string  $genreId;
 }
+#[\AllowDynamicProperties]
+class subId{
+    public  string  $subId;
+}
 
 
 #[\AllowDynamicProperties]
@@ -28,6 +32,23 @@ class subscUpdateDAO{
         $stmt->execute();
 
         $data = $stmt->fetchObject('subsc');
+
+        return $data;
+    }
+
+    public function get_subID($subName){
+        $dbh = DAO::get_db_connect();
+
+        $sql = "SELECT subId
+	            FROM subsc 
+		        WHERE SubName =:subName";
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':subName',$subName ,PDO::PARAM_STR);
+       
+        $stmt->execute();
+
+        $data = $stmt->fetchObject('subId');
 
         return $data;
     }

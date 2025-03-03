@@ -54,14 +54,20 @@
                 $Url=$_POST['url'];
                 $returnSubsc = [$name,$detail,$image,$category,$aliasname,$shortname,$url];
                 $_SESSION['returnSubsc']=$returnSubsc;
+                if($deleteImage !==$image){
                 array_map('unlink', glob("image/$image.*"));
+                }
+                $_SESSION['id'] = $subId;
                 header('Location:subscUpdate.php');
-                
                 exit;
             }elseif(!empty($_POST['update'])){
                 $updateConfirmationDAO->update_subsc($subId,$name,$detail,$image,$category,$aliasname,$shortname,$url);
                 $updateConfirmationDAO->delete_plan($subId);
-                
+                $deleteImage =$_SESSION['deleteImage'];
+                if($deleteImage !==$image){
+                $deletePath="images/$deleteimage";
+                if(unlink($deletePath));
+                }
 
                 if(isset($_SESSION['updateData1'])){
                     $updateData1  = $_SESSION['updateData1'];
@@ -108,7 +114,7 @@
 
 <head>
     <meta charset="utf-8">
-
+        
     <title>サブスク詳細登録確認</title>
     <link rel="stylesheet" href="css/regiConfirmation.css">
     <link rel="stylesheet" href="css/adminiHeader.css">
@@ -118,13 +124,13 @@
 <body>
 <?php include "adminHeader.php"; ?>
     
-    <form method = "POST" action ="">
-        
+    <form method = "POST" action ="" enctype="multipart/form-data">
+    <?php var_dump($subId) ?>
         <div class="title">サブスク登録確認</div>
             <div class="name">
             <p>アップロード画像</p>
-            <img src="images/<?=$image ?>">
-            <input type="file" name="image" id="image" value="<?php if($image !== "") :?><?= $image ?><?php endif ?>" disabled>
+            <img src="images/<?= $image ?>">
+            <input type="hidden" name="image" value="<?php if($image !== "") :?> <?= $image ?> <?php endif ?>" disabled>
                 <p>サブスク名<br>
                     <input type="text" name="name" size="50px" disabled value="<?= $name ?>">
                 </p>

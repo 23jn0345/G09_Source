@@ -108,8 +108,6 @@ function generate_year_range(start, end) {
                 if ( date === today.getDate() && year === today.getFullYear() && month === today.getMonth() ) {
                     cell.className = "date-picker selected";
                 }
-<<<<<<< HEAD
-=======
                 
 
                 // 無料期間と次回支払いを取得してカレンダーに反映する処理
@@ -146,7 +144,6 @@ function generate_year_range(start, end) {
 
                 month = month - 1;
 
->>>>>>> 63ae590e4ec453ef3d1c228f22076e21b548d400
                 row.appendChild(cell);
                 date++;
             }

@@ -31,7 +31,7 @@
         $subscid  = $_SESSION['id'];
         $subscUpdateDAO = new SubscUpdateDAO;
         $subscData=$subscUpdateDAO->get_subsc($subscid);
-        
+        $_SESSION['deleteImage'] = $subscData->image;
        
     }
 
@@ -50,23 +50,27 @@
             $returnaliasname  = $returnSubsc[4];
             $returnshortname  = $returnSubsc[5];
             $returnurl        = $returnSubsc[6];
+            $subscid = $_SESSION['id']; 
+            session_destroy();
             
-        
-        }elseif($_SERVER['REQUEST_METHOD']==='POST'){
+            
+        }elseif($_SERVER['REQUEST_METHOD']==='POST'){    
 
-            if(!empty($_POST['submit'])){
-                
-                $path           = "images/";
+            if(isset($_POST['submit'])){
+                $path = "./images/";
                 $temporary_file = $_FILES['file_name']['tmp_name']; # 一時ファイル名
                 $true_file = $_FILES['file_name']['name']; # 本来のファイル名
                 # is_uploaded_fileメソッドで、一時的にアップロードされたファイルが本当にアップロード処理されたかの確認
-                if (is_uploaded_file($temporary_file)) {
-                    if (move_uploaded_file($temporary_file , $true_file )) {
-                        move_uploaded_file( $_FILES['file1']['tmp_name'], $path.'upload_pic.jpg');
-                    }
+                if( !empty($_FILES['file_name']['tmp_name']) && is_uploaded_file($_FILES['file_name']['tmp_name']) ) {
+                        move_uploaded_file( $_FILES['file_name']['tmp_name'], $path.$_FILES['file_name']['full_path']);
+                        var_dump('アップロードしました');
+                        $image      = $_FILES['file_name']['name'];
+                }else{
+                    $image= $subscData->image;
                 }
 
-                $true_file = $_POST['image'];
+                
+                
                 $name = $_POST['name'];
                 $shortName = $_POST['shortName'];
                 $aliasName = $_POST['aliasName'];
@@ -107,6 +111,8 @@
                     }
                     if($updateSubsc !==false){
                         $_SESSION['updateSubsc']=$updateSubsc;
+                        $_SESSION['id'] = $subscid;
+                        $_SESSION['deleteImage'] = $subscData->image;
                         header('Location:updateConfirmation.php');
                         exit;
                     }
@@ -141,8 +147,8 @@
         <div class="title">
             <h1>サブスク更新</h1>
         </div>
-
-    <form method = "POST" action ="">
+        <?php var_dump($subscid) ?>
+    <form method = "POST" action ="" enctype="multipart/form-data">
     
     <?php if($errs!=null): ?>
         <spam style="color:red"><?= $errs ?></span>
@@ -150,8 +156,9 @@
         <div class="name">
         
         <p>アップロード画像</p>
+        ※画像を変更しない場合ファイル選択は必要ありません<br>
         <input type="file" name="file_name"  value ="<?php if($subscData->image != "") : ?>images/<?=$subscData->image ?> <?php elseif($returnimage != ""): ?>images/<?= $returnimage?><?php endif?>">
-        
+        <input type="hidden" name="image" value ="<?php if($subscData->image != "") : ?><?=$subscData->image ?> <?php elseif($returnimage != ""): ?><?= $returnimage?><?php endif?>">
             <p>サブスク名<br>
                 <input type="text" name="name" size="50px" value ="<?php if($subscData->subName !="" ) :?><?=$subscData->subName ?><?php elseif($returnname != ""): ?><?=$returnname ?><?php endif ?>">
             </p>

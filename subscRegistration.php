@@ -31,23 +31,23 @@
             $returnaliasname    = $returnSubsc[4];
             $returnshortname    = $returnSubsc[5];
             $returnurl          = $returnSubsc[6];
+            
             session_destroy();
         
         }elseif($_SERVER['REQUEST_METHOD']==='POST'){    
 
             if(isset($_POST['submit'])){
-                $path           = "images/";
+                $path = "./images/";
                 $temporary_file = $_FILES['file_name']['tmp_name']; # 一時ファイル名
                 $true_file = $_FILES['file_name']['name']; # 本来のファイル名
                 # is_uploaded_fileメソッドで、一時的にアップロードされたファイルが本当にアップロード処理されたかの確認
-                if (is_uploaded_file($temporary_file)) {
-                    if (move_uploaded_file($temporary_file , $true_file )) {
-                        move_uploaded_file( $_FILES['file1']['tmp_name'], $path.'upload_pic.jpg');
-                    }
+                if( !empty($_FILES['file_name']['tmp_name']) && is_uploaded_file($_FILES['file_name']['tmp_name']) ) {
+                        move_uploaded_file( $_FILES['file_name']['tmp_name'], $path.$_FILES['file_name']['full_path']);
+                        var_dump('アップロードしました');
                 }
 
                 
-                $true_file      = $_POST['image'];
+                $image      = $_FILES['file_name']['name'];
                 $name           = $_POST['name'];
                 $shortName      = $_POST['shortName'];
                 $aliasName      = $_POST['aliasName'];
@@ -123,12 +123,12 @@
                 <h1>サブスク詳細登録</h1>
             </div>
 
-        <form method = "POST" action ="">
+        <form method = "POST" action ="" enctype="multipart/form-data">
             <?php echo($errs) ?>
             <div class="name">
             <p>アップロード画像</p>
-            
-            <input type="file" name="file_name" value ="<?php if($returnimage != ""): ?><?= $returnimage?><?php endif?>">
+            <?php var_dump($returnimage) ?>
+            <input type="file" name="file_name" value ="<?php if($returnimage != ""): ?>images/<?= $returnimage?><?php endif?>">
             
                 <p>サブスク名<br>
                     <input type="text" name="name" size="50px" value ="<?php if($returnname != ""): ?><?=$returnname ?><?php endif ?>">
